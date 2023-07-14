@@ -1,4 +1,5 @@
-import { createContext, useReducer } from 'react'
+import { useEffect, createContext, useReducer } from 'react'
+
 
 export const AuthContext = createContext()
 
@@ -17,6 +18,16 @@ export const AuthContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, {
         user: null
     })
+
+    // This fires when the react app loads
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+
+        // This works, but sometimes the token is expired...
+        if (user) {
+            dispatch({type: 'LOGIN', payload: user})
+        }
+    }, [])
 
     console.log('AuthContext state: ', state)
 
