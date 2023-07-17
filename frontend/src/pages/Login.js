@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLogin } from '../hooks/useLogin'
 import { Link } from 'react-router-dom'
+import RingLoader from "react-spinners/RingLoader";
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -32,6 +33,12 @@ const Login = () => {
             <p>Forgot your password? <Link to="/forgot">Reset it here</Link></p>
             <button disabled={isLoading}>Log in</button>
             {error && <div className='error'>{error}</div>}
+            {isLoading && 
+                    <div className="loading">
+                        <p>Fetching data from server...</p>
+                        <p>This process tends to take 5-60 seconds</p>
+                        <RingLoader color="#1aac83" />
+                    </div>}
         </form>
     )
 }

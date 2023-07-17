@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import PacmanLoader from "react-spinners/PacmanLoader";
+import RingLoader from "react-spinners/RingLoader";
 
 const Forgot = () => {
     const [email, setEmail] = useState('')
@@ -48,7 +48,7 @@ const Forgot = () => {
                     <div className="loading">
                         <p>Sending email...</p>
                         <p>This process tends to take 5-60 seconds</p>
-                        <PacmanLoader color="#1aac83" />
+                        <RingLoader color="#1aac83" />
                     </div>}
             </form>
             : <div className="good-response">A reset link has been sent to your email.</div> }
