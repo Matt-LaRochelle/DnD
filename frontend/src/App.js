@@ -6,6 +6,8 @@ import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Forgot from './pages/Forgot'
+import ResetPassword from './pages/Reset'
 
 function App() {
   const { user } = useAuthContext()
@@ -28,6 +30,14 @@ function App() {
               path="/signup"
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
+            <Route 
+              path="/reset-password/:token"
+              element={!user ? <ResetPassword /> : <Navigate to="/" />}
+              />
+            <Route
+              path='/forgot'
+              element={!user ? <Forgot /> : <Navigate to="/" />}
+              />
           </Routes>
         </div>
       </BrowserRouter>
