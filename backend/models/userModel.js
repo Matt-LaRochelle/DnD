@@ -13,6 +13,12 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    resetPasswordToken: {
+        type: String
+    },
+    resetPasswordExpires: {
+        type: Number
     }
 })
 
@@ -69,6 +75,48 @@ userSchema.statics.login = async function(email, password) {
 
     return user
     
+}
+
+
+// static forgot method
+userSchema.statics.forgot = async function (email) {
+    if (!email) {
+        throw Error('Must include an email')
+    }
+
+    const user = await this.findOne({ email })
+
+    if (!user) {
+        throw Error ('Incorrect email')
+    }
+    return user
+}
+
+// static reset method
+userSchema.statics.reset = async function (token, password) {
+    if (!token || !password) {
+        throw Error('All fields must be filled')
+    }
+    if (!validator.isStrongPassword(password)) {
+        throw Error('Password not strong enough')
+    }
+
+    const user = await this.findOne({ resetPasswordToken: token })
+
+    if (!user) {
+        throw Error ('Invalid token')
+    }
+
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(password, salt)
+
+    // Update the user's password field
+    user.password = hash
+
+    // Save the updated user document to the database
+    await user.save()
+
+    return user
 }
 
 module.exports = mongoose.model('User', userSchema)
