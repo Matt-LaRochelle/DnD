@@ -1,9 +1,9 @@
 import { useAuthContext } from './useAuthContext'
-import { useWorkoutsContext } from './useWorkoutsContext'
+import { useCampaignsContext } from './useCampaignsContext'
 
 export const useLogout = () => {
     const { dispatch } = useAuthContext()
-    const { dispatch: workoutsDispatch } = useWorkoutsContext()
+    const { dispatch: campaignsDispatch } = useCampaignsContext()
 
     const logout = () => {
         // remove user from storage
@@ -13,8 +13,8 @@ export const useLogout = () => {
         dispatch({type: 'LOGOUT'})
         
         // This clears the global workouts state so that when another
-        // person logs in they do not see the workouts for a brief second.
-        workoutsDispatch({type: 'SET_WORKOUTS', payload: null})
+        // person logs in they do not see the campaigns for a brief second.
+        campaignsDispatch({type: 'SET_CAMPAIGNS', payload: null})
     }
 
     return {logout}

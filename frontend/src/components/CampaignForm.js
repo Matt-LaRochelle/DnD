@@ -1,14 +1,12 @@
 import { useState } from 'react'
-import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import { useCampaignsContext } from '../hooks/useCampaignsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
-const WorkoutForm = () => {
-    const { dispatch } = useWorkoutsContext()
+const CampaignForm = () => {
+    const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
 
     const [title, setTitle] = useState('')
-    const [load, setLoad] = useState('')
-    const [reps, setReps] = useState('')
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
 
@@ -20,11 +18,11 @@ const WorkoutForm = () => {
             return
         }
 
-        const workout = {title, load, reps}
+        const campaign = {title}
 
-        const response = await fetch('/api/workouts', {
+        const response = await fetch('/api/campaigns', {
             method: 'POST',
-            body: JSON.stringify(workout),
+            body: JSON.stringify(campaign),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}`
@@ -38,11 +36,9 @@ const WorkoutForm = () => {
         }
         if (response.ok) {
             setTitle('')
-            setLoad('')
-            setReps('')
             setError(null)
             setEmptyFields([])
-            console.log('new workout added', json)
+            console.log('new campaign added', json)
             dispatch({type: 'CREATE_WORKOUT', payload: json})
         }
     }
@@ -63,4 +59,4 @@ const WorkoutForm = () => {
     )
 }
 
-export default WorkoutForm
+export default CampaignForm

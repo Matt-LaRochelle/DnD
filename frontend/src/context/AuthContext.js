@@ -19,14 +19,20 @@ export const AuthContextProvider = ({ children }) => {
         user: null
     })
 
-    // This fires when the react app loads
+    // This fires when the react app loads in order to log out users
+    // who have been logged in for more than 3 days.
+    // We need to change this to something else - there is
+    // backend middleware which can send back a message that
+    // the token has expired. This must log out the person.
+    // That is a TODO
+    
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
 
         const validateUser = async () => {
             if (user) {
                 // Check if the token is valid or invalid
-                const response = await fetch('/api/workouts/', {
+                const response = await fetch('/api/campaigns/', {
                         headers: {
                             'Authorization': `Bearer ${user.token}`
                         }
