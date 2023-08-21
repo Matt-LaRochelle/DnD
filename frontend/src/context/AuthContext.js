@@ -23,10 +23,27 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
 
-        // This works, but sometimes the token is expired...
-        if (user) {
-            dispatch({type: 'LOGIN', payload: user})
-        }
+        const validateUser = async () => {
+            if (user) {
+                // Check if the token is valid or invalid
+                const response = await fetch('/api/workouts/', {
+                        headers: {
+                            'Authorization': `Bearer ${user.token}`
+                        }
+                    })
+                    const json = await response.json()
+                    console.log(json)
+
+                    if (response.ok) {
+                        dispatch({ type: 'LOGIN', payload: user })
+                    }
+                    else {
+                        dispatch({ type: 'LOGOUT', payload: null})
+                    }
+                }
+            }
+        validateUser()
+        
     }, [])
 
     console.log('AuthContext state: ', state)
