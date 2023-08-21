@@ -24,7 +24,7 @@ function App() {
               element={user ? <Home /> : <Navigate to="/login" />}
             />
             <Route 
-              path="/campaign"
+              path="/campaign/:id"
               element={user ? <Campaign /> : <Navigate to="/login" />}
             />
             <Route 

@@ -8,6 +8,10 @@ export const campaignsReducer = (state, action) => {
             return {
                 campaigns: action.payload
             }
+        case 'SET_CAMPAIGN':
+            return {
+                campaigns: action.payload
+            }
         case 'CREATE_CAMPAIGN':
             return {
                 campaigns: [action.payload, ...state.campaigns]

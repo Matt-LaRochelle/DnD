@@ -24,13 +24,19 @@ const CampaignDetails = ({ campaign }) => {
             dispatch({type: 'DELETE_CAMPAIGN', payload: json})
         }
     }
+
+    const giveID = () => {
+        console.log(campaign._id)
+    }
     
+    const path = `/campaign/${campaign._id}`
     return (
         <div className="campaign-details">
             <h4>{campaign.title}</h4>
             <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
-            <Link to="/campaign">Enter</Link>
+            <Link to={path}>Enter</Link>
+            <button onClick={giveID}>Check ID</button>
         </div>
     )
 }
