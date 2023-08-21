@@ -7,6 +7,12 @@ const campaignSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String
+    },
+    maps: {
+        type: String
+    },
     user_id: {
         type: String,
         required: true
