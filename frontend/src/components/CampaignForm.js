@@ -39,7 +39,7 @@ const CampaignForm = () => {
             setError(null)
             setEmptyFields([])
             console.log('new campaign added', json)
-            dispatch({type: 'CREATE_WORKOUT', payload: json})
+            dispatch({type: 'CREATE_CAMPAIGN', payload: json})
         }
     }
 

@@ -12,7 +12,7 @@ export const useLogout = () => {
         // dispatch logout action
         dispatch({type: 'LOGOUT'})
         
-        // This clears the global workouts state so that when another
+        // This clears the global campaigns state so that when another
         // person logs in they do not see the campaigns for a brief second.
         campaignsDispatch({type: 'SET_CAMPAIGNS', payload: null})
     }

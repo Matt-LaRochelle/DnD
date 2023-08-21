@@ -1,5 +1,6 @@
 import { useCampaignsContext } from '../hooks/useCampaignsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { Link } from 'react-router-dom'
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
@@ -29,6 +30,7 @@ const CampaignDetails = ({ campaign }) => {
             <h4>{campaign.title}</h4>
             <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
+            <Link to="/campaign">Enter</Link>
         </div>
     )
 }
