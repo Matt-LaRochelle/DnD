@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Forgot from './pages/Forgot'
 import ResetPassword from './pages/Reset'
+import Map from './pages/map/Map'
 
 function App() {
   const { user } = useAuthContext()
@@ -26,6 +27,10 @@ function App() {
             <Route 
               path="/campaign/:id"
               element={user ? <Campaign /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/map"
+              element={user ? <Map /> : <Navigate to="/login" />}
             />
             <Route 
               path="/login"

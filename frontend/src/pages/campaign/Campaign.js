@@ -1,8 +1,9 @@
 import './campaign.scss'
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
+
 
 const Campaign = () => {
     const location = useLocation();
@@ -70,12 +71,13 @@ const Campaign = () => {
                     <button onClick={handleClick}>Submit</button>
                 </div>}
             </div>
-            <p>Maps</p>
-            <p>Player Characters</p>
-            <p>NPC's</p>
-            <p>Quests</p>
-            <p>News</p>
-            <p>Lore</p>
+            <p>Maps page link</p>
+            <Link to="/map">Maps</Link>
+            <p>Player Characters page link</p>
+            <p>NPC's page link</p>
+            <p>Quests page link</p>
+            <p>News - maybe for local regions?</p>
+            <p>Lore - also for local regions, or just general??</p>
             <p>Treasure</p>
             <p>Items</p>
             <p>Creatures</p>
