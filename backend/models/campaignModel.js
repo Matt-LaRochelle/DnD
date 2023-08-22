@@ -7,16 +7,20 @@ const campaignSchema = new Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String
-    },
-    maps: {
-        type: String
-    },
     user_id: {
         type: String,
         required: true
-    }
+    },
+    description: String,
+    maps: [String],
+    npcs: [String],
+    pcs: [String],
+    quests: [String],
+    news: [String],
+    lore: [String],
+    treasure: [String],
+    items: [String],
+    creatures: [String],
 }, { timestamps: true })
 
 module.exports = mongoose.model('Campaign', campaignSchema)

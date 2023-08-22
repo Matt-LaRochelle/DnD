@@ -38,6 +38,7 @@ const Campaign = () => {
             <p>Player Characters</p>
             <p>NPC's</p>
             <p>Quests</p>
+            <p>News</p>
             <p>Lore</p>
             <p>Treasure</p>
             <p>Items</p>
