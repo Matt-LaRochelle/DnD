@@ -71,8 +71,18 @@ const Campaign = () => {
                     <button onClick={handleClick}>Submit</button>
                 </div>}
             </div>
-            <p>Maps page link</p>
-            <Link to="/map">Maps</Link>
+            <div className="cMaps">
+                <h3>Maps</h3>
+                <ul>
+                    <li><strong>Make this dynamic at some point</strong></li>
+                    <li>Current map</li>
+                    <li>Recent map</li>
+                    <li>Recent map</li>
+                    <li>Recent map</li>
+                </ul>
+                <Link to="/map">Maps Page</Link>
+            </div>
+            
             <p>Player Characters page link</p>
             <p>NPC's page link</p>
             <p>Quests page link</p>
