@@ -3,9 +3,21 @@
 
     .cDescription {
         border: 2px solid lime;
+        background-color: #fff;
+        padding: 20px;
+        position: relative;
+
+        button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
     }
 
     .cMaps {
         border: 2px solid aqua;
+        margin-top: 20px;
+        background-color: #fff;
+        padding: 20px;
     }
 }
