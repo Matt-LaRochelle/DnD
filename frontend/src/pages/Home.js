@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useCampaignsContext } from '../hooks/useCampaignsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 
@@ -7,6 +7,7 @@ import CampaignDetails from '../components/CampaignDetails'
 import CampaignForm from '../components/CampaignForm'
 
 const Home = () => {
+    const [loading, setLoading] = useState(false)
     const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
@@ -21,6 +22,7 @@ const Home = () => {
 
             if (response.ok) {
                 dispatch({type: 'SET_CAMPAIGNS', payload: json})
+                setLoading(true)
             }
         }
 
@@ -32,9 +34,12 @@ const Home = () => {
     return (
         <div className="home">
             <div className='campaigns'>
-                {campaigns && campaigns.map((campaign) => (
+            {loading ?
+                campaigns.map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
-                ))}
+                ))
+                : <p>Loading...</p>
+                }
             </div>
             <CampaignForm />
         </div>
