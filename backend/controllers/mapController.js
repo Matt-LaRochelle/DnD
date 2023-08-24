@@ -31,7 +31,7 @@ const getMap = async (req, res) => {
 
 // create new map
 const createMap = async (req, res) => {
-    const {title} = req.body
+    const {title, description, mapImage} = req.body
 
     let emptyFields = []
 
@@ -39,7 +39,9 @@ const createMap = async (req, res) => {
         emptyFields.push('title')
     }
     if(emptyFields.length > 0) {
-        return res.status(400).json({ error: 'Please fill in all the fields', emptyFields})
+        // In this case, it is only necessary to have a title, other fields
+        // can be filled in later or never depending on the game
+        return res.status(400).json({ error: 'Map must have a title', emptyFields})
     }
 
     // add doc to db
