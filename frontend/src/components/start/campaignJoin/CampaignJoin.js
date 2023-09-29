@@ -1,9 +1,9 @@
+import './campaignJoin.css'
 import { useState } from 'react'
-import { useCampaignsContext } from '../../hooks/useCampaignsContext'
-import { useAuthContext } from '../../hooks/useAuthContext'
-import './campaignForm.css'
+import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { useAuthContext } from '../../../hooks/useAuthContext'
 
-const CampaignForm = () => {
+const CampaignJoin = () => {
     const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
 
@@ -15,7 +15,6 @@ const CampaignForm = () => {
     const handleClick = () => {
         setShowForm(showForm => !showForm);
     }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -51,19 +50,19 @@ const CampaignForm = () => {
     }
 
     return (
-        <div className='campaignForm__container' onSubmit={handleSubmit}>
-            <h3>DM for a campaign</h3>
+        <div className='joinCampaign__container' onSubmit={handleSubmit}>
+            <h3>Join campaign as a player</h3>
             <p className="add" onClick={handleClick}>{showForm ? "-" : "+"}</p>
             {showForm &&
                 <form>
-                    <label>Campaign Title:</label>
+                    <label>Campaign room number:</label>
                     <input 
                         type="text"
                         onChange={(e) => setTitle(e.target.value)}
                         value={title}
                         className={emptyFields.includes('title') ? 'error' : ''}
                     />
-                    <button>Start</button>
+                    <button>Join</button>
                     {error && <div className='error'>{error}</div>}
                 </form>
             }
@@ -71,4 +70,4 @@ const CampaignForm = () => {
     )
 }
 
-export default CampaignForm
+export default CampaignJoin

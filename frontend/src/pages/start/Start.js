@@ -5,8 +5,8 @@ import './start.css'
 
 // components
 import CampaignDetails from '../../components/CampaignDetails'
-import CampaignForm from '../../components/newCampaign/CampaignForm'
-import JoinCampaign from '../../components/joinCampaign/JoinCampaign'
+import CampaignForm from '../../components/start/campaignStart/CampaignStart'
+import JoinCampaign from '../../components/start/campaignJoin/CampaignJoin'
 
 const Start = () => {
     const [loading, setLoading] = useState(false)
