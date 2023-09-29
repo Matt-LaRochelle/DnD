@@ -35,18 +35,20 @@ const Start = () => {
 
     return (
         <div className="start">
-            <div className='campaigns'>
-            {loading ?
-                campaigns.map((campaign) => (
-                    <CampaignDetails key={campaign._id} campaign={campaign} />
-                ))
-                : <p>Loading...</p>
-                }
-            </div>
             <div className="start__add">
                 <CampaignForm />
                 <JoinCampaign />
             </div>
+
+            <div className='campaigns'>
+                {loading 
+                ?   campaigns.map((campaign) => (
+                        <CampaignDetails key={campaign._id} campaign={campaign} />
+                    ))
+                :   <p>Loading...</p>
+                }
+            </div>
+            
         </div>
     )
 }
