@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import RingLoader from "react-spinners/RingLoader";
+import './landing.css'
 
 function ResetPassword() {
   const { token } = useParams();

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import RingLoader from "react-spinners/RingLoader";
+import RingLoader from "react-spinners/RingLoader"
+import './landing.css'
 
 const Forgot = () => {
     const [email, setEmail] = useState('')

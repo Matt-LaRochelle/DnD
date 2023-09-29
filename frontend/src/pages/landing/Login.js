@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { useLogin } from '../hooks/useLogin'
+import { useLogin } from '../../hooks/useLogin'
 import { Link } from 'react-router-dom'
 import RingLoader from "react-spinners/RingLoader";
+import './landing.css'
 
 const Login = () => {
     const [email, setEmail] = useState('')

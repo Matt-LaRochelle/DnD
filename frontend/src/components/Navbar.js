@@ -15,11 +15,12 @@ const Navbar = () => {
         <header>
             <div className="container">
                 <Link to="/">
-                    <div className="navbar__logo">
-                        <Logo />
+                    <div className="navbar__title">
+                        <div className="navbar__logo">
+                            <Logo />
+                        </div>
+                        <h1>Role Playing Buddy</h1>
                     </div>
-                    
-                    <h1>Role Playing Buddy</h1>
                 </Link>
                 <nav>
                     {user && (

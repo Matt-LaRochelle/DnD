@@ -2,13 +2,15 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
 
 //pages and components
+import Navbar from './components/Navbar'
+
+import Login from './pages/landing/Login';
+import Signup from './pages/landing/Signup';
+import Forgot from './pages/landing/Forgot'
+import ResetPassword from './pages/landing/Reset'
+
 import Home from './pages/Home'
 import Campaign from './pages/campaign/Campaign'
-import Navbar from './components/Navbar'
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Forgot from './pages/Forgot'
-import ResetPassword from './pages/Reset'
 import Map from './pages/map/Map'
 
 function App() {

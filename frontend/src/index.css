@@ -10,12 +10,13 @@ body {
   background: #f1f1f1;
   margin: 0;
   font-family: "Poppins";
+  width: 100vw;
 }
 header {
   background: #fff;
 }
 header .container {
-  max-width: 1400px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 10px 20px;
   display: flex;
@@ -27,7 +28,7 @@ header a {
   text-decoration: none;
 }
 .pages{
-  max-width: 1400px;
+  max-width: 1000px;
   padding: 20px;
   margin: 0 auto;
 }
@@ -106,6 +107,10 @@ input.error {
   height: 100px;
   width: 100px;
 }
+.navbar__title {
+  display: flex;
+  align-items: center;
+}
 nav {
   display: flex;
   align-items: center;
@@ -122,13 +127,4 @@ nav button {
   font-family: "Poppins";
   cursor: pointer;
   font-size: 1em;
-}
-
-/* auth forms */
-form.signup, form.login {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 4px;
 }

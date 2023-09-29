@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useSignup } from '../hooks/useSignup'
+import { useSignup } from '../../hooks/useSignup'
 import RingLoader from "react-spinners/RingLoader";
+import './landing.css'
 
 const Signup = () => {
     const [email, setEmail] = useState('')
