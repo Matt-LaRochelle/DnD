@@ -9,7 +9,7 @@ import Signup from './pages/landing/Signup';
 import Forgot from './pages/landing/Forgot'
 import ResetPassword from './pages/landing/Reset'
 
-import Home from './pages/Home'
+import Start from './pages/start/Start'
 import Campaign from './pages/campaign/Campaign'
 import Map from './pages/map/Map'
 
@@ -24,7 +24,7 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={user ? <Home /> : <Navigate to="/login" />}
+              element={user ? <Start /> : <Navigate to="/login" />}
             />
             <Route 
               path="/campaign/:id"

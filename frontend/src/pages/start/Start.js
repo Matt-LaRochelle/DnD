@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
-import { useCampaignsContext } from '../hooks/useCampaignsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useCampaignsContext } from '../../hooks/useCampaignsContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
+import './start.css'
 
 // components
-import CampaignDetails from '../components/CampaignDetails'
-import CampaignForm from '../components/CampaignForm'
+import CampaignDetails from '../../components/CampaignDetails'
+import CampaignForm from '../../components/newCampaign/CampaignForm'
+import JoinCampaign from '../../components/joinCampaign/JoinCampaign'
 
-const Home = () => {
+const Start = () => {
     const [loading, setLoading] = useState(false)
     const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
@@ -32,7 +34,7 @@ const Home = () => {
     }, [dispatch, user])
 
     return (
-        <div className="home">
+        <div className="start">
             <div className='campaigns'>
             {loading ?
                 campaigns.map((campaign) => (
@@ -41,9 +43,12 @@ const Home = () => {
                 : <p>Loading...</p>
                 }
             </div>
-            <CampaignForm />
+            <div className="start__add">
+                <CampaignForm />
+                <JoinCampaign />
+            </div>
         </div>
     )
 }
 
-export default Home
+export default Start

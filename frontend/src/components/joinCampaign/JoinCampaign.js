@@ -1,14 +1,20 @@
+import './joinCampaign.css'
 import { useState } from 'react'
-import { useCampaignsContext } from '../hooks/useCampaignsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useCampaignsContext } from '../../hooks/useCampaignsContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
 
-const CampaignForm = () => {
+const JoinCampaign = () => {
     const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
 
+    const [showForm, setShowForm] = useState(false)
     const [title, setTitle] = useState('')
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
+
+    const handleClick = () => {
+        setShowForm(showForm => !showForm);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -44,19 +50,24 @@ const CampaignForm = () => {
     }
 
     return (
-        <form className='create' onSubmit={handleSubmit}>
-            <h3>Add a New Campaign</h3>
-            <label>Campaign Title:</label>
-            <input 
-                type="text"
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
-                className={emptyFields.includes('title') ? 'error' : ''}
-            />
-            <button>Add Campaign</button>
-            {error && <div className='error'>{error}</div>}
-        </form>
+        <div className='joinCampaign__container' onSubmit={handleSubmit}>
+            <h3>Join campaign as a player</h3>
+            <p className="add" onClick={handleClick}>{showForm ? "-" : "+"}</p>
+            {showForm &&
+                <form>
+                    <label>Campaign room number:</label>
+                    <input 
+                        type="text"
+                        onChange={(e) => setTitle(e.target.value)}
+                        value={title}
+                        className={emptyFields.includes('title') ? 'error' : ''}
+                    />
+                    <button>Join</button>
+                    {error && <div className='error'>{error}</div>}
+                </form>
+            }
+        </div>
     )
 }
 
-export default CampaignForm
+export default JoinCampaign

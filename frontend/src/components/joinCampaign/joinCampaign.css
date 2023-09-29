@@ -1,0 +1,11 @@
+.joinCampaign__container {
+    border: 2px solid red;
+    width: 200px;
+    height: max-content;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px
+}
