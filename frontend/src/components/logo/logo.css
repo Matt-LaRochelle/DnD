@@ -1,0 +1,25 @@
+.logo__container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    border-radius: 50%;
+    background: radial-gradient(lime, rgba(255, 255, 255, 0)56%);
+    animation: 14s linear 0s infinite psychedelic;
+}
+@keyframes psychedelic {
+    from {
+      filter: hue-rotate(0deg);
+    }
+    to {
+      filter: hue-rotate(360deg);
+    }
+}
+
+.logo__image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

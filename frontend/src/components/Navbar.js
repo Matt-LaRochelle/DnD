@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useLogout } from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext'
+import Logo from './logo/Logo';
 
 const Navbar = () => {
     const { logout } = useLogout()
@@ -14,6 +15,10 @@ const Navbar = () => {
         <header>
             <div className="container">
                 <Link to="/">
+                    <div className="navbar__logo">
+                        <Logo />
+                    </div>
+                    
                     <h1>Role Playing Buddy</h1>
                 </Link>
                 <nav>

@@ -102,6 +102,10 @@ input.error {
 }
 
 /* navbar */
+.navbar__logo {
+  height: 100px;
+  width: 100px;
+}
 nav {
   display: flex;
   align-items: center;
