@@ -12,7 +12,7 @@ const CampaignDetails = ({ campaign }) => {
         if (!user) {
             return
         }
-        const response = await fetch('/api/campaigns/' + campaign._id, {
+        const response = await fetch('/api/campaign/' + campaign._id, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`

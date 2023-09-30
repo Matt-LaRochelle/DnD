@@ -3,24 +3,30 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const campaignSchema = new Schema({
+    dm: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true
     },
-    user_id: {
+    description: {
         type: String,
         required: true
     },
-    description: String,
-    maps: [String],
-    npcs: [String],
+    hidden: {
+        type: Boolean,
+        required: true
+    },
+    players: [String],
     pcs: [String],
+    npcs: [String],
+    maps: [String],
     quests: [String],
-    news: [String],
     lore: [String],
-    treasure: [String],
-    items: [String],
-    creatures: [String],
+    news: [String],
+    diary: [String]
 }, { timestamps: true })
 
 module.exports = mongoose.model('Campaign', campaignSchema)

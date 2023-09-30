@@ -17,7 +17,7 @@ const Campaign = () => {
 
     useEffect(() => {
         const fetchCampaign = async () => {
-            const response = await fetch(`/api/campaigns/${path}`, {
+            const response = await fetch(`/api/campaign/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -40,7 +40,7 @@ const Campaign = () => {
 
     const handleClick = async (e) => {
         e.preventDefault()
-        const response = await fetch(`/api/campaigns/${path}`, {
+        const response = await fetch(`/api/campaign/${path}`, {
             method: 'PATCH',
             body: JSON.stringify({description: description}),
             headers: {

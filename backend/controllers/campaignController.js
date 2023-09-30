@@ -31,12 +31,22 @@ const getCampaign = async (req, res) => {
 
 // create new campaign
 const createCampaign = async (req, res) => {
-    const {title} = req.body
+    const {dm, title, description, hidden} = req.body
+    console.log(dm);
 
     let emptyFields = []
 
     if (!title) {
         emptyFields.push('title')
+    }
+    if (!dm) {
+        emptyFields.push('dm')
+    }
+    if (!description) {
+        emptyFields.push('description')
+    }
+    if (!hidden) {
+        emptyFields.push('hidden')
     }
     if(emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields})
@@ -44,9 +54,9 @@ const createCampaign = async (req, res) => {
 
     // add doc to db
     try {
-        const user_id = req.user._id
+        // const user_id = req.user._id
 
-        const campaign = await Campaign.create({title, user_id})
+        const campaign = await Campaign.create({title, dm, description, hidden})
         res.status(200).json(campaign)
     } catch (error) {
         res.status(400).json({error: error.message})
