@@ -15,7 +15,7 @@ const Start = () => {
 
     useEffect(() => {
         const fetchCampaigns = async () => {
-            const response = await fetch('/api/campaign', {
+            const response = await fetch('/api/user/getCampaigns', {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

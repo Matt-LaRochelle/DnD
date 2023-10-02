@@ -120,4 +120,10 @@ const resetPassword = async (req, res) => {
     }
 }
 
-module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword }
+
+const getCampaigns = async (req, res) => {
+    console.log("triggered");
+    res.status(200).json({message: "received"})
+}
+
+module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, getCampaigns }

@@ -1,7 +1,13 @@
 const express = require('express')
 
 // controller functions
-const { signupUser, loginUser, forgotUser, verifyLink, resetPassword } = require('../controllers/userController')
+const { 
+    signupUser, 
+    loginUser, 
+    forgotUser, 
+    verifyLink, 
+    resetPassword, 
+    getCampaigns } = require('../controllers/userController')
 
 const router = express.Router()
 
@@ -19,5 +25,8 @@ router.post('/verify', verifyLink)
 
 // reset password
 router.post('/reset', resetPassword)
+
+// get user's campaign list
+router.get('/getCampaigns', getCampaigns)
 
 module.exports = router
