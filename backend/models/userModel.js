@@ -4,7 +4,7 @@ const validator = require('validator')
 
 const Schema = mongoose.Schema
 
-const campaignSchema = new Schema({
+const campaignsSchema = new Schema({
     campaignID: {
         type: String,
         required: true
@@ -36,7 +36,7 @@ const userSchema = new Schema({
         type: Number
     },
     campaigns: {
-        type: [campaignSchema]
+        type: [campaignsSchema]
     }
 })
 

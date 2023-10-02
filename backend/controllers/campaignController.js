@@ -1,4 +1,5 @@
 const Campaign = require('../models/campaignModel')
+const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
 // get all campaigns
@@ -52,17 +53,39 @@ const createCampaign = async (req, res) => {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields})
     }
 
+    if (!mongoose.Types.ObjectId.isValid(dm)) {
+        return res.status(404).json({error: 'Player does not exist.'})
+    }
+
     // add doc to db
     try {
-        // const user_id = req.user._id
 
+        // 1. Create the campaign
         const campaign = await Campaign.create({title, dm, description, hidden})
-        res.status(200).json(campaign)
+
+        // 2. Get campaign ID
+        const campaignID = campaign._id.toString();
+        // returns: 651b3819885bd325614e5215
+
+        // 3. Create a new campaign object
+        const newCampaign = {
+            campaignID: campaignID,
+            dm: true
+        }
+
+        // 4. Push newCampaign object to the user schema's campaigns list 
+        const updatedUser = await User.findByIdAndUpdate(dm, { $push: { campaigns: newCampaign } }, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json(campaign);
     } catch (error) {
-        res.status(400).json({error: error.message})
-        console.log(error.message)
+        res.status(400).json({ error: error.message });
+        console.log(error.message);
     }
-}
+};
 
 // delete a campaign
 const deleteCampaign = async (req, res) => {
