@@ -30,7 +30,7 @@ const getCampaign = async (req, res) => {
 }
 
 
-// create new campaign
+// DM (Create) a new campaign
 const createCampaign = async (req, res) => {
     const {dm, title, description, hidden} = req.body
     console.log(dm);
@@ -87,6 +87,52 @@ const createCampaign = async (req, res) => {
     }
 };
 
+
+// Join a campaign
+const joinCampaign = async (req, res) => {
+
+    const { campaignID } = req.params
+    const { userID } = req.body
+
+
+    if (!mongoose.Types.ObjectId.isValid(campaignID)) {
+        return res.status(404).json({error: 'No such campaign'})
+    }
+    if (!mongoose.Types.ObjectId.isValid(userID)) {
+        return res.status(404).json({error: 'No such user'})
+    }
+
+
+
+    const newCampaign = {
+        campaignID,
+        dm: false
+    }
+
+    console.log(newCampaign);
+
+
+    // Add newCampaign object to your UserSchema.campaigns list
+    const updatedUser = await User.findByIdAndUpdate(userID, { $push: { campaigns: newCampaign } }, { new: true });
+
+    // Add your user mongoID to the campaign players list
+    const updatedCampaign = await Campaign.findByIdAndUpdate(campaignID, { $push: { players: userID } }, { new: true });
+
+    res.status(200).json({received: "yes"});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 // delete a campaign
 const deleteCampaign = async (req, res) => {
     const { id } = req.params
@@ -128,6 +174,7 @@ module.exports = {
     getCampaigns,
     getCampaign,
     createCampaign,
+    joinCampaign,
     deleteCampaign,
     updateCampaign
 }
