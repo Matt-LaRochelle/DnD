@@ -7,7 +7,6 @@ const {
     forgotUser, 
     verifyLink, 
     resetPassword, 
-    getCampaigns,
     checkCookies } = require('../controllers/userController')
 
 const requireAuth = require('../middleware/requireAuth')
@@ -34,8 +33,5 @@ router.post('/reset', resetPassword)
 router.use(requireAuth)
 
 router.get('/check', checkCookies)
-
-// get user's campaign list
-router.get('/getCampaigns', getCampaigns)
 
 module.exports = router

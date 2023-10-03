@@ -38,7 +38,7 @@ export const AuthContextProvider = ({ children }) => {
                         }
                     })
                     const json = await response.json()
-                    console.log(json)
+                    console.log("checked Auth Context", json)
 
                     if (response.ok) {
                         dispatch({ type: 'LOGIN', payload: user })

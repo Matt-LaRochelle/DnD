@@ -80,7 +80,7 @@ const Start = () => {
                     ))
                 }
             </div> */}
-        <h3>Full List:</h3>
+        <h3>Campaigns you DM:</h3>
             <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>

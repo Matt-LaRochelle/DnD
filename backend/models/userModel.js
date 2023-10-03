@@ -4,17 +4,6 @@ const validator = require('validator')
 
 const Schema = mongoose.Schema
 
-const campaignsSchema = new Schema({
-    campaignID: {
-        type: String,
-        required: true
-    },
-    dm: {
-        type: Boolean,
-        required: true
-    }
-});
-
 const userSchema = new Schema({
     email: {
         type: String,
@@ -34,9 +23,6 @@ const userSchema = new Schema({
     },
     resetPasswordExpires: {
         type: Number
-    },
-    campaigns: {
-        type: [campaignsSchema]
     }
 })
 

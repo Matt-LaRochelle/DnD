@@ -5,11 +5,17 @@ const mongoose = require('mongoose')
 // get all campaigns
 const getCampaigns = async (req, res) => {
     const user_id = req.user._id
-    console.log("user_id", user_id)
 
-    const campaigns = await Campaign.find({ dm: user_id }).sort({createdAt: -1})
+    try {
+        const campaigns = await Campaign.find({ dm: user_id }).sort({createdAt: -1})
+        res.status(200).json(campaigns)
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ error: err.message });
+    }
 
-    res.status(200).json(campaigns)
+
+    
 }
 
 
