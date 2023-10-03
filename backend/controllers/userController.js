@@ -125,4 +125,18 @@ const checkCookies = async (req, res) => {
     res.status(200).json({message: "You're logged in!"})
 } 
 
-module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, checkCookies }
+const getUser = async (req, res) => {
+    const { id } = req.params
+
+    // if (!mongoose.Types.ObjectId.isValid(id)) {
+    //     return res.status(404).json({error: 'No such campaign'})
+    // }
+
+    console.log("id:", id)
+    const user = User.findById(id)
+
+    console.log(user);
+    res.status(200)
+}
+
+module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, checkCookies, getUser }

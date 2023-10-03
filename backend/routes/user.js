@@ -7,7 +7,8 @@ const {
     forgotUser, 
     verifyLink, 
     resetPassword, 
-    checkCookies } = require('../controllers/userController')
+    checkCookies,
+    getUser } = require('../controllers/userController')
 
 const requireAuth = require('../middleware/requireAuth')
 
@@ -33,5 +34,7 @@ router.post('/reset', resetPassword)
 router.use(requireAuth)
 
 router.get('/check', checkCookies)
+
+router.get('/:id', getUser)
 
 module.exports = router

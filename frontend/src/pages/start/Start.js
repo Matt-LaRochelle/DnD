@@ -81,14 +81,14 @@ const Start = () => {
                 }
             </div> */}
         <h3>Campaigns you DM:</h3>
-            <div className='campaigns'>
+            {/* <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
                 :   fullList.map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
-            </div>
+            </div> */}
             
         </div>
     )
