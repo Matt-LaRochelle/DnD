@@ -33,21 +33,18 @@ const getCampaign = async (req, res) => {
 // DM (Create) a new campaign
 const createCampaign = async (req, res) => {
     const {dm, title, description, hidden} = req.body
-    console.log(dm);
+    console.log("dm:", dm);
+    console.log("title:", title);
+    console.log("description:", description);
+    console.log("hidden:", hidden);
 
     let emptyFields = []
 
     if (!title) {
         emptyFields.push('title')
     }
-    if (!dm) {
-        emptyFields.push('dm')
-    }
     if (!description) {
         emptyFields.push('description')
-    }
-    if (!hidden) {
-        emptyFields.push('hidden')
     }
     if(emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields})

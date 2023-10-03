@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useCampaignsContext } from '../../hooks/useCampaignsContext'
+// import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import './start.css'
 
@@ -9,29 +9,35 @@ import CampaignForm from '../../components/start/campaignStart/CampaignStart'
 import JoinCampaign from '../../components/start/campaignJoin/CampaignJoin'
 
 const Start = () => {
-    const [loading, setLoading] = useState(false)
-    const {campaigns, dispatch} = useCampaignsContext() 
+    const [loading, setLoading] = useState(true)
+    const [campaignList, setCampaignList] = useState(null)
+    // const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
+
 
     useEffect(() => {
         const fetchCampaigns = async () => {
+            setLoading(true);
             const response = await fetch('/api/user/getCampaigns', {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
             })
-            const json = await response.json()
+            const list = await response.json()
+            setCampaignList(list)
+            console.log(list)
+            setLoading(false);
 
-            if (response.ok) {
-                dispatch({type: 'SET_CAMPAIGNS', payload: json})
-                setLoading(true)
-            }
+            // if (response.ok) {
+            //     dispatch({type: 'SET_CAMPAIGNS', payload: json})
+            //     setLoading(true)
+            // }
         }
 
         if (user) {
             fetchCampaigns()
         }
-    }, [dispatch, user])
+    }, [user])
 
     return (
         <div className="start">
@@ -39,13 +45,13 @@ const Start = () => {
                 <CampaignForm />
                 <JoinCampaign />
             </div>
-
+{/* <CampaignDetails key={campaign._id} campaign={campaign} /> this line belongs 4 lines down if this doesn't work out. */}
             <div className='campaigns'>
                 {loading 
-                ?   campaigns.map((campaign) => (
-                        <CampaignDetails key={campaign._id} campaign={campaign} />
+                ?   <p>Loading...</p>
+                :   campaignList.map((campaign) => (
+                    <p key={campaign._id}>{campaign.campaignID}</p>        
                     ))
-                :   <p>Loading...</p>
                 }
             </div>
             

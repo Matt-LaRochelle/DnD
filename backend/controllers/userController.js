@@ -122,8 +122,29 @@ const resetPassword = async (req, res) => {
 
 
 const getCampaigns = async (req, res) => {
-    console.log("triggered");
-    res.status(200).json({message: "received"})
+    // Get access to the User object which is this user
+    const id = req.user._id.toString();
+    console.log("id", id);
+
+    try {
+        const user = await User.findById({ _id: id });
+        console.log("user:", user);
+
+        // Console.log the list of campaigns
+        const campaignList = user.campaigns;
+        console.log("campaign list:", campaignList);
+
+        res.status(200).json(campaignList)
+    } catch (err) {
+        // Handle any errors that occur
+        console.error(err);
+        res.status(400).json({error: err.message})
+    }
+
+
+
+
+
 }
 
 module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, getCampaigns }

@@ -9,6 +9,8 @@ const {
     resetPassword, 
     getCampaigns } = require('../controllers/userController')
 
+const requireAuth = require('../middleware/requireAuth')
+
 const router = express.Router()
 
 // login route
@@ -25,6 +27,10 @@ router.post('/verify', verifyLink)
 
 // reset password
 router.post('/reset', resetPassword)
+
+
+// require authorization before going to this route
+router.use(requireAuth)
 
 // get user's campaign list
 router.get('/getCampaigns', getCampaigns)

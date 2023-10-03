@@ -1,0 +1,17 @@
+.toggle__background {
+    width: 80px;
+    height: 40px;
+    background-color: lavender;
+    border: 1px solid #222;
+    border-radius: 40px;
+    position: relative;
+}
+
+.toggle__background div {
+    height: 38px;
+    width: 38px;
+    background-color: lemonchiffon;
+    border-radius: 50%;
+    position: absolute;
+    transition: .5s;
+}

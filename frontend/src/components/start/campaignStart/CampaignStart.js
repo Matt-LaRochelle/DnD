@@ -1,20 +1,28 @@
 import { useState } from 'react'
-import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+// import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import './campaignStart.css'
+import Toggle from '../../toggle/Toggle'
 
 const CampaignStart = () => {
-    const { dispatch } = useCampaignsContext()
+    // const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
 
     const [showForm, setShowForm] = useState(false)
     const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [hidden, setHidden] = useState(false);
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
 
     const handleClick = () => {
         setShowForm(showForm => !showForm);
         console.log(user);
+    }
+
+    const handleHidden = () => {
+        setHidden(hidden => !hidden);
+        console.log(user.id)
     }
 
 
@@ -26,9 +34,9 @@ const CampaignStart = () => {
             return
         }
 
-        const campaign = {title}
+        const campaign = {title, description, hidden, "dm": user.id}
 
-        const response = await fetch('/api/campaigns', {
+        const response = await fetch('/api/campaign', {
             method: 'POST',
             body: JSON.stringify(campaign),
             headers: {
@@ -47,7 +55,7 @@ const CampaignStart = () => {
             setError(null)
             setEmptyFields([])
             console.log('new campaign added', json)
-            dispatch({type: 'CREATE_CAMPAIGN', payload: json})
+            // dispatch({type: 'CREATE_CAMPAIGN', payload: json})
         }
     }
 
@@ -64,6 +72,15 @@ const CampaignStart = () => {
                         value={title}
                         className={emptyFields.includes('title') ? 'error' : ''}
                     />
+                    <label>Description:</label>
+                    <textarea 
+                        type="text"
+                        onChange={(e) => setDescription(e.target.value)}
+                        value={description}
+                        className={emptyFields.includes('description') ? 'error' : ''}
+                    />
+                    <label>Hidden: {hidden ? "true" : "false"}</label>
+                    <Toggle onClick={handleHidden}/>
                     <button>Start</button>
                     {error && <div className='error'>{error}</div>}
                 </form>

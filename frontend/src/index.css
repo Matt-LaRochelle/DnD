@@ -138,7 +138,9 @@ nav button {
   font-size: 1em;
 }
 
-
+button {
+  margin: 20px 0;
+}
 
 /* My own classes */
 .add {
