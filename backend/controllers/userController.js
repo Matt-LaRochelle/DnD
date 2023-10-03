@@ -124,15 +124,15 @@ const resetPassword = async (req, res) => {
 const getCampaigns = async (req, res) => {
     // Get access to the User object which is this user
     const id = req.user._id.toString();
-    console.log("id", id);
+    // console.log("id", id);
 
     try {
         const user = await User.findById({ _id: id });
-        console.log("user:", user);
+        // console.log("user:", user);
 
         // Console.log the list of campaigns
         const campaignList = user.campaigns;
-        console.log("campaign list:", campaignList);
+        // console.log("campaign list:", campaignList);
 
         res.status(200).json(campaignList)
     } catch (err) {
@@ -140,11 +140,11 @@ const getCampaigns = async (req, res) => {
         console.error(err);
         res.status(400).json({error: err.message})
     }
-
-
-
-
-
 }
 
-module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, getCampaigns }
+// AuthContext check for 3 day period
+const checkCookies = async (req, res) => {
+    res.status(200).json({message: "You're logged in!"})
+} 
+
+module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, getCampaigns, checkCookies }

@@ -1,17 +1,22 @@
 import { useState } from 'react';
 import './toggle.css'
 
-const Toggle = () => {
-    const [hidden, setHidden] = useState(false);
+const Toggle = ({ onClick }) => {
+    const [toggle, setToggle] = useState(false);
 
-    const handleHidden = () => {
-        setHidden(hidden => !hidden);
-    }
+    const handleToggle = () => {
+        setToggle((prevToggle) => !prevToggle);
+
+        // If we want an onclick event - this does it
+        if (onClick) {
+            onClick();
+        }
+    };
 
     return (
         <div>
-            <div className="toggle__background">
-                <div onClick={handleHidden} style={{transform: hidden && "translateX(40px)"}}>
+            <div onClick={handleToggle} className="toggle__background">
+                <div style={{transform: toggle && "translateX(40px)"}}>
 
                 </div>
             </div>

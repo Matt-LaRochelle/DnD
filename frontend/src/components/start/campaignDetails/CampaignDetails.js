@@ -1,11 +1,11 @@
-import { useCampaignsContext } from '../hooks/useCampaignsContext'
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { useAuthContext } from '../../../hooks/useAuthContext'
 import { Link } from 'react-router-dom'
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const CampaignDetails = ({ campaign }) => {
-    const { dispatch } = useCampaignsContext()
+    // const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
 
     const handleClick = async () => {
@@ -21,7 +21,7 @@ const CampaignDetails = ({ campaign }) => {
         const json = await response.json()
 
         if (response.ok) {
-            dispatch({type: 'DELETE_CAMPAIGN', payload: json})
+            // dispatch({type: 'DELETE_CAMPAIGN', payload: json})
         }
     }
 
@@ -33,9 +33,10 @@ const CampaignDetails = ({ campaign }) => {
     return (
         <div className="campaign-details">
             <h4>{campaign.title}</h4>
-            <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p>
+            <p>{campaign.dm}</p>
+            {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
-            <Link to={path}>Enter</Link>
+            {/* <Link to={path}>Enter</Link> */}
             <button onClick={giveID}>Check ID</button>
         </div>
     )

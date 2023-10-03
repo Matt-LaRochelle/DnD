@@ -5,6 +5,7 @@
     border: 1px solid #222;
     border-radius: 40px;
     position: relative;
+    margin: 20px auto;
 }
 
 .toggle__background div {

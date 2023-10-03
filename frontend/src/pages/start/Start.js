@@ -4,13 +4,14 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 import './start.css'
 
 // components
-import CampaignDetails from '../../components/CampaignDetails'
+import CampaignDetails from '../../components/start/campaignDetails/CampaignDetails'
 import CampaignForm from '../../components/start/campaignStart/CampaignStart'
 import JoinCampaign from '../../components/start/campaignJoin/CampaignJoin'
 
 const Start = () => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [campaignList, setCampaignList] = useState(null)
+    const [fullList, setFullList] = useState(null)
     // const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
@@ -25,7 +26,7 @@ const Start = () => {
             })
             const list = await response.json()
             setCampaignList(list)
-            console.log(list)
+            // console.log(list)
             setLoading(false);
 
             // if (response.ok) {
@@ -39,18 +40,52 @@ const Start = () => {
         }
     }, [user])
 
+    useEffect(() => {
+        const fetchCampaignList = async () => {
+            setLoading(true);
+            const response = await fetch('/api/campaign', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const list = await response.json()
+            setFullList(list)
+            console.log("full list", list)
+            setLoading(false);
+
+            // if (response.ok) {
+            //     dispatch({type: 'SET_CAMPAIGNS', payload: json})
+            //     setLoading(true)
+            // }
+        }
+
+        if (user) {
+            fetchCampaignList()
+        }
+    }, [user])
+
     return (
         <div className="start">
             <div className="start__add">
                 <CampaignForm />
                 <JoinCampaign />
             </div>
-{/* <CampaignDetails key={campaign._id} campaign={campaign} /> this line belongs 4 lines down if this doesn't work out. */}
-            <div className='campaigns'>
+{/* <p key={campaign._id}>{campaign.campaignID}</p>   this line belongs 4 lines down if this doesn't work out. */}
+        <h3>Nested List:</h3>
+            {/* <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
                 :   campaignList.map((campaign) => (
-                    <p key={campaign._id}>{campaign.campaignID}</p>        
+                    <CampaignDetails key={campaign._id} campaign={campaign} />
+                    ))
+                }
+            </div> */}
+        <h3>Full List:</h3>
+            <div className='campaigns'>
+                {loading 
+                ?   <p>Loading...</p>
+                :   fullList.map((campaign) => (
+                    <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
             </div>

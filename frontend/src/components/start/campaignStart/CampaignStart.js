@@ -80,7 +80,7 @@ const CampaignStart = () => {
                         className={emptyFields.includes('description') ? 'error' : ''}
                     />
                     <label>Hidden: {hidden ? "true" : "false"}</label>
-                    <Toggle onClick={handleHidden}/>
+                    <Toggle onClick={handleHidden} />
                     <button>Start</button>
                     {error && <div className='error'>{error}</div>}
                 </form>

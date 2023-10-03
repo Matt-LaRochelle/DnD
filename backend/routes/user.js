@@ -7,7 +7,8 @@ const {
     forgotUser, 
     verifyLink, 
     resetPassword, 
-    getCampaigns } = require('../controllers/userController')
+    getCampaigns,
+    checkCookies } = require('../controllers/userController')
 
 const requireAuth = require('../middleware/requireAuth')
 
@@ -31,6 +32,8 @@ router.post('/reset', resetPassword)
 
 // require authorization before going to this route
 router.use(requireAuth)
+
+router.get('/check', checkCookies)
 
 // get user's campaign list
 router.get('/getCampaigns', getCampaigns)
