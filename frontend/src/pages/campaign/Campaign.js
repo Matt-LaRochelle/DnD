@@ -9,11 +9,9 @@ const Campaign = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
 
-    const [description, setDescription] = useState('')
-    const [descriptionPage, setDescriptionPage] = useState(false)
-    const [campaign, setCampaign] = useState({})
+    // const [campaign, setCampaign] = useState({})
 
-    // const {campaigns, dispatch} = useCampaignsContext() 
+    const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
     useEffect(() => {
@@ -24,75 +22,64 @@ const Campaign = () => {
                 }
             })
             const json = await response.json()
+            console.log("Step 1: json data from server:", json);
 
             if (response.ok) {
-                // dispatch({type: 'SET_CAMPAIGN', payload: json})
-                setCampaign(json)
+                dispatch({type: 'SET_CAMPAIGN', payload: json})
+                // setCampaign(json)
             }
         }
 
         if (user) {
             fetchCampaign()
         }
-    }, [user, path])
+    }, [dispatch, user, path])
 
-    const editButton = () => {
-        setDescriptionPage(() => !descriptionPage)
+    const campaignDetails = () => {
+        console.log("Step end: campaign:", campaigns)
+        console.log("playerUsernames", campaigns.playerUsernames)
     }
 
-    const handleClick = async (e) => {
-        e.preventDefault()
-        const response = await fetch(`/api/campaign/${path}`, {
-            method: 'PATCH',
-            body: JSON.stringify({description: description}),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${user.token}`
-            }
-        })
-        const json = await response.json()
-        console.log(json)
-    }
 
 
     return (
         <div className="campaign__Container">
-            <h1>{campaign.title}</h1>
-            <div className="campaign__Description">
-                <h3>Description</h3>
-                <p>{campaign.description}</p>
-                <button onClick={editButton}>Edit</button>
-                {descriptionPage && 
-                <div>
-                    <input 
-                        type="text" 
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}>
-                    </input>
-                    <button onClick={handleClick}>Submit</button>
-                </div>}
-            </div>
-            <div className="campaign__Maps">
-                <h3>Maps</h3>
-                <ul>
-                    <li><strong>Make this dynamic at some point</strong></li>
-                    <li>Current map</li>
-                    <li>Recent map</li>
-                    <li>Recent map</li>
-                    <li>Recent map</li>
-                </ul>
-                <Link to="/map">Maps Page</Link>
-            </div>
-            
-            <p>Player Characters page link</p>
-            <p>NPC's page link</p>
-            <p>Quests page link</p>
-            <p>News - maybe for local regions?</p>
-            <p>Lore - also for local regions, or just general??</p>
-            <p>Treasure</p>
-            <p>Items</p>
-            <p>Creatures</p>
+            {!campaigns 
+            ?   <div className='loading'>
+                    <h1>Loading...</h1>
+                    <button onClick={campaignDetails}>Campaign details</button>
+                </div>
+
+            :   <div className='loaded'>
+                    <h1>{campaigns.title}</h1>
+                    <div className="campaign__Description">
+                        <h3>Description</h3>
+                        <p>{campaigns.description}</p>
+                    </div>
+                    <div className='campaign__users'>
+                    <button onClick={campaignDetails}>Campaign details</button>
+                        <h4>DM for this campaign: {campaigns.dmUsername}</h4>
+                        <p>Players: </p>
+                        {campaigns.playerUsernames.map((username) => (
+                            <p>{username}</p>
+                        ))}
+                    </div>
+                    <div className="campaign__Maps">
+                        <h3>Maps</h3>
+                        <ul>
+                            <li><strong>Make this dynamic at some point</strong></li>
+                            <li>Current map</li>
+                            <li>Recent map</li>
+                            <li>Recent map</li>
+                            <li>Recent map</li>
+                        </ul>
+                        {/* <Link to="/map">Maps Page</Link> */}
+                    </div>
+                    
+                    <h2>PCs</h2>
+                    <h2>NPCs</h2>
+                </div>
+            }
         </div>
     )
 }

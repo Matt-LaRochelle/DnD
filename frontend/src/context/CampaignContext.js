@@ -9,6 +9,7 @@ export const campaignsReducer = (state, action) => {
                 campaigns: action.payload
             }
         case 'SET_CAMPAIGN':
+            console.log("Step 2 set campaign context", action.payload)
             return {
                 campaigns: action.payload
             }
