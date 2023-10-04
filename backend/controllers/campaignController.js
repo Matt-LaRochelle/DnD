@@ -77,6 +77,24 @@ const createCampaign = async (req, res) => {
 };
 
 
+// DM deletes their campaign
+const deleteCampaign = async (req, res) => {
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'No such campaign'})
+    }
+
+    const campaign = await Campaign.findOneAndDelete({_id: id})
+
+    if (!campaign) {
+        return res.status(400).json({error: 'No such campaign'})
+    }
+
+    res.status(200).json(campaign)
+}
+
+
 // Player joins an existing campaign
 const joinCampaign = async (req, res) => {
 
@@ -110,37 +128,57 @@ const joinCampaign = async (req, res) => {
         console.log(err)
         res.status(400).json(err.message)
     }
-
 }
 
 
+// Player leaves an existing campaign
+const leaveCampaign = async (req, res) => {
+
+    const { campaignID, playerID, playerUsername } = req.body
 
 
-
-
-
-
-
-
-
-
-
-// DM deletes their campaign
-const deleteCampaign = async (req, res) => {
-    const { id } = req.params
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(campaignID)) {
         return res.status(404).json({error: 'No such campaign'})
     }
-
-    const campaign = await Campaign.findOneAndDelete({_id: id})
-
-    if (!campaign) {
-        return res.status(400).json({error: 'No such campaign'})
+    if (!mongoose.Types.ObjectId.isValid(playerID)) {
+        return res.status(404).json({error: 'No such user'})
     }
 
-    res.status(200).json(campaign)
+    console.log(playerID)
+
+    try {
+        // Delete the playerID and playerUsername from the campaign
+        const updatedCampaign = await Campaign.findByIdAndUpdate(
+            campaignID,
+            { 
+                $pull: { 
+                    playerIDs: playerID,
+                    playerUsernames: playerUsername
+                }
+            },
+            { new: true }
+        );
+
+        res.status(200).json(updatedCampaign);
+    } catch (err) {
+        console.log(err)
+        res.status(400).json(err.message)
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // update a campaign
 const updateCampaign = async (req, res) => {
@@ -167,7 +205,8 @@ module.exports = {
     getPlayerCampaigns,
     getCampaign,
     createCampaign,
-    joinCampaign,
     deleteCampaign,
+    joinCampaign,
+    leaveCampaign,
     updateCampaign
 }

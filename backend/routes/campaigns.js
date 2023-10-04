@@ -3,9 +3,10 @@ const {
     getDMCampaigns,
     getPlayerCampaigns,
     getCampaign,
-    joinCampaign,
     createCampaign,
     deleteCampaign,
+    joinCampaign,
+    leaveCampaign,
     updateCampaign
 } = require('../controllers/campaignController')
 const requireAuth = require('../middleware/requireAuth')
@@ -19,17 +20,22 @@ router.use(requireAuth)
 router.get('/dm', getDMCampaigns)
 router.get('/player', getPlayerCampaigns)
 
-//GET a single Campaign
+// GET a single Campaign
 router.get('/:id', getCampaign)
 
-//POST (DM a new Campaign)
+// POST DM a new Campaign
 router.post('/', createCampaign)
 
-//UPDATE (Join a campaign)
+// DELETE a campaign you are DM for
+router.delete('/:id', deleteCampaign)
+
+// UPDATE Join a campaign
 router.patch('/join', joinCampaign)
 
-//DELETE a Campaign
-router.delete('/:id', deleteCampaign)
+// UPDATE Leave a campaign
+router.patch('/leave', leaveCampaign)
+
+
 
 //UPDATE a Campaign
 // router.patch('/:id', updateCampaign)
