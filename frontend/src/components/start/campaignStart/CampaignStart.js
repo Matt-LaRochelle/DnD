@@ -34,7 +34,7 @@ const CampaignStart = () => {
             return
         }
 
-        const campaign = {title, description, hidden, "dm": user.id}
+        const campaign = {title, description, hidden, "dmID": user.id, "dmUsername": user.username}
 
         const response = await fetch('/api/campaign', {
             method: 'POST',
@@ -52,6 +52,7 @@ const CampaignStart = () => {
         }
         if (response.ok) {
             setTitle('')
+            setDescription('')
             setError(null)
             setEmptyFields([])
             console.log('new campaign added', json)

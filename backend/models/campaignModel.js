@@ -3,7 +3,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const campaignSchema = new Schema({
-    dm: {
+    dmID: {
+        type: String,
+        required: true
+    },
+    dmUsername: {
         type: String,
         required: true
     },
@@ -19,7 +23,8 @@ const campaignSchema = new Schema({
         type: Boolean,
         required: true
     },
-    players: [String],
+    playerIDs: [String],
+    playerUsernames: [String],
     pcs: [String],
     npcs: [String],
     maps: [String],
