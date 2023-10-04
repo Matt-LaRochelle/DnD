@@ -10,23 +10,24 @@ import CampaignJoin from '../../components/start/campaignJoin/CampaignJoin'
 
 const Start = () => {
     const [loading, setLoading] = useState(false)
-    const [fullList, setFullList] = useState([])
+    const [dmList, setDmList] = useState([])
+    const [playerList, setPlayerList] = useState([])
     // const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
 
     useEffect(() => {
         // Fetch the campaigns which this user DMs for
-        const fetchCampaignList = async () => {
+        const fetchDMCampaignList = async () => {
             setLoading(true);
-            const response = await fetch('/api/campaign', {
+            const response = await fetch('/api/campaign/dm', {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
             })
             const list = await response.json()
-            setFullList(list)
-            console.log("full list", list)
+            setDmList(list)
+            console.log("DM list", list)
             setLoading(false);
 
             // if (response.ok) {
@@ -36,7 +37,32 @@ const Start = () => {
         }
 
         if (user) {
-            fetchCampaignList()
+            fetchDMCampaignList()
+        }
+    }, [user])
+
+    useEffect(() => {
+        // Fetch the campaigns which this user DMs for
+        const fetchPlayerCampaignList = async () => {
+            setLoading(true);
+            const response = await fetch('/api/campaign/player', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const list = await response.json()
+            setPlayerList(list)
+            console.log("DM list", list)
+            setLoading(false);
+
+            // if (response.ok) {
+            //     dispatch({type: 'SET_CAMPAIGNS', payload: json})
+            //     setLoading(true)
+            // }
+        }
+
+        if (user) {
+            fetchPlayerCampaignList()
         }
     }, [user])
 
@@ -50,13 +76,20 @@ const Start = () => {
             <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
-                :   fullList.map((campaign) => (
+                :   dmList.map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
             </div>
         <h3>Campaigns you play in:</h3>
-            
+        <div className='campaigns'>
+                {loading 
+                ?   <p>Loading...</p>
+                :   playerList.map((campaign) => (
+                    <CampaignDetails key={campaign._id} campaign={campaign} />
+                    ))
+                }
+            </div>
         </div>
     )
 }

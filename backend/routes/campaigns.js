@@ -1,6 +1,7 @@
 const express = require('express')
 const {
-    getCampaigns,
+    getDMCampaigns,
+    getPlayerCampaigns,
     getCampaign,
     joinCampaign,
     createCampaign,
@@ -15,7 +16,8 @@ const router = express.Router()
 router.use(requireAuth)
 
 // GET all Campaigns
-router.get('/', getCampaigns)
+router.get('/dm', getDMCampaigns)
+router.get('/player', getPlayerCampaigns)
 
 //GET a single Campaign
 router.get('/:id', getCampaign)
@@ -24,7 +26,7 @@ router.get('/:id', getCampaign)
 router.post('/', createCampaign)
 
 //UPDATE (Join a campaign)
-router.patch('/join/:campaignID', joinCampaign)
+router.patch('/join/:userID', joinCampaign)
 
 //DELETE a Campaign
 router.delete('/:id', deleteCampaign)

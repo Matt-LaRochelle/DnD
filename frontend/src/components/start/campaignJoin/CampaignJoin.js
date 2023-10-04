@@ -8,12 +8,13 @@ const CampaignJoin = () => {
     const { user } = useAuthContext()
 
     const [showForm, setShowForm] = useState(false)
-    const [title, setTitle] = useState('')
+    const [campaignID, setCampaignID] = useState('')
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
 
     const handleClick = () => {
         setShowForm(showForm => !showForm);
+        console.log(user.id)
     }
 
     const handleSubmit = async (e) => {
@@ -24,10 +25,10 @@ const CampaignJoin = () => {
             return
         }
 
-        const campaign = {title}
+        const campaign = {campaignID}
 
-        const response = await fetch('/api/campaigns', {
-            method: 'POST',
+        const response = await fetch(`/api/campaign/join/${user.id}`, {
+            method: 'PATCH',
             body: JSON.stringify(campaign),
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +42,7 @@ const CampaignJoin = () => {
             setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
-            setTitle('')
+            setCampaignID('')
             setError(null)
             setEmptyFields([])
             console.log('new campaign added', json)
@@ -58,9 +59,9 @@ const CampaignJoin = () => {
                     <label>Campaign room number:</label>
                     <input 
                         type="text"
-                        onChange={(e) => setTitle(e.target.value)}
-                        value={title}
-                        className={emptyFields.includes('title') ? 'error' : ''}
+                        onChange={(e) => setCampaignID(e.target.value)}
+                        value={campaignID}
+                        className={emptyFields.includes('campaignID') ? 'error' : ''}
                     />
                     <button>Join</button>
                     {error && <div className='error'>{error}</div>}

@@ -2,20 +2,28 @@ const Campaign = require('../models/campaignModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
-// get all campaigns
-const getCampaigns = async (req, res) => {
+// get all campaigns you DM in
+const getDMCampaigns = async (req, res) => {
     const user_id = req.user._id
-
     try {
         const campaigns = await Campaign.find({ dm: user_id }).sort({createdAt: -1})
         res.status(200).json(campaigns)
     } catch (err) {
         console.log(err)
         res.status(400).json({ error: err.message });
-    }
+    }   
+}
 
-
-    
+// get all campaigns you are a Player in
+const getPlayerCampaigns = async (req, res) => {
+    const user_id = req.user._id
+    try {
+        const campaigns = await Campaign.find({ players: user_id }).sort({createdAt: -1})
+        res.status(200).json(campaigns)
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ error: err.message });
+    }   
 }
 
 
@@ -95,8 +103,8 @@ const createCampaign = async (req, res) => {
 // Join a campaign
 const joinCampaign = async (req, res) => {
 
-    const { campaignID } = req.params
-    const { userID } = req.body
+    const { campaignID } = req.body
+    const { userID } = req.params
 
 
     if (!mongoose.Types.ObjectId.isValid(campaignID)) {
@@ -106,23 +114,18 @@ const joinCampaign = async (req, res) => {
         return res.status(404).json({error: 'No such user'})
     }
 
+    console.log(userID);
 
+    try {
+        // Add your user mongoID to the campaign players list
+        const updatedCampaign = await Campaign.findByIdAndUpdate(campaignID, { $push: { players: userID } }, { new: true });
 
-    const newCampaign = {
-        campaignID,
-        dm: false
+        res.status(200).json(updatedCampaign);
+    } catch (err) {
+        console.log(err)
+        res.status(400).json(err.message)
     }
 
-    console.log(newCampaign);
-
-
-    // Add newCampaign object to your UserSchema.campaigns list
-    const updatedUser = await User.findByIdAndUpdate(userID, { $push: { campaigns: newCampaign } }, { new: true });
-
-    // Add your user mongoID to the campaign players list
-    const updatedCampaign = await Campaign.findByIdAndUpdate(campaignID, { $push: { players: userID } }, { new: true });
-
-    res.status(200).json({received: "yes"});
 }
 
 
@@ -175,7 +178,8 @@ const updateCampaign = async (req, res) => {
 
 
 module.exports = {
-    getCampaigns,
+    getDMCampaigns,
+    getPlayerCampaigns,
     getCampaign,
     createCampaign,
     joinCampaign,
