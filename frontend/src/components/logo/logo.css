@@ -3,7 +3,10 @@
     width: 100%;
     position: relative;
     border-radius: 50%;
-    background: radial-gradient(lime, rgba(255, 255, 255, 0)90%);
+    background: radial-gradient(at 70px 70px, lime, rgba(255, 255, 255, 0) 150%);
+    /* background-position: calc(100% + 60px) calc(100% + 60px); */
+    /* background-repeat: no-repeat; */
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
     animation: 14s linear 0s infinite psychedelic;
 }
 @keyframes psychedelic {
