@@ -1,6 +1,7 @@
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { Link } from 'react-router-dom'
+import './campaignDetails.css'
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useEffect, useState } from 'react'
