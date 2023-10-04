@@ -137,7 +137,7 @@ const joinCampaign = async (req, res) => {
 
 
 
-// delete a campaign
+// delete a campaign you DM
 const deleteCampaign = async (req, res) => {
     const { id } = req.params
 
