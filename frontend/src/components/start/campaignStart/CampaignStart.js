@@ -60,7 +60,7 @@ const CampaignStart = () => {
     }
 
     return (
-        <div className='campaignForm__container' onSubmit={handleSubmit}>
+        <div className='campaignStart__container' onSubmit={handleSubmit}>
             <h3>DM for a campaign</h3>
             <p className="add" onClick={handleClick}>{showForm ? "-" : "+"}</p>
             {showForm &&

@@ -5,42 +5,18 @@ import './start.css'
 
 // components
 import CampaignDetails from '../../components/start/campaignDetails/CampaignDetails'
-import CampaignForm from '../../components/start/campaignStart/CampaignStart'
-import JoinCampaign from '../../components/start/campaignJoin/CampaignJoin'
+import CampaignStart from '../../components/start/campaignStart/CampaignStart'
+import CampaignJoin from '../../components/start/campaignJoin/CampaignJoin'
 
 const Start = () => {
     const [loading, setLoading] = useState(false)
-    const [campaignList, setCampaignList] = useState(null)
     const [fullList, setFullList] = useState([])
     // const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
 
     useEffect(() => {
-        const fetchCampaigns = async () => {
-            setLoading(true);
-            const response = await fetch('/api/user/getCampaigns', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const list = await response.json()
-            setCampaignList(list)
-            // console.log(list)
-            setLoading(false);
-
-            // if (response.ok) {
-            //     dispatch({type: 'SET_CAMPAIGNS', payload: json})
-            //     setLoading(true)
-            // }
-        }
-
-        if (user) {
-            fetchCampaigns()
-        }
-    }, [user])
-
-    useEffect(() => {
+        // Fetch the campaigns which this user DMs for
         const fetchCampaignList = async () => {
             setLoading(true);
             const response = await fetch('/api/campaign', {
@@ -67,8 +43,8 @@ const Start = () => {
     return (
         <div className="start">
             <div className="start__add">
-                <CampaignForm />
-                <JoinCampaign />
+                <CampaignStart />
+                <CampaignJoin />
             </div>
         <h3>Campaigns you DM:</h3>
             <div className='campaigns'>
@@ -79,6 +55,7 @@ const Start = () => {
                     ))
                 }
             </div>
+        <h3>Campaigns you play in:</h3>
             
         </div>
     )

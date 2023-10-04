@@ -1,9 +1,9 @@
-import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+// import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import './campaignDetails.css'
 // date fns
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+// import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useEffect, useState } from 'react'
 
 const CampaignDetails = ({ campaign }) => {
@@ -53,7 +53,7 @@ const CampaignDetails = ({ campaign }) => {
     
     const path = `/campaign/${campaign._id}`
     return (
-        <div className="campaign-details">
+        <div className="campaignDetails__container">
             <h4>"Campaign Title" {campaign.title}</h4>
             <p>"DM": {dmUsername}</p>
             <p>"Description" {campaign.description}</p>

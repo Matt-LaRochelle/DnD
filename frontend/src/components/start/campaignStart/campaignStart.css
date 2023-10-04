@@ -1,4 +1,4 @@
-.campaignForm__container {
+.campaignStart__container {
     border: 2px solid blue;
     width: 200px;
     height: max-content;
@@ -10,7 +10,7 @@
     padding: 20px
 }
 
-.campaignForm__container textarea {
+.campaignStart__container textarea {
     position: relative;
     width: 100%;
     height: 150px;

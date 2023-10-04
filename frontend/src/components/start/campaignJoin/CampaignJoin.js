@@ -50,7 +50,7 @@ const CampaignJoin = () => {
     }
 
     return (
-        <div className='joinCampaign__container' onSubmit={handleSubmit}>
+        <div className='campaignJoin__container' onSubmit={handleSubmit}>
             <h3>Join campaign as a player</h3>
             <p className="add" onClick={handleClick}>{showForm ? "-" : "+"}</p>
             {showForm &&
