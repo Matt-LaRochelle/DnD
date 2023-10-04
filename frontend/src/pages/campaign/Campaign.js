@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useLocation, Link } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import AddNPC from '../../components/campaign/addNPC/AddNPC';
 
 
 const Campaign = () => {
@@ -78,6 +79,9 @@ const Campaign = () => {
                     
                     <h2>PCs</h2>
                     <h2>NPCs</h2>
+
+                    {campaigns.dmID === user.id && <AddNPC />}
+                    
                 </div>
             }
         </div>
