@@ -4,7 +4,7 @@ import { useAuthContext } from '../../../hooks/useAuthContext'
 import './campaignDetails.css'
 // date fns
 // import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const CampaignDetails = ({ campaign }) => {
     // const { dispatch } = useCampaignsContext()

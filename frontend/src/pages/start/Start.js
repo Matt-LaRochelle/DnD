@@ -42,7 +42,7 @@ const Start = () => {
     }, [user])
 
     useEffect(() => {
-        // Fetch the campaigns which this user DMs for
+        // Fetch the campaigns which this user is a player in
         const fetchPlayerCampaignList = async () => {
             setLoading(true);
             const response = await fetch('/api/campaign/player', {

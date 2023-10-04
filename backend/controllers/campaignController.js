@@ -2,7 +2,7 @@ const Campaign = require('../models/campaignModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
-// get all campaigns you DM in
+// get all campaigns client DMs in
 const getDMCampaigns = async (req, res) => {
     const user_id = req.user._id
     try {
@@ -14,7 +14,7 @@ const getDMCampaigns = async (req, res) => {
     }   
 }
 
-// get all campaigns you are a Player in
+// get all campaigns client is a Player in
 const getPlayerCampaigns = async (req, res) => {
     const user_id = req.user._id
     try {
@@ -45,17 +45,12 @@ const getCampaign = async (req, res) => {
 }
 
 
-// DM (Create) a new campaign
+// DM creates a new campaign
 const createCampaign = async (req, res) => {
     const {dmID, dmUsername, title, description, hidden} = req.body
-    console.log("dmID:", dmID);
-    console.log("dmUsername:", dmUsername);
-    console.log("title:", title);
-    console.log("description:", description);
-    console.log("hidden:", hidden);
-
+    
+    // Check that user filled out all information
     let emptyFields = []
-
     if (!title) {
         emptyFields.push('title')
     }
@@ -66,10 +61,12 @@ const createCampaign = async (req, res) => {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields})
     }
 
+    // Check valid ID
     if (!mongoose.Types.ObjectId.isValid(dmID)) {
         return res.status(404).json({error: 'Player does not exist.'})
     }
 
+    // Add doc to db
     try {
         const campaign = await Campaign.create({title, dmID, dmUsername, description, hidden})
         res.status(200).json(campaign);
@@ -80,25 +77,33 @@ const createCampaign = async (req, res) => {
 };
 
 
-// Join a campaign
+// Player joins an existing campaign
 const joinCampaign = async (req, res) => {
 
-    const { campaignID } = req.body
-    const { userID } = req.params
+    const { campaignID, playerID, playerUsername } = req.body
 
 
     if (!mongoose.Types.ObjectId.isValid(campaignID)) {
         return res.status(404).json({error: 'No such campaign'})
     }
-    if (!mongoose.Types.ObjectId.isValid(userID)) {
+    if (!mongoose.Types.ObjectId.isValid(playerID)) {
         return res.status(404).json({error: 'No such user'})
     }
 
-    console.log(userID);
+    console.log(playerID)
 
     try {
-        // Add your user mongoID to the campaign players list
-        const updatedCampaign = await Campaign.findByIdAndUpdate(campaignID, { $push: { players: userID } }, { new: true });
+        // Add the playerID and playerUsername to the campaign
+        const updatedCampaign = await Campaign.findByIdAndUpdate(
+            campaignID,
+            { 
+                $push: { 
+                    playerIDs: playerID,
+                    playerUsernames: playerUsername
+                }
+            },
+            { new: true }
+        );
 
         res.status(200).json(updatedCampaign);
     } catch (err) {
@@ -120,7 +125,7 @@ const joinCampaign = async (req, res) => {
 
 
 
-// delete a campaign you DM
+// DM deletes their campaign
 const deleteCampaign = async (req, res) => {
     const { id } = req.params
 

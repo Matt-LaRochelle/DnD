@@ -25,9 +25,9 @@ const CampaignJoin = () => {
             return
         }
 
-        const campaign = {campaignID}
+        const campaign = {campaignID, playerID: user.id, playerUsername: user.username}
 
-        const response = await fetch(`/api/campaign/join/${user.id}`, {
+        const response = await fetch("/api/campaign/join", {
             method: 'PATCH',
             body: JSON.stringify(campaign),
             headers: {

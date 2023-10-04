@@ -26,7 +26,7 @@ router.get('/:id', getCampaign)
 router.post('/', createCampaign)
 
 //UPDATE (Join a campaign)
-router.patch('/join/:userID', joinCampaign)
+router.patch('/join', joinCampaign)
 
 //DELETE a Campaign
 router.delete('/:id', deleteCampaign)
