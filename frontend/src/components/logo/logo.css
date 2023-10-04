@@ -6,15 +6,15 @@
     background: radial-gradient(at 70px 70px, lime, rgba(255, 255, 255, 0) 150%);
     /* background-position: calc(100% + 60px) calc(100% + 60px); */
     /* background-repeat: no-repeat; */
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 6px 20px 2px rgba(0, 0, 0, 0.8);
     animation: 14s linear 0s infinite psychedelic;
 }
 @keyframes psychedelic {
     from {
-      filter: hue-rotate(0deg);
+      filter: hue-rotate(0deg) brightness(1.1);
     }
     to {
-      filter: hue-rotate(360deg);
+      filter: hue-rotate(360deg) brightness(1.1);
     }
 }
 
