@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 })
 
 // routes
-app.use('/api/user', userRoutes)
+app.use('/api/user/', userRoutes)
 app.use('/api/campaign/', campaignRoutes)
 
 

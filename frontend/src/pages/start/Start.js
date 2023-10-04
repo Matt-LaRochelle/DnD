@@ -11,7 +11,7 @@ import JoinCampaign from '../../components/start/campaignJoin/CampaignJoin'
 const Start = () => {
     const [loading, setLoading] = useState(false)
     const [campaignList, setCampaignList] = useState(null)
-    const [fullList, setFullList] = useState(null)
+    const [fullList, setFullList] = useState([])
     // const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
@@ -70,25 +70,15 @@ const Start = () => {
                 <CampaignForm />
                 <JoinCampaign />
             </div>
-{/* <p key={campaign._id}>{campaign.campaignID}</p>   this line belongs 4 lines down if this doesn't work out. */}
-        <h3>Nested List:</h3>
-            {/* <div className='campaigns'>
-                {loading 
-                ?   <p>Loading...</p>
-                :   campaignList.map((campaign) => (
-                    <CampaignDetails key={campaign._id} campaign={campaign} />
-                    ))
-                }
-            </div> */}
         <h3>Campaigns you DM:</h3>
-            {/* <div className='campaigns'>
+            <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
                 :   fullList.map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
-            </div> */}
+            </div>
             
         </div>
     )

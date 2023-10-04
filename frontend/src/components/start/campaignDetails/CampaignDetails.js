@@ -3,16 +3,25 @@ import { useAuthContext } from '../../../hooks/useAuthContext'
 import { Link } from 'react-router-dom'
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const CampaignDetails = ({ campaign }) => {
     // const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
+    const [dmUsername, setDmUsername] = useState('')
 
     useEffect(() => {
         const getDMusername = async () => {
-        const dm = await fetch(`/api/user/${campaign.dm}`)
-        console.log("dm object", dm);
+            const id = campaign.dm;
+            // console.log(id);
+            const response = await fetch(`/api/user/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+            console.log(json.username)
+            setDmUsername(json.username)
         // const dmUsername = dm.username
         // console.log("dm Username:", dmUsername)
         }
@@ -44,10 +53,10 @@ const CampaignDetails = ({ campaign }) => {
     return (
         <div className="campaign-details">
             <h4>"Campaign Title" {campaign.title}</h4>
-            <p>"DM": {campaign.dm}</p>
-            <p>{campaign.hidden ? "hidden" : "visible" }</p>
+            <p>"DM": {dmUsername}</p>
             <p>"Description" {campaign.description}</p>
             <p>"List of players" {campaign.players}</p>
+            <p>{campaign.hidden ? "This campaign is hidden." : "This campaign is visible." }</p>
             {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
             {/* <Link to={path}>Enter</Link> */}

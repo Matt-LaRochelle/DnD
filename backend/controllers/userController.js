@@ -2,6 +2,7 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const mongoose = require('mongoose')
 
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
@@ -126,17 +127,21 @@ const checkCookies = async (req, res) => {
 } 
 
 const getUser = async (req, res) => {
+    // Get the users ID
     const { id } = req.params
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'No such user'})
+    }
 
-    // if (!mongoose.Types.ObjectId.isValid(id)) {
-    //     return res.status(404).json({error: 'No such campaign'})
-    // }
+    const user = await User.findById(id)
+    console.log(user)
 
-    console.log("id:", id)
-    const user = User.findById(id)
+    if (!user) {
+        return res.status(404).json({error: 'No such user'})
+    }
 
-    console.log(user);
-    res.status(200)
+    res.status(200).json(user)
 }
 
 module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, checkCookies, getUser }
