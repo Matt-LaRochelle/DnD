@@ -99,6 +99,13 @@ const deleteCampaign = async (req, res) => {
 const joinCampaign = async (req, res) => {
 
     const { campaignID, playerID, playerUsername } = req.body
+    let emptyFields = []
+    if (!campaignID) {
+        emptyFields.push('campaignID')
+    }
+    if(emptyFields.length > 0) {
+        return res.status(400).json({ error: 'Please enter campaign ID'})
+    }
 
 
     if (!mongoose.Types.ObjectId.isValid(campaignID)) {
@@ -108,7 +115,36 @@ const joinCampaign = async (req, res) => {
         return res.status(404).json({error: 'No such user'})
     }
 
-    console.log(playerID)
+    // Check if the player is already in the campaign
+    try {
+        const campaign = await Campaign.findOne({
+            _id: campaignID, 
+            playerIDs: { $in: [playerID] }
+        });
+        if (campaign) {
+            return res.status(400).json({ error: 'Player is already in the campaign' });
+        }
+
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({error: err.message})
+    }
+
+    // Check if the player is the DM of the campaign - DM should not also be a player.
+    try {
+        const campaign = await Campaign.findOne({
+            _id: campaignID, 
+            dmID: playerID 
+        });
+        if (campaign) {
+            return res.status(400).json({ error: 'DM cannot join as a player' });
+        }
+
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({error: err.message})
+    }
+
 
     try {
         // Add the playerID and playerUsername to the campaign

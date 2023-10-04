@@ -10,7 +10,6 @@ const CampaignJoin = () => {
     const [showForm, setShowForm] = useState(false)
     const [campaignID, setCampaignID] = useState('')
     const [error, setError] = useState(null)
-    const [emptyFields, setEmptyFields] = useState([])
 
     const handleClick = () => {
         setShowForm(showForm => !showForm);
@@ -39,12 +38,10 @@ const CampaignJoin = () => {
 
         if (!response.ok) {
             setError(json.error)
-            setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
             setCampaignID('')
             setError(null)
-            setEmptyFields([])
             console.log('new campaign added', json)
             // dispatch({type: 'CREATE_CAMPAIGN', payload: json})
         }
@@ -61,7 +58,7 @@ const CampaignJoin = () => {
                         type="text"
                         onChange={(e) => setCampaignID(e.target.value)}
                         value={campaignID}
-                        className={emptyFields.includes('campaignID') ? 'error' : ''}
+                        className={error ? 'error' : ''}
                     />
                     <button>Join</button>
                     {error && <div className='error'>{error}</div>}
