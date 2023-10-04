@@ -9,6 +9,7 @@ const CampaignDetails = ({ campaign }) => {
     // const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
     const [dmUsername, setDmUsername] = useState('')
+    const [showID, setShowID] = useState('')
 
     useEffect(() => {
         const getDMusername = async () => {
@@ -46,7 +47,7 @@ const CampaignDetails = ({ campaign }) => {
     }
 
     const giveID = () => {
-        console.log(campaign._id)
+        setShowID(prevValue => !prevValue)
     }
     
     const path = `/campaign/${campaign._id}`
@@ -60,7 +61,7 @@ const CampaignDetails = ({ campaign }) => {
             {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
             {/* <Link to={path}>Enter</Link> */}
-            <button onClick={giveID}>Check ID</button>
+            <p onClick={giveID}>Check ID <p className="campaign-details__id" style={{display: showID ? "inline" : "none"}}>{campaign._id}</p></p>
         </div>
     )
 }
