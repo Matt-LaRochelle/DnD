@@ -3,6 +3,17 @@ form.signup, form.login {
     max-width: 400px;
     margin: 40px auto;
     padding: 20px;
-    background: #fff;
+    background: #444;
     border-radius: 4px;
+  }
+
+  form.signup a,
+  form.login a {
+    text-decoration: none;
+    color: var(--primary);
+  }
+
+  form.signup a:hover,
+  form.login a:hover {
+    filter: brightness(1.2)
   }

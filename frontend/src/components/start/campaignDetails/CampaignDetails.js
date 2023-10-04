@@ -1,6 +1,6 @@
 // import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './campaignDetails.css'
 // date fns
 // import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -66,7 +66,7 @@ const CampaignDetails = ({ campaign }) => {
     }
     
     // We can use this link later to go to the actual campaign
-    // const path = `/campaign/${campaign._id}`
+    const path = `/campaign/${campaign._id}`
 
     return (
         <div className="campaignDetails__container">
@@ -78,7 +78,7 @@ const CampaignDetails = ({ campaign }) => {
             ))}</p>
             <p>{campaign.hidden ? "This campaign is hidden." : "This campaign is visible." }</p>
             {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
-            {/* <Link to={path}>Enter</Link> */}
+            <Link to={path}>Enter</Link>
 
             {dmRole 
                 ?   <div>

@@ -1,4 +1,4 @@
-import './campaign.scss'
+import './campaign.css'
 import { useEffect, useState } from "react"
 import { useLocation, Link } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
@@ -11,8 +11,9 @@ const Campaign = () => {
 
     const [description, setDescription] = useState('')
     const [descriptionPage, setDescriptionPage] = useState(false)
+    const [campaign, setCampaign] = useState({})
 
-    const {campaigns, dispatch} = useCampaignsContext() 
+    // const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
     useEffect(() => {
@@ -25,14 +26,15 @@ const Campaign = () => {
             const json = await response.json()
 
             if (response.ok) {
-                dispatch({type: 'SET_CAMPAIGN', payload: json})
+                // dispatch({type: 'SET_CAMPAIGN', payload: json})
+                setCampaign(json)
             }
         }
 
         if (user) {
             fetchCampaign()
         }
-    }, [dispatch, user, path])
+    }, [user, path])
 
     const editButton = () => {
         setDescriptionPage(() => !descriptionPage)
@@ -54,11 +56,11 @@ const Campaign = () => {
 
 
     return (
-        <div className="cContainer">
-            <h1>{campaigns.title}</h1>
-            <div className="cDescription">
+        <div className="campaign__Container">
+            <h1>{campaign.title}</h1>
+            <div className="campaign__Description">
                 <h3>Description</h3>
-                <p>{campaigns.description}</p>
+                <p>{campaign.description}</p>
                 <button onClick={editButton}>Edit</button>
                 {descriptionPage && 
                 <div>
@@ -71,7 +73,7 @@ const Campaign = () => {
                     <button onClick={handleClick}>Submit</button>
                 </div>}
             </div>
-            <div className="cMaps">
+            <div className="campaign__Maps">
                 <h3>Maps</h3>
                 <ul>
                     <li><strong>Make this dynamic at some point</strong></li>

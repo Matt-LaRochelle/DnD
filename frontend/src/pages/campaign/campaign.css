@@ -1,0 +1,26 @@
+.campaign__Container {
+    border: 2px solid red;
+    color: #e8e8e8;
+}
+
+.campaign__Description {
+    border: 2px solid lime;
+    background-color: #444;
+    padding: 20px;
+    position: relative;
+}
+.campaign__Description button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.campaign__Maps {
+    border: 2px solid aqua;
+    margin-top: 20px;
+    background-color: #444;
+    padding: 20px;
+}
+
+
+

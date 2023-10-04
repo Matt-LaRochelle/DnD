@@ -14,13 +14,13 @@
   --error: #e7195a;
 }
 body {
-  background: #f1f1f1;
+  background: #0b0b0b;
   margin: 0;
   font-family: "Poppins";
   width: 100vw;
 }
 header {
-  background: #fff;
+  background: #222;
 }
 header .container {
   max-width: 1000px;
@@ -31,13 +31,14 @@ header .container {
   justify-content: space-between;
 }
 header a {
-  color: #333;
+  color: #a8a8a8;
   text-decoration: none;
 }
 .pages{
   max-width: 1000px;
   padding: 20px;
   margin: 0 auto;
+  color: #e8e8e8;
 }
 
 /* homepage */
@@ -69,7 +70,7 @@ form button {
   border-radius: 4px;
   cursor: pointer;
   width: max-content;
-  margin: auto;
+  margin: 15px auto 0;
 }
 div.error {
   padding: 10px;
@@ -98,12 +99,13 @@ input.error {
 nav {
   display: flex;
   align-items: center;
+  color: #a8a8a8;
 }
 nav a, nav button {
   margin-left: 10px;
 }
 nav button {
-  background: #fff;
+  background: #222;
   color: var(--primary);
   border: 2px solid var(--primary);
   padding: 6px 10px;
@@ -123,7 +125,7 @@ button {
 .add {
   font-weight: 900;
   font-size: 2rem;
-  border: 1px solid black;
+  border: 1px solid #e8e8e8;
   border-radius: 50%;
   width: 50px;
   height: 50px;
