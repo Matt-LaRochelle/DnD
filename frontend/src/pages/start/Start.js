@@ -10,14 +10,12 @@ import CampaignJoin from '../../components/start/campaignJoin/CampaignJoin'
 
 const Start = () => {
     const [loading, setLoading] = useState(false)
-    const [dmList, setDmList] = useState([])
-    const [playerList, setPlayerList] = useState([])
     const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
 
     useEffect(() => {
-        // Fetch the campaigns which this user DMs for
+        // Fetch the campaigns which this user is a DM or Player for
         const fetchDMCampaignList = async () => {
             setLoading(true);
             const response = await fetch('/api/campaign/', {
@@ -26,9 +24,6 @@ const Start = () => {
                 }
             })
             const list = await response.json()
-            setDmList(list)
-            console.log("Campaign", list)
-            setLoading(false);
 
             if (response.ok) {
                 dispatch({type: 'SET_CAMPAIGNS', payload: list})
@@ -41,30 +36,6 @@ const Start = () => {
         }
     }, [user])
 
-    // useEffect(() => {
-    //     // Fetch the campaigns which this user is a player in
-    //     const fetchPlayerCampaignList = async () => {
-    //         setLoading(true);
-    //         const response = await fetch('/api/campaign/player', {
-    //             headers: {
-    //                 'Authorization': `Bearer ${user.token}`
-    //             }
-    //         })
-    //         const list = await response.json()
-    //         setPlayerList(list)
-    //         console.log("DM list", list)
-    //         setLoading(false);
-
-    //         if (response.ok) {
-    //             dispatch({type: 'SET_CAMPAIGNS', payload: list})
-    //             setLoading(false)
-    //         }
-    //     }
-
-    //     if (user) {
-    //         fetchPlayerCampaignList()
-    //     }
-    // }, [user])
 
     return (
         <div className="start">
@@ -76,6 +47,7 @@ const Start = () => {
             <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
+                // Filter the campaigns to show only the ones where the user is the DM
                 :   campaigns && campaigns.filter(campaign => campaign.dmID === user.id).map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
@@ -85,6 +57,7 @@ const Start = () => {
         <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
+                // Filter the campaigns to show only the ones where the user is a player
                 :   campaigns && campaigns.filter(campaign => campaign.playerIDs.includes(user.id)).map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))

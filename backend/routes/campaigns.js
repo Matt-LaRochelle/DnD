@@ -1,7 +1,6 @@
 const express = require('express')
 const {
     getCampaigns,
-    getPlayerCampaigns,
     getCampaign,
     createCampaign,
     deleteCampaign,
@@ -18,7 +17,6 @@ router.use(requireAuth)
 
 // GET all Campaigns
 router.get('/', getCampaigns)
-router.get('/player', getPlayerCampaigns)
 
 // GET a single Campaign
 router.get('/:id', getCampaign)

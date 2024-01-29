@@ -2,25 +2,12 @@ const Campaign = require('../models/campaignModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
-// get all campaigns client
+// get all campaigns client has access to (DM or Player)
 const getCampaigns = async (req, res) => {
     const user_id = req.user._id
     try {
         // Get all campaigns where the user_id matches the dmID as well as all the campaigns where one of the playerIDs matches the user_id
         const campaigns = await Campaign.find({ $or: [{ dmID: user_id }, { playerIDs: user_id }] }).sort({ createdAt: -1 }).sort({createdAt: -1})
-        res.status(200).json(campaigns)
-    } catch (err) {
-        console.log(err)
-        res.status(400).json({ error: err.message });
-    }   
-}
-
-// Delete this one
-// get all campaigns client is a Player in
-const getPlayerCampaigns = async (req, res) => {
-    const user_id = req.user._id
-    try {
-        const campaigns = await Campaign.find({ playerIDs: user_id }).sort({createdAt: -1})
         res.status(200).json(campaigns)
     } catch (err) {
         console.log(err)
@@ -240,7 +227,6 @@ const updateCampaign = async (req, res) => {
 
 module.exports = {
     getCampaigns,
-    getPlayerCampaigns,
     getCampaign,
     createCampaign,
     deleteCampaign,
