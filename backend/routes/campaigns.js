@@ -1,6 +1,6 @@
 const express = require('express')
 const {
-    getDMCampaigns,
+    getCampaigns,
     getPlayerCampaigns,
     getCampaign,
     createCampaign,
@@ -17,7 +17,7 @@ const router = express.Router()
 router.use(requireAuth)
 
 // GET all Campaigns
-router.get('/dm', getDMCampaigns)
+router.get('/', getCampaigns)
 router.get('/player', getPlayerCampaigns)
 
 // GET a single Campaign

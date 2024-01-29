@@ -20,14 +20,14 @@ const Start = () => {
         // Fetch the campaigns which this user DMs for
         const fetchDMCampaignList = async () => {
             setLoading(true);
-            const response = await fetch('/api/campaign/dm', {
+            const response = await fetch('/api/campaign/', {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
             })
             const list = await response.json()
             setDmList(list)
-            console.log("DM list", list)
+            console.log("Campaign", list)
             setLoading(false);
 
             if (response.ok) {
@@ -41,30 +41,30 @@ const Start = () => {
         }
     }, [user])
 
-    useEffect(() => {
-        // Fetch the campaigns which this user is a player in
-        const fetchPlayerCampaignList = async () => {
-            setLoading(true);
-            const response = await fetch('/api/campaign/player', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const list = await response.json()
-            setPlayerList(list)
-            console.log("DM list", list)
-            setLoading(false);
+    // useEffect(() => {
+    //     // Fetch the campaigns which this user is a player in
+    //     const fetchPlayerCampaignList = async () => {
+    //         setLoading(true);
+    //         const response = await fetch('/api/campaign/player', {
+    //             headers: {
+    //                 'Authorization': `Bearer ${user.token}`
+    //             }
+    //         })
+    //         const list = await response.json()
+    //         setPlayerList(list)
+    //         console.log("DM list", list)
+    //         setLoading(false);
 
-            if (response.ok) {
-                dispatch({type: 'SET_CAMPAIGNS', payload: list})
-                setLoading(false)
-            }
-        }
+    //         if (response.ok) {
+    //             dispatch({type: 'SET_CAMPAIGNS', payload: list})
+    //             setLoading(false)
+    //         }
+    //     }
 
-        if (user) {
-            fetchPlayerCampaignList()
-        }
-    }, [user])
+    //     if (user) {
+    //         fetchPlayerCampaignList()
+    //     }
+    // }, [user])
 
     return (
         <div className="start">
@@ -76,7 +76,7 @@ const Start = () => {
             <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
-                :   dmList && dmList.map((campaign) => (
+                :   campaigns && campaigns.filter(campaign => campaign.dmID === user.id).map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
@@ -85,7 +85,7 @@ const Start = () => {
         <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
-                :   playerList && playerList.map((campaign) => (
+                :   campaigns && campaigns.filter(campaign => campaign.playerIDs.includes(user.id)).map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
