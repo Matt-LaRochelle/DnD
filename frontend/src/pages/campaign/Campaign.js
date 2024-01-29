@@ -9,6 +9,8 @@ import AddNPC from '../../components/campaign/addNPC/AddNPC';
 const Campaign = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
+    const [loading, setLoading] = useState(true)
+
 
     // const [campaign, setCampaign] = useState({})
 
@@ -17,6 +19,7 @@ const Campaign = () => {
 
     useEffect(() => {
         const fetchCampaign = async () => {
+            setLoading(true);
             const response = await fetch(`/api/campaign/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
@@ -28,13 +31,14 @@ const Campaign = () => {
             if (response.ok) {
                 dispatch({type: 'SET_CAMPAIGN', payload: json})
                 // setCampaign(json)
+                setLoading(false)
             }
         }
 
         if (user) {
             fetchCampaign()
         }
-    }, [dispatch, user, path])
+    }, [path, user, dispatch])
 
     const campaignDetails = () => {
         console.log("Step end: campaign:", campaigns)
@@ -45,13 +49,14 @@ const Campaign = () => {
 
     return (
         <div className="campaign__Container">
-            {!campaigns 
-            ?   <div className='loading'>
+            {loading 
+            ?   
+                <div className='loading'>
                     <h1>Loading...</h1>
                     <button onClick={campaignDetails}>Campaign details</button>
-                </div>
-
-            :   <div className='loaded'>
+                </div>             
+            :   
+                <div className='loaded'>
                     <h1>{campaigns.title}</h1>
                     <div className="campaign__Description">
                         <h3>Description</h3>
@@ -82,7 +87,7 @@ const Campaign = () => {
 
                     {campaigns.dmID === user.id && <AddNPC />}
                     
-                </div>
+                </div>  
             }
         </div>
     )

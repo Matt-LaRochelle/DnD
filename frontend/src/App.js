@@ -22,7 +22,7 @@ function App() {
         <div className="pages">
           <Routes>
             <Route 
-              path="/"
+              path="/start"
               element={user ? <Start /> : <Navigate to="/login" />}
             />
             <Route 
@@ -31,19 +31,19 @@ function App() {
             />
             <Route 
               path="/login"
-              element={!user ? <Login /> : <Navigate to="/" />}
+              element={!user ? <Login /> : <Navigate to="/start" />}
             />
             <Route 
               path="/signup"
-              element={!user ? <Signup /> : <Navigate to="/" />}
+              element={!user ? <Signup /> : <Navigate to="/start" />}
             />
             <Route 
               path="/reset-password/:token"
-              element={!user ? <ResetPassword /> : <Navigate to="/" />}
+              element={!user ? <ResetPassword /> : <Navigate to="/start" />}
               />
             <Route
               path='/forgot'
-              element={!user ? <Forgot /> : <Navigate to="/" />}
+              element={!user ? <Forgot /> : <Navigate to="/start" />}
               />
           </Routes>
         </div>

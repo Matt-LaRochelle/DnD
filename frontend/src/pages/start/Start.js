@@ -9,14 +9,18 @@ import CampaignStart from '../../components/start/campaignStart/CampaignStart'
 import CampaignJoin from '../../components/start/campaignJoin/CampaignJoin'
 
 const Start = () => {
-    const [loading, setLoading] = useState(false)
+    // Can I make sure that loading is set to true when the component mounts?
+    const [loading, setLoading] = useState(true)
     const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
 
+
+
     useEffect(() => {
         // Fetch the campaigns which this user is a DM or Player for
-        const fetchDMCampaignList = async () => {
+        const fetchUserCampaignList = async () => {
+            console.log('useEffect is running'); // This will log to the console every time useEffect runs
             setLoading(true);
             const response = await fetch('/api/campaign/', {
                 headers: {
@@ -32,7 +36,7 @@ const Start = () => {
         }
 
         if (user) {
-            fetchDMCampaignList()
+            fetchUserCampaignList()
         }
     }, [user])
 
@@ -52,7 +56,7 @@ const Start = () => {
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
-                {campaigns && campaigns.filter(campaign => campaign.dmID === user.id).length === 0 && <p>You are not a DM for any campaigns</p>}
+                {!loading && campaigns && campaigns.filter(campaign => campaign.dmID === user.id).length === 0 && <p>You are not a DM for any campaigns</p>}
             </div>
             <h3 className='start-title'>Campaigns you play in:</h3>
             <div className='campaigns'>
@@ -63,7 +67,7 @@ const Start = () => {
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
-                {campaigns && campaigns.filter(campaign => campaign.playerIDs.includes(user.id)).length === 0 && <p>You are not a player in any campaigns</p>}
+                {!loading && campaigns && campaigns.filter(campaign => campaign.playerIDs.includes(user.id)).length === 0 && <p>You are not a player in any campaigns</p>}
             </div>
         </div>
     )

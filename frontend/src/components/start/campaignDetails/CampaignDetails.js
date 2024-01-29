@@ -69,7 +69,7 @@ const CampaignDetails = ({ campaign }) => {
     const path = `/campaign/${campaign._id}`
 
     return (
-        <div className="campaignDetails__container">
+        <div key={campaign._id} className="campaignDetails__container">
             <h4>Campaign Title {campaign.title}</h4>
             <p>DM {campaign.dmUsername}</p>
             <p>Description {campaign.description}</p>

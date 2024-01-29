@@ -14,7 +14,7 @@ const Navbar = () => {
     return (
         <header>
             <div className="container">
-                <Link to="/">
+                <Link to="/start">
                     <div className="navbar__title">
                         <div className="navbar__logo">
                             <Logo />
