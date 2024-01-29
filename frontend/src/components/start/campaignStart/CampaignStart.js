@@ -1,11 +1,11 @@
 import { useState } from 'react'
-// import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import './campaignStart.css'
 import Toggle from '../../toggle/Toggle'
 
 const CampaignStart = () => {
-    // const { dispatch } = useCampaignsContext()
+    const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
 
     const [showForm, setShowForm] = useState(false)
@@ -56,7 +56,7 @@ const CampaignStart = () => {
             setError(null)
             setEmptyFields([])
             console.log('new campaign added', json)
-            // dispatch({type: 'CREATE_CAMPAIGN', payload: json})
+            dispatch({type: 'CREATE_CAMPAIGN', payload: json})
         }
     }
 

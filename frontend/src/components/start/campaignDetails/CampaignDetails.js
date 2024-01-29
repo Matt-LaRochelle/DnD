@@ -1,4 +1,4 @@
-// import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { Link } from 'react-router-dom'
 import './campaignDetails.css'
@@ -7,7 +7,7 @@ import './campaignDetails.css'
 import { useEffect, useState } from 'react'
 
 const CampaignDetails = ({ campaign }) => {
-    // const { dispatch } = useCampaignsContext()
+    const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
     const [showID, setShowID] = useState('')
     const [dmRole, setDmRole] = useState(false);
@@ -18,7 +18,7 @@ const CampaignDetails = ({ campaign }) => {
         }
     }, [])
 
-    // This deletes the DM's campaign
+    // This deletes the DM's campaign - only available for DMs
     const handleClick = async () => {
         if (!user) {
             return
@@ -32,10 +32,11 @@ const CampaignDetails = ({ campaign }) => {
         const json = await response.json()
 
         if (response.ok) {
-            // dispatch({type: 'DELETE_CAMPAIGN', payload: json})
+            dispatch({type: 'DELETE_CAMPAIGN', payload: json})
         }
     }
 
+    // Removes the player from the campaign - only available for players
     const leaveCampaign = async () => {
         const leavingPlayer = {
             campaignID: campaign._id,
@@ -53,10 +54,9 @@ const CampaignDetails = ({ campaign }) => {
         })
         const json = await response.json()
 
-
         if (response.ok) {
-            console.log('new campaign deleted', json)
-            // dispatch({type: 'CREATE_CAMPAIGN', payload: json})
+            // Deletes campaign from frontend context
+            dispatch({type: 'DELETE_CAMPAIGN', payload: json})
         }
     }
 
