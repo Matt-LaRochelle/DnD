@@ -73,20 +73,21 @@ const CampaignDetails = ({ campaign }) => {
             <h4>Campaign Title {campaign.title}</h4>
             <p>DM {campaign.dmUsername}</p>
             <p>Description {campaign.description}</p>
-            <p>List of players {campaign.playerUsernames.map((username) => (
+            <p>List of players</p>
+            {campaign.playerUsernames.map((username) => (
                 <p>{username}</p>
-            ))}</p>
+            ))}
             <p>{campaign.hidden ? "This campaign is hidden." : "This campaign is visible." }</p>
             {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
-            <Link to={path}>Enter</Link>
+            <Link to={path} className="campaignDetails__enter">Enter</Link>
 
             {dmRole 
                 ?   <div>
-                        <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
-                        <p onClick={giveID}>Check ID</p>
+                        <span className="material-symbols-outlined button-secondary trash" onClick={handleClick}>delete</span>
+                        <p className="button-primary campaignDetails__id-checker" onClick={giveID}>Check ID</p>
                         <p className="campaign-details__id" style={{display: showID ? "inline" : "none"}}>{campaign._id}</p>
                     </div>
-                :   <span onClick={leaveCampaign}>Leave Campaign</span>
+                :   <span className="button-secondary" onClick={leaveCampaign}>Leave Campaign</span>
                 }
         </div>
     )

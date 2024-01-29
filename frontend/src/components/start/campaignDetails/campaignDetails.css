@@ -1,6 +1,7 @@
 .campaignDetails__container {
-    background: #796565;
-    border-radius: 4px;
+    background: linear-gradient(#332828, rgb(48, 48, 68)) ;
+    border: 2px solid #ddd;
+    border-radius: 14px;
     margin: 20px auto;
     padding: 20px;
     position: relative;
@@ -19,20 +20,36 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    cursor: pointer;
-    background: #f1f1f1;
-    padding: 6px;
-    border-radius: 50%;
-    color: #333;
   }
-  .campaignDetails__container a {
-    text-decoration: none;
-    color: #e8e8e8;
-  }
+  .campaignDetails__container a,
   .campaignDetails__container a:focus,
   .campaignDetails__container a:visited {
-    color: #e8e8e8;
+    display: block;
+    text-decoration: none;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 8px 20px;
+    width: max-content;
+    background: linear-gradient(to right, #dffaf0, #d5f8f3);
+    margin: 20px 0;
   }
-  .campaignDetails__container a:hover {
-    color: lightgoldenrodyellow;
+
+  .campaignDetails__container a:hover,
+  .campaignDetails__id-checker:hover {
+    color: #333;
+    background: linear-gradient(to right, #d9e8e2, #c1ebe5);
+  }
+
+  .campaignDetails__id-checker {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+  .campaign-details__id {
+    position: absolute;
+    bottom: 20px;
+    right: 140px;
+    border: 2px solid #ddd;
+    padding: 8px;
+    background: radial-gradient(ellipse at 30px 50px, #440202bb, #741a01b6);
   }

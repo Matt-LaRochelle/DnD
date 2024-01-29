@@ -1,5 +1,6 @@
 .campaignJoin__container {
     border: 2px solid red;
+    background: radial-gradient(ellipse at 30px 50px, #830101 0%, #220000 100%);
     width: 200px;
     height: max-content;
     border-radius: 20px;

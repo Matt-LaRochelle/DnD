@@ -1,5 +1,6 @@
 .campaignStart__container {
     border: 2px solid blue;
+    background: radial-gradient(ellipse at 160px 140px, #0a0183 0%, #020022 100%);
     width: 200px;
     height: max-content;
     border-radius: 20px;

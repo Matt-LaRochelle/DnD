@@ -43,7 +43,7 @@ const Start = () => {
                 <CampaignStart />
                 <CampaignJoin />
             </div>
-        <h3>Campaigns you DM:</h3>
+            <h3 className='start-title'>Campaigns you DM:</h3>
             <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
@@ -53,8 +53,8 @@ const Start = () => {
                     ))
                 }
             </div>
-        <h3>Campaigns you play in:</h3>
-        <div className='campaigns'>
+            <h3 className='start-title'>Campaigns you play in:</h3>
+            <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
                 // Filter the campaigns to show only the ones where the user is a player

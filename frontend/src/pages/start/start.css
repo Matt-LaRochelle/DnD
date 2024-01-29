@@ -1,4 +1,9 @@
 .start__add {
     display: flex;
     justify-content: space-around;
+    margin: 20px 0 60px;
+}
+
+.start-title {
+    margin-top: 80px;
 }
