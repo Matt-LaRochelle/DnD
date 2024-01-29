@@ -71,12 +71,14 @@ const CampaignDetails = ({ campaign }) => {
     return (
         <div key={campaign._id} className="campaignDetails__container">
             <h4>Campaign Title {campaign.title}</h4>
-            <p>DM {campaign.dmUsername}</p>
-            <p>Description {campaign.description}</p>
-            <p>List of players</p>
-            {campaign.playerUsernames.map((username) => (
-                <p>{username}</p>
-            ))}
+            <p className="campaignDetails__dm"><strong>DM:</strong> {campaign.dmUsername}</p>
+            <p><strong>Description:</strong> {campaign.description}</p>
+            <p className="campaignDetails__list-title">List of players</p>
+            <div className="campaignDetails__list">
+                {campaign.playerUsernames.map((username) => (
+                    <p>{username}</p>
+                ))}
+            </div>
             <p>{campaign.hidden ? "This campaign is hidden." : "This campaign is visible." }</p>
             {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
             <Link to={path} className="campaignDetails__enter">Enter</Link>
