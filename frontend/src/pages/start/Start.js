@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-// import { useCampaignsContext } from '../../hooks/useCampaignsContext'
+import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import './start.css'
 
@@ -12,7 +12,7 @@ const Start = () => {
     const [loading, setLoading] = useState(false)
     const [dmList, setDmList] = useState([])
     const [playerList, setPlayerList] = useState([])
-    // const {campaigns, dispatch} = useCampaignsContext() 
+    const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
 
 
@@ -30,10 +30,10 @@ const Start = () => {
             console.log("DM list", list)
             setLoading(false);
 
-            // if (response.ok) {
-            //     dispatch({type: 'SET_CAMPAIGNS', payload: json})
-            //     setLoading(true)
-            // }
+            if (response.ok) {
+                dispatch({type: 'SET_CAMPAIGNS', payload: list})
+                setLoading(false)
+            }
         }
 
         if (user) {
@@ -55,10 +55,10 @@ const Start = () => {
             console.log("DM list", list)
             setLoading(false);
 
-            // if (response.ok) {
-            //     dispatch({type: 'SET_CAMPAIGNS', payload: json})
-            //     setLoading(true)
-            // }
+            if (response.ok) {
+                dispatch({type: 'SET_CAMPAIGNS', payload: list})
+                setLoading(false)
+            }
         }
 
         if (user) {
@@ -76,7 +76,7 @@ const Start = () => {
             <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
-                :   dmList.map((campaign) => (
+                :   dmList && dmList.map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
@@ -85,7 +85,7 @@ const Start = () => {
         <div className='campaigns'>
                 {loading 
                 ?   <p>Loading...</p>
-                :   playerList.map((campaign) => (
+                :   playerList && playerList.map((campaign) => (
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }

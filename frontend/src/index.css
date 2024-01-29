@@ -14,13 +14,13 @@
   --error: #e7195a;
 }
 body {
-  background: #0b0b0b;
+  background: #454545;
   margin: 0;
   font-family: "Poppins";
   width: 100vw;
 }
 header {
-  background: #222;
+  background: #838383;
 }
 header .container {
   max-width: 1000px;
@@ -31,7 +31,7 @@ header .container {
   justify-content: space-between;
 }
 header a {
-  color: #a8a8a8;
+  color: #222;
   text-decoration: none;
 }
 .pages{
@@ -99,7 +99,7 @@ input.error {
 nav {
   display: flex;
   align-items: center;
-  color: #a8a8a8;
+  color: #222;
 }
 nav a, nav button {
   margin-left: 10px;

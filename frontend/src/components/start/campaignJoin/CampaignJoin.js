@@ -1,12 +1,12 @@
 import './campaignJoin.css'
 import { useState } from 'react'
-// import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 
 const CampaignJoin = () => {
     // const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
-
+    const { dispatch } = useCampaignsContext()
     const [showForm, setShowForm] = useState(false)
     const [campaignID, setCampaignID] = useState('')
     const [error, setError] = useState(null)
@@ -43,7 +43,7 @@ const CampaignJoin = () => {
             setCampaignID('')
             setError(null)
             console.log('new campaign added', json)
-            // dispatch({type: 'CREATE_CAMPAIGN', payload: json})
+            dispatch({type: 'CREATE_CAMPAIGN', payload: json})
         }
     }
 
