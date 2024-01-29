@@ -52,6 +52,7 @@ const Start = () => {
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
+                {campaigns && campaigns.filter(campaign => campaign.dmID === user.id).length === 0 && <p>You are not a DM for any campaigns</p>}
             </div>
             <h3 className='start-title'>Campaigns you play in:</h3>
             <div className='campaigns'>
@@ -62,6 +63,7 @@ const Start = () => {
                     <CampaignDetails key={campaign._id} campaign={campaign} />
                     ))
                 }
+                {campaigns && campaigns.filter(campaign => campaign.playerIDs.includes(user.id)).length === 0 && <p>You are not a player in any campaigns</p>}
             </div>
         </div>
     )

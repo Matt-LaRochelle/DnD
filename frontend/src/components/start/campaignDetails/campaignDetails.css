@@ -47,8 +47,8 @@
   }
   .campaign-details__id {
     position: absolute;
-    bottom: 20px;
-    right: 140px;
+    bottom: 70px;
+    right: 20px;
     border: 2px solid #ddd;
     padding: 8px;
     background: radial-gradient(ellipse at 30px 50px, #440202bb, #741a01b6);

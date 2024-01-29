@@ -18,6 +18,8 @@ body {
   margin: 0;
   font-family: "Poppins";
   width: 100vw;
+  min-height: 100vw;
+  padding-bottom: 50px;
 }
 header {
   background: #838383;
