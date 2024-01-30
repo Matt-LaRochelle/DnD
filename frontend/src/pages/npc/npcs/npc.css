@@ -1,0 +1,30 @@
+.npc__container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.npc__container img {
+    width: min(400px, 90%);
+    height: min(400px, 90%);
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.npc__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.npc__grid p {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+    .npc__grid {
+        grid-template-columns: 1fr;
+    }
+    
+}

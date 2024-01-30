@@ -10,6 +10,9 @@ const npcSchema = new Schema({
     description: {
         type: String,
     },
+    image: {
+        type: String,
+    },
     lastSeen: {
         type: String,
     },

@@ -11,7 +11,8 @@ import ResetPassword from './pages/landing/Reset'
 
 import Start from './pages/start/Start'
 import Campaign from './pages/campaign/Campaign'
-import Npc from './pages/npc/Npc'
+import Npc from './pages/npc/npcs/Npc'
+import AddNPC from './pages/npc/addNPC/AddNPC'
 
 function App() {
   const { user } = useAuthContext()
@@ -33,6 +34,10 @@ function App() {
             <Route 
               path="/npc/:id"
               element={user ? <Npc /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/npc/add"
+              element={user ? <AddNPC /> : <Navigate to="/login" />}
             />
             <Route 
               path="/login"

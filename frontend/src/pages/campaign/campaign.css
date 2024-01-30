@@ -36,5 +36,17 @@
     max-width: 250px;
     border-radius: 20px;
 }
+.npc h3 {
+    text-align: center;
+}
+.npc img {
+    width: 100%;
+    border-radius: 20px;
+    margin: 10px auto;
+}
+.npc button {
+    display: block;
+    margin: auto;
+}
 
 

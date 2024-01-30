@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import AddNPC from '../../components/campaign/addNPC/AddNPC';
+import Npcs from '../../components/npc/Npcs';
 
 
 const Campaign = () => {
@@ -41,27 +42,6 @@ const Campaign = () => {
         }
     }, [path, user, dispatch])
 
-    useEffect(() => {
-        const fetchNpcs = async () => {
-            setLoading(true);
-            const response = await fetch(`/api/npc/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const json = await response.json()
-            console.log("Step 1: json data from server:", json);
-
-            if (response.ok) {
-                setNpcs(json)
-                setLoading(false)
-            }
-        }
-
-        if (user) {
-            fetchNpcs()
-        }
-    }, [path, user, dispatch])
 
     const campaignDetails = () => {
         console.log("Step end: campaign:", campaigns)
@@ -70,7 +50,6 @@ const Campaign = () => {
 
 
     const moreInfo = (id) => {
-        console.log(`/npc/${id}`);
         navigate(`/npc/${id}`);
     }
 
@@ -111,21 +90,9 @@ const Campaign = () => {
                     
                     <h2>PCs</h2>
                     <h2>NPCs</h2>
-                    <div className="campaign__Npcs">
-                        {npcs && npcs.map((npc) => (
-                            <div className="npc" key={npc._id}>
-                                <h3>{npc.name}</h3>
-                                <p><strong>Description:</strong> {npc.description}</p>
-                                {campaigns.dmID === user.id && <p><strong>Secrets:</strong> {npc.secrets}</p>}
-                                <p><strong>Last Seen:</strong> {npc.lastSeen}</p>
-                                <p>{npc.hidden}</p>
-                                <button onClick={() => moreInfo(npc._id)}>More Info</button>
-                                {campaigns.dmID === user.id && <button>Delete</button>}
-                                {campaigns.dmID === user.id && <button>Edit</button>}
-                            </div>
-                        ))}
-                        {campaigns.dmID === user.id && <AddNPC />}
-                    </div>
+                    <Npcs 
+                        dm={campaigns.dmID}
+                    />
                     
                 </div>  
             }
