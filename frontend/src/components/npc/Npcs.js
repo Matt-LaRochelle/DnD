@@ -37,6 +37,27 @@ const Npcs = () => {
         }
     }, [path, user, dispatch])
 
+
+    const deleteNPC = async (id) => {
+        if (!user) {
+            return
+        }
+        setLoading(true);
+        const response = await fetch(`/api/npc/${id}`, {
+            method: 'DELETE', // Specify the method here
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+        const json = await response.json()
+        console.log("Step 1: json data from server:", json);
+
+        if (response.ok) {
+            setLoading(false)
+            setNpcs(npcs.filter(npc => npc._id !== id))
+        }
+    }
+
     const moreInfo = (id) => {
         navigate(`/npc/${id}`);
     }
@@ -52,7 +73,7 @@ const Npcs = () => {
                     <h3>{npc.name}</h3>
                     <img src={npc.image} alt={npc.name} />
                     <button className='button-primary' onClick={() => moreInfo(npc._id)}>More Info</button>
-                    {campaigns.dmID === user.id && <button className="button-secondary">Delete</button>}
+                    {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteNPC(npc._id)}>Delete</button>}
                 </div>
             ))}
             {campaigns.dmID === user.id && 

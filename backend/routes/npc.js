@@ -13,10 +13,9 @@ const router = express.Router()
 // require authorization before going to routes
 router.use(requireAuth)
 
-// GET all Npcs
+// GET all Npcs for a campaign
 router.get('/:campaign/', getNpcs)
 
-// Haven't done this yet
 // GET a single Npc
 router.get('/:campaign/:id', getNpc)
 

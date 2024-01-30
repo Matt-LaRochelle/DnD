@@ -1,9 +1,11 @@
 import './npc.css'
 
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+
+import Loading from '../../../components/loading/Loading'
 
 const Npc = () => {
     const [loading, setLoading] = useState(true)
@@ -13,11 +15,12 @@ const Npc = () => {
     const { campaigns } = useCampaignsContext()
     const location = useLocation()
     const path = location.pathname.split("/")[2]
+    const navigate = useNavigate()
 
     console.log("campaign id", campaigns._id)
 
     useEffect(() => {
-        // Fetch the campaigns which this user is a DM or Player for
+        // Fetch an NPC's information
         const fetchNPCinfo = async () => {
             setLoading(true);
             const response = await fetch(`/api/npc/${campaigns._id}/${path}`, {
@@ -38,15 +41,20 @@ const Npc = () => {
         }
     }, [user])
 
+    const goBack = () => {
+        navigate(`/campaign/${campaigns._id}`)
+    }
+
 
     return (
         <div>
             {loading
                 ?
-                <h1>Loading...</h1>
+                <Loading />
                 :
                 <div className='npc__container'>
                     <h1>{npc.name}</h1>
+                    <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='npc__grid'>
                     <img src={npc.image} alt={npc.name} />
                         <div>

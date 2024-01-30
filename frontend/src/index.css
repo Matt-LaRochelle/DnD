@@ -178,3 +178,9 @@ button {
   border-radius: 50%;
   padding: 6px;
 }
+
+.back {
+  position: absolute;
+  top: 110px;
+  left: 10px;
+}
