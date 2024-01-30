@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
-import AddNPC from '../../components/campaign/addNPC/AddNPC';
+import AddNPC from '../npc/addNPC/AddNPC';
 import Npcs from '../../components/npc/Npcs';
 import Loading from '../../components/loading/Loading';
 

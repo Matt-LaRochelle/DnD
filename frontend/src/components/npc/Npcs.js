@@ -5,8 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 
-import AddNPC from '../campaign/addNPC/AddNPC';
-
 const Npcs = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
