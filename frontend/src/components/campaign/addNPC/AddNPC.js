@@ -19,12 +19,15 @@ const AddNPC = () => {
                     <input type="text"></input>
                     <label>Description</label>
                     <input type="text"></input>
-                    <label>Image</label>
-                    <input type="text"></input>
+                    {/* <label>Image</label>
+                    <input type="text"></input> */}
                     <label>Secrets</label>
                     <input type="text"></input>
                     <label>Last Seen</label>
                     <input type="text"></input>
+                    <label>Hide Character</label>
+                    <input type="checkbox"></input>
+                    <button type="submit">Add NPC</button>
                 </div>
             }
         </form>
