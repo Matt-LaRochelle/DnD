@@ -5,6 +5,7 @@ import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import AddNPC from '../../components/campaign/addNPC/AddNPC';
 import Npcs from '../../components/npc/Npcs';
+import Loading from '../../components/loading/Loading';
 
 
 const Campaign = () => {
@@ -57,13 +58,10 @@ const Campaign = () => {
         <div className="campaign__Container">
             {loading 
             ?   
-                <div className='loading'>
-                    <h1>Loading...</h1>
-                    <button onClick={campaignDetails}>Campaign details</button>
-                </div>             
+                <Loading />             
             :   
                 <div className='loaded'>
-                    <h1>{campaigns.title}</h1>
+                    <h1 onClick={campaignDetails}>{campaigns.title}</h1>
                     <div className="campaign__Description">
                         <h3>Description</h3>
                         <p>{campaigns.description}</p>
