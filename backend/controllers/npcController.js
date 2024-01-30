@@ -2,12 +2,18 @@ const Npc = require('../models/npcModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
-// get all npcs client has access to (DM or Player)
+// get all npcs in a campaign
 const getNpcs = async (req, res) => {
-    const user_id = req.user._id
+    const campaignID = req.params.campaign
+
+    // Check that request is coming from a valid campaign
+    if (!mongoose.Types.ObjectId.isValid(campaignID)) {
+        return res.status(404).json({error: 'No such campaign'})
+    }
+
     try {
-        // Get all npcs where the user_id matches the dmID as well as all the npcs where one of the playerIDs matches the user_id
-        const npcs = await Npc.find({ $or: [{ dmID: user_id }, { playerIDs: user_id }] }).sort({ createdAt: -1 }).sort({createdAt: -1})
+        // Get all npcs where the npc has a campaignID which matches current campaignID
+        const npcs = await Npc.find({ campaignID }).sort({createdAt: -1})
         res.status(200).json(npcs)
     } catch (err) {
         console.log(err)

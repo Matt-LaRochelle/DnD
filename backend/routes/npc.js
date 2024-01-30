@@ -14,17 +14,20 @@ const router = express.Router()
 router.use(requireAuth)
 
 // GET all Npcs
-router.get('/', getNpcs)
+router.get('/:campaign/', getNpcs)
 
+// Haven't done this yet
 // GET a single Npc
-router.get('/:id', getNpc)
+router.get('/:campaign/:id', getNpc)
 
 // POST a new Npc
 router.post('/', createNpc)
 
+// Haven't done this yet
 // DELETE a Npc
 router.delete('/:id', deleteNpc)
 
+// Haven't done this yet
 // UPDATE a Npc
 router.patch('/:id', updateNpc)
 
