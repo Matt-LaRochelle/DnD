@@ -156,11 +156,18 @@ const Npcs = () => {
                 </div>}
             </div>
             <div className="npcs__buttons">
-                {!loading && npcs.map((npc, index) => (
-                    <div className="npcs__button" onClick={() => swiperClick(index)} />
-                ))}
-                
-                
+            {!loading && npcs.filter((npc) => {
+                if (user.id === campaigns.dmID) {
+                    return true; // Include all NPCs
+                } else {
+                    return !npc.hidden; // Exclude NPCs with hidden=true
+                }
+            }).map((npc, index) => (
+                <div 
+                    className="npcs__button" 
+                    onClick={() => swiperClick(index)}
+                />
+            ))} 
             </div>
         </div>
     )

@@ -132,8 +132,14 @@ const Pcs = () => {
             // onMouseUp={handleMouseUp}
             >
             <div className="npcs__swiper" style={{transform: `translateX(-${xAxis}px)`}}>
-            {!loading && pcs.map((pc) => (
-                <div className={pc.hidden ? "npc npc-hidden" : "npc"} key={pc._id} style={{ display: pc.hidden && user.id !== campaigns.dmID && "none"}}>
+            {!loading && pcs.filter((pc) => {
+                if (user.id === campaigns.dmID || pc.userID === user.id) {
+                    return true; // Include all PCs
+                } else {
+                    return !pc.hidden; // Exclude PCs with hidden=true
+                }
+            }).map((pc) => (
+                <div className={pc.hidden ? "npc npc-hidden" : "npc"} key={pc._id}>
                 <h3>{pc.name}</h3>
                     <img src={pc.image} alt={pc.name} />
                     <button className='button-primary' onClick={() => moreInfo(pc._id)}>More Info</button>
@@ -156,9 +162,18 @@ const Pcs = () => {
             </div>
             </div>
             <div className="npcs__buttons">
-                {!loading && pcs.map((pc, index) => (
-                    <div className="npcs__button" onClick={() => swiperClick(index)} />
-                ))}
+            {!loading && pcs.filter((pc) => {
+                if (user.id === campaigns.dmID || pc.userID === user.id) {
+                    return true; // Include all PCs
+                } else {
+                    return !pc.hidden; // Exclude PCs with hidden=true
+                }
+            }).map((pc, index) => (
+                <div 
+                    className="npcs__button" 
+                    onClick={() => swiperClick(index)}
+                />
+            ))} 
                 
                 
             </div>
