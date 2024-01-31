@@ -137,7 +137,7 @@ const Pcs = () => {
                 <h3>{pc.name}</h3>
                     <img src={pc.image} alt={pc.name} />
                     <button className='button-primary' onClick={() => moreInfo(pc._id)}>More Info</button>
-                    {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deletePC(pc._id)}>Delete</button>}
+                    {campaigns.dmID === user.id || pc.userID === user.id && <button className="button-secondary" onClick={() => deletePC(pc._id)}>Delete</button>}
                 </div>
                 ))}
             {/* {!loading && npcs.map((npc) => (

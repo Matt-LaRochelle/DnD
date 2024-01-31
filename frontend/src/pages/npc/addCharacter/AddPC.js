@@ -39,7 +39,12 @@ const AddPC = () => {
             return
         }
 
-        const pc = {...formState, "campaignID": campaigns._id, "userID": user.id}
+        const pc = {
+            ...formState, 
+            "campaignID": campaigns._id, 
+            "userID": user.id,
+            "username": user.username
+        }
 
         const response = await fetch('/api/pc/', {
             method: 'POST',

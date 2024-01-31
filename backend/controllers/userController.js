@@ -131,13 +131,13 @@ const getUser = async (req, res) => {
     }
 
     const user = await User.findById(id)
-    console.log(user)
 
     if (!user) {
         return res.status(404).json({error: 'No such user'})
     }
 
-    res.status(200).json(user)
+    const username = user.username
+    res.status(200).json(username)
 }
 
 module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, checkCookies, getUser }

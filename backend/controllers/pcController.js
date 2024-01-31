@@ -42,7 +42,7 @@ const getPc = async (req, res) => {
 
 // DM creates a new pc
 const createPc = async (req, res) => {
-    const {name, description, image, secrets, lastSeen, hidden, campaignID, userID} = req.body
+    const {name, description, image, secrets, lastSeen, hidden, campaignID, userID, username} = req.body
     
     // Check that user filled out all information
     let emptyFields = []
@@ -67,7 +67,7 @@ const createPc = async (req, res) => {
 
     // Add doc to db
     try {
-        const pc = await Pc.create({name, description, image, secrets, lastSeen, hidden, campaignID, userID})
+        const pc = await Pc.create({name, description, image, secrets, lastSeen, hidden, campaignID, userID, username})
         res.status(200).json(pc);
     } catch (error) {
         res.status(400).json({ error: error.message });
