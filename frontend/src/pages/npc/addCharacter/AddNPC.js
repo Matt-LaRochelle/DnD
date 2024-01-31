@@ -1,4 +1,4 @@
-import './addNPC.css'
+import './add.css'
 import { useEffect, useState } from 'react'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
@@ -78,7 +78,7 @@ const AddNPC = () => {
 
 
     return (
-        <form className='AddNPC__form' onSubmit={submit}>
+        <form className='Add__form' onSubmit={submit}>
            <h2>Add NPC</h2>
             <label>Name</label>
             <input className={emptyFields.includes("name") && "error"} type="text" id="name" onChange={handleChange}></input>

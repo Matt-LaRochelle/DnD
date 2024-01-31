@@ -1,4 +1,4 @@
-import './npc.css'
+import './character.css'
 
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -52,10 +52,10 @@ const Npc = () => {
                 ?
                 <Loading />
                 :
-                <div className='npc__container'>
+                <div className='character__container'>
                     <h1>{npc.name}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
-                    <div className='npc__grid'>
+                    <div className='character__grid'>
                     <img src={npc.image} alt={npc.name} />
                         <div>
                             <p><strong>Description</strong></p>

@@ -3,8 +3,9 @@ import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
-import AddNPC from '../npc/addNPC/AddNPC';
+
 import Npcs from '../../components/npc/Npcs';
+import Pcs from '../../components/pcs/Pcs';
 import Loading from '../../components/loading/Loading';
 
 
@@ -87,6 +88,7 @@ const Campaign = () => {
                     </div>
                     
                     <h2>PCs</h2>
+                    <Pcs dm={campaigns.dmID} />
                     <h2>NPCs</h2>
                     <Npcs 
                         dm={campaigns.dmID}

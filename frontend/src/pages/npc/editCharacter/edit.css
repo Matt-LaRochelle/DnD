@@ -1,4 +1,4 @@
-.editNPC__form {
+.editCharacter__form {
     border: 2px solid blue;
     width: 200px;
     height: max-content;
@@ -11,14 +11,14 @@
     margin: 10px;
 }
 
-.editNPC__form label {
+.editCharacter__form label {
     margin-top: 20px;
     margin-left: 0;
     text-align: left;
     font-weight: 600;
 }
 
-.editNPC__form img {
+.editCharacter__form img {
     width: 160px;
     height: 160px;
     object-fit: cover;

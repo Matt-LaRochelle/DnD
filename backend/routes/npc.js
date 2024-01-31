@@ -25,7 +25,6 @@ router.post('/', createNpc)
 // DELETE a Npc
 router.delete('/:id', deleteNpc)
 
-// Haven't done this yet
 // UPDATE a Npc
 router.patch('/:id', updateNpc)
 

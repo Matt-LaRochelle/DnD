@@ -1,9 +1,9 @@
-.npc__container h1 {
+.character__container h1 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.npc__container img {
+.character__container img {
     width: min(400px, 90%);
     height: min(400px, 90%);
     object-fit: cover;
@@ -11,19 +11,19 @@
     margin: 0 auto;
 }
 
-.npc__grid {
+.character__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
-.npc__grid div {
+.character__grid div {
     width: min(400px, 90vw);
     margin: 0 auto;
 }
 
 @media screen and (max-width: 768px) {
-    .npc__grid {
+    .character__grid {
         grid-template-columns: 1fr;
     }
     

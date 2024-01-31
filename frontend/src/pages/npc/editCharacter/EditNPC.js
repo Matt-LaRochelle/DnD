@@ -1,4 +1,4 @@
-import './editNPC.css'
+import './edit.css'
 import { useEffect, useState } from 'react'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useNpcsContext } from '../../../hooks/useNpcsContext'
@@ -119,7 +119,7 @@ const EditNPC = () => {
 
 
     return (
-        <form className='editNPC__form'>
+        <form className='editCharacter__form'>
            <h2>Edit NPC</h2>
             <label>Name</label>
             <div>

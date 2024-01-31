@@ -11,9 +11,12 @@ import ResetPassword from './pages/landing/Reset'
 
 import Start from './pages/start/Start'
 import Campaign from './pages/campaign/Campaign'
-import Npc from './pages/npc/npcs/Npc'
-import AddNPC from './pages/npc/addNPC/AddNPC'
-import EditNPC from './pages/npc/editNPC/EditNPC'
+import Npc from './pages/npc/character/Npc'
+import Pc from './pages/npc/character/Pc'
+import AddNPC from './pages/npc/addCharacter/AddNPC'
+import AddPC from './pages/npc/addCharacter/AddPC'
+import EditNPC from './pages/npc/editCharacter/EditNPC'
+import EditPC from './pages/npc/editCharacter/EditPC'
 
 function App() {
   const { user } = useAuthContext()
@@ -43,6 +46,18 @@ function App() {
             <Route 
               path="/npc/add"
               element={user ? <AddNPC /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/pc/add"
+              element={user ? <AddPC /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/pc/:id"
+              element={user ? <Pc /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/pc/edit/:id"
+              element={user ? <EditPC /> : <Navigate to="/login" />}
             />
             <Route 
               path="/login"
