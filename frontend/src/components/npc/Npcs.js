@@ -6,11 +6,6 @@ import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useNpcsContext } from '../../hooks/useNpcsContext'
 
-// Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
 
 
 const Npcs = () => {
@@ -18,7 +13,8 @@ const Npcs = () => {
     const path = location.pathname.split("/")[2];
     const [loading, setLoading] = useState(true)
 
-    const [variable, setVariable] = useState(3);
+    const [xAxis, setXAxis] = useState(0)
+    const [startX, setStartX] = useState(null);
 
     const {campaigns, dispatch} = useCampaignsContext()
     const { npcs, dispatch: npcsDispatch } = useNpcsContext()
@@ -77,36 +73,65 @@ const Npcs = () => {
         navigate(`/npc/add`);
     }
 
+    const swiperClick = (index) => {
+        setXAxis(() => index * 280)
+        console.log("Swiper Clicked", xAxis);
+    }
 
-    useEffect(() => {
-        // Function to update the variable based on window size
-        function updateVariable() {
-          const windowWidth = window.innerWidth;
-          console.log("Running")
-          if (windowWidth >= 1200) {
-            setVariable(3);
-          } else if (windowWidth >= 800) {
-            setVariable(1);
-          } else {
-            setVariable(5);
-          }
-        }
+
+    // // For swiper component
+    // function handleMouseDown(event) {
+    //     setStartX(event.clientX);
+    //   }
     
-        // Add event listener for window resize
-        window.addEventListener('resize', updateVariable);
+    //   function handleMouseUp(event) {
+    //     const currentX = event.clientX;
+    //     const distance = currentX - startX;
     
-        // Call the function initially to set the variable based on the initial window size
-        updateVariable();
+    //     if (Math.abs(distance) >= 150) {
+    //       // Trigger your function here
+    //       console.log('Function triggered!');
+    //     }
     
-        // Clean up the event listener when the component is unmounted
-        return () => {
-          window.removeEventListener('resize', updateVariable);
-        };
-      }, []);
+    //     setStartX(null);
+    //   }
+
+    //   useEffect(() => {
+    //     console.log("x-axis:", xAxis)
+    //     if (xAxis < 0) {
+    //       setXAxis(0)
+    //     }
+    //     // If the xAxis variable is halfway to the next component, set it to the next components position.
+    //     if (xAxis > 140) {
+    //       setXAxis(280)
+    //     }
+    //   }, [xAxis]);
+    
+    //   useEffect(() => {
+    //     const handleMouseMove = (event) => {
+    //       if (startX !== null) {
+    //         const currentX = event.clientX;
+    //         const distance = startX - currentX;
+            
+    //         setXAxis(xAxis + distance);
+    //       }
+    //     }
+    
+    //     window.addEventListener('mousemove', handleMouseMove);
+    //     return () => {
+    //       window.removeEventListener('mousemove', handleMouseMove);
+    //     };
+    //   }, [startX]);
+
+
 
     return (
-        <div className="npcs__container">
-            <div className="npcs__swiper">
+        <div 
+            className="npcs__container"
+            // onMouseDown={handleMouseDown}
+            // onMouseUp={handleMouseUp}
+            >
+            <div className="npcs__swiper" style={{transform: `translateX(-${xAxis}px)`}}>
             {!loading && npcs.map((npc) => (
                 <div className={npc.hidden ? "npc npc-hidden" : "npc"} key={npc._id} style={{ display: npc.hidden && user.id !== campaigns.dmID && "none"}}>
                 <h3>{npc.name}</h3>
@@ -131,13 +156,10 @@ const Npcs = () => {
                 </div>}
             </div>
             <div className="npcs__buttons">
-                <div className="npcs__button"></div>
-                <div className="npcs__button"/>
-                <div className="npcs__button"/>
-                <div className="npcs__button"/>
-                <div className="npcs__button"/>
-                <div className="npcs__button"/>
-                <div className="npcs__button"/>
+                {!loading && npcs.map((npc, index) => (
+                    <div className="npcs__button" onClick={() => swiperClick(index)} />
+                ))}
+                
                 
             </div>
         </div>

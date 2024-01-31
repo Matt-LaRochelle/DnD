@@ -6,16 +6,21 @@
     /* flex-wrap: wrap; */
     overflow: hidden;
     position: relative;
-    border: 2px solid red;
+    border: 2px solid rgba(147, 37, 37, 0.668);
+    border-radius: 20px;
+    background: radial-gradient(ellipse at 30px 50px, rgba(84, 0, 0, 0.9) 0%, rgba(3, 16, 45, 0.8) 100%);
+
 }
 .npcs__swiper {
     display: flex;
     width: max-content;
+    transition-property: transform;
+    transition-duration: 1s;
 }
 
 .npcs__swiper .npc {
-    border: 2px solid blue;
-    margin: 10px;
+    border: 2px solid rgba(26, 255, 0, 0.253);
+    margin:  15px 15px;
     padding: 20px;
     background-color: #444;
     color: #e8e8e8;
@@ -65,10 +70,9 @@
 
 .npcs__buttons {
     position: absolute;
-    bottom: 0px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    border: 2px solid lime;
     width: max-content;
     display: flex;
     gap: 16px;
@@ -77,6 +81,7 @@
     width: 20px;
     height: 20px;
     background-color: #fff;
+    border: 1px solid rgba(0, 255, 0, 0.358);
     border-radius: 50%;
 }
 
