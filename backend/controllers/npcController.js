@@ -100,15 +100,17 @@ const deleteNpc = async (req, res) => {
 
 // update a npc
 const updateNpc = async (req, res) => {
+    console.log("req", req.body)
     const { id } = req.params
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({error: 'No such npc'})
     }
 
+    // How to make it return the new version?
     const npc = await Npc.findOneAndUpdate({_id: id}, {
         ...req.body
-    })
+    }, { new: true })
 
     if (!npc) {
         return res.status(400).json({error: 'No such npc'})

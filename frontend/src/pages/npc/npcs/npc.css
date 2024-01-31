@@ -17,8 +17,8 @@
     gap: 20px;
 }
 
-.npc__grid p {
-    max-width: 400px;
+.npc__grid div {
+    width: min(400px, 90vw);
     margin: 0 auto;
 }
 

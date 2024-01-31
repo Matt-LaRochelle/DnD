@@ -1,0 +1,47 @@
+.editNPC__form {
+    border: 2px solid blue;
+    width: 200px;
+    height: max-content;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 10px;
+}
+
+.editNPC__form label {
+    margin-top: 20px;
+    margin-left: 0;
+    text-align: left;
+    font-weight: 600;
+}
+
+.editNPC__form img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.edit-input {
+    background: transparent;
+    border: none;
+    height: 1px;
+    transition: 1s;
+}
+.edit-input::placeholder {
+    color: #fff;
+}
+
+.edit-input:focus {
+    background: #fff;
+    color: #000;
+    height: 35px;
+
+}
+.edit-input:focus::placeholder {
+    color: #555;
+}

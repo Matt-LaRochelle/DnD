@@ -22,7 +22,6 @@ router.get('/:campaign/:id', getNpc)
 // POST a new Npc
 router.post('/', createNpc)
 
-// Haven't done this yet
 // DELETE a Npc
 router.delete('/:id', deleteNpc)
 

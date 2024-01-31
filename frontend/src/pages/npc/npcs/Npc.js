@@ -60,10 +60,20 @@ const Npc = () => {
                         <div>
                             <p><strong>Description</strong></p>
                             <p>{npc.description}</p>
+                            {campaigns.dmID === user.id && 
+                            <div>
+                                <p><strong>Secrets</strong></p>
+                                <p>{npc.secrets}</p>
+                            </div>
+                            }
                             <p><strong>Last Seen</strong></p>
                             <p>{npc.lastSeen}</p>
+                            {campaigns.dmID === user.id && 
+                        <button className="button-primary" onClick={() => navigate(`/npc/edit/${npc._id}`)}>Edit</button>
+                            }
                         </div>
                     </div>
+                    
                 </div>
             }
         </div>

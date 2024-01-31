@@ -4,14 +4,15 @@ import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import { useNpcsContext } from '../../hooks/useNpcsContext'
 
 const Npcs = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
     const [loading, setLoading] = useState(true)
-    const [npcs, setNpcs] = useState(null)
 
-    const {campaigns, dispatch} = useCampaignsContext() 
+    const {campaigns, dispatch} = useCampaignsContext()
+    const { npcs, dispatch: npcsDispatch } = useNpcsContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
@@ -27,7 +28,7 @@ const Npcs = () => {
             console.log("Step 1: json data from server:", json);
 
             if (response.ok) {
-                setNpcs(json)
+                npcsDispatch({type: 'SET_NPCS', payload: json})
                 setLoading(false)
             }
         }
@@ -53,8 +54,9 @@ const Npcs = () => {
         console.log("Step 1: json data from server:", json);
 
         if (response.ok) {
+            npcsDispatch({type: 'DELETE_NPC', payload: json})
             setLoading(false)
-            setNpcs(npcs.filter(npc => npc._id !== id))
+            
         }
     }
 
