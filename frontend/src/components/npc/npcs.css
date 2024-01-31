@@ -36,6 +36,7 @@
     height: 205px;
     border-radius: 20px;
     margin: 10px auto;
+    object-fit: cover;
 }
 .npc button {
     display: block;
