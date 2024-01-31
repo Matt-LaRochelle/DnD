@@ -21,21 +21,7 @@ body {
   min-height: 100vh;
   padding-bottom: 50px;
 }
-header {
-  background: #838383;
-}
-header .container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-header a {
-  color: #222;
-  text-decoration: none;
-}
+
 .pages{
   max-width: 1000px;
   padding: 20px;
@@ -84,41 +70,6 @@ div.error {
 }
 input.error {
   border: 4px solid var(--error);
-}
-
-/* navbar */
-.navbar__logo {
-  height: 100px;
-  width: 100px;
-  margin-right: 20px;
-}
-.navbar__title {
-  display: flex;
-  align-items: center;
-  /* border: 2px solid red; */
-  /* width: 500px; */
-}
-nav {
-  display: flex;
-  align-items: center;
-  color: #222;
-}
-nav a, nav button {
-  margin-left: 10px;
-}
-nav button {
-  background: #222;
-  color: var(--primary);
-  border: 2px solid var(--primary);
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-family: "Poppins";
-  cursor: pointer;
-  font-size: 1em;
-}
-
-button {
-  margin: 20px 0;
 }
 
 
