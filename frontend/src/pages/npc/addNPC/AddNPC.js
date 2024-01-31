@@ -81,7 +81,7 @@ const AddNPC = () => {
         <form className='AddNPC__form' onSubmit={submit}>
            <h2>Add NPC</h2>
             <label>Name</label>
-            <input type="text" id="name" onChange={handleChange}></input>
+            <input className={emptyFields.includes("name") && "error"} type="text" id="name" onChange={handleChange}></input>
 
             <label>Description</label>
             <input type="text" id="description" onChange={handleChange}></input>
@@ -99,6 +99,7 @@ const AddNPC = () => {
             <input type="checkbox" id="hidden" onChange={handleChange}></input>
 
             <button type="submit">Add NPC</button>
+            {error && <div className="error" >{error}</div>}
         </form>
     )
 }
