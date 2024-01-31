@@ -121,7 +121,7 @@ const checkCookies = async (req, res) => {
     res.status(200).json({message: "You're logged in!"})
 } 
 
-// Get single User object
+// Get single User object (full details including password) -- not used in this project yet.
 const getUser = async (req, res) => {
     // Get the users ID
     const { id } = req.params
@@ -136,8 +136,30 @@ const getUser = async (req, res) => {
         return res.status(404).json({error: 'No such user'})
     }
 
-    const username = user.username
-    res.status(200).json(username)
+    res.status(200).json(user)
 }
 
-module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, checkCookies, getUser }
+
+
+// update a user
+const updateUser = async (req, res) => {
+    console.log("req", req.body)
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'No such user'})
+    }
+
+    // How to make it return the new version?
+    const user = await User.findOneAndUpdate({_id: id}, {
+        ...req.body
+    }, { new: true })
+
+    if (!user) {
+        return res.status(400).json({error: 'No such user'})
+    }
+
+    res.status(200).json(user)
+}
+
+module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, checkCookies, getUser, updateUser }

@@ -8,7 +8,8 @@ const {
     verifyLink, 
     resetPassword, 
     checkCookies,
-    getUser } = require('../controllers/userController')
+    getUser,
+    updateUser } = require('../controllers/userController')
 
 const requireAuth = require('../middleware/requireAuth')
 
@@ -36,5 +37,7 @@ router.use(requireAuth)
 router.get('/check', checkCookies)
 
 router.get('/:id', getUser)
+
+router.patch('/:id', updateUser)
 
 module.exports = router
