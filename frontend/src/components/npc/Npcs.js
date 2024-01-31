@@ -71,7 +71,7 @@ const Npcs = () => {
     return (
         <div className="npcs__container">
             {!loading && npcs.map((npc) => (
-                <div className="npc" key={npc._id}>
+                <div className={npc.hidden ? "npc npc-hidden" : "npc"} key={npc._id}>
                     <h3>{npc.name}</h3>
                     <img src={npc.image} alt={npc.name} />
                     <button className='button-primary' onClick={() => moreInfo(npc._id)}>More Info</button>

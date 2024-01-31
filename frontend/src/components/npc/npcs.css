@@ -25,3 +25,29 @@
     display: block;
     margin: 10px auto;
 }
+
+.npc-hidden {
+    position: relative;
+    z-index: 1;
+    border: 2px solid purple;
+}
+.npc-hidden::after {
+    content: 'Hidden';
+    text-align: center;
+    display: block;
+    position: absolute;
+    top: 36%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid rgba(208, 164, 237, 0.811);
+    background-color: #222;
+    padding: 8px 20px;
+    color: #fff;
+    filter: opacity(1.4);
+    z-index: 10;
+    font-size: 2rem;
+    font-weight: 600;
+}
+.npc-hidden img {
+    filter: opacity(0.5) blur(2px);
+}

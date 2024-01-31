@@ -53,6 +53,13 @@ const EditNPC = () => {
             if (response.ok) {
                 dispatch({ type: 'SET_NPC', payload: npcInfo })
                 setLoading(false)
+                setFormState({
+                    description: '',
+                    image: '',
+                    secrets: '',
+                    lastSeen: '',
+                    hidden: npcInfo.hidden
+                })
             }
         }
 
@@ -89,9 +96,7 @@ const EditNPC = () => {
         if (formState.lastSeen) {
             updatedData.lastSeen = formState.lastSeen;
         }
-        if (formState.hidden) {
-            updatedData.hidden = formState.hidden;
-        }
+        updatedData.hidden = formState.hidden;
 
         const response = await fetch('/api/npc/' + npcs._id, {
             method: 'PATCH',
@@ -141,7 +146,13 @@ const EditNPC = () => {
 
             <label>Image</label>
             <img src={npcs.image} alt={npcs.name}/>
-            <input className="edit-input"  type="text" id="image" onChange={handleChange}></input>
+            <input 
+                className="edit-input"  
+                type="text" 
+                id="image" 
+                onChange={handleChange}
+                placeholder={npcs.image}></input>
+                {formState.image && <button onClick={submit} className="button-primary">Save</button>}
 
             <label>Secrets</label>
             <input 
@@ -162,7 +173,12 @@ const EditNPC = () => {
                 {formState.lastSeen && <button onClick={submit} className="button-primary">Save</button>}
 
             <label>Hide Character</label>
-            <input type="checkbox" id="hidden" onChange={handleChange}></input>
+            <input 
+                type="checkbox" 
+                id="hidden" 
+                onChange={handleChange}
+                checked={formState.hidden}></input>
+                {formState.hidden !== npcs.hidden && <button onClick={submit} className="button-primary">Save</button>}
 
             
         </form>
