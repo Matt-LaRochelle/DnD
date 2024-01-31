@@ -1,6 +1,6 @@
 import './navbar.css'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useLogout } from '../../hooks/useLogout'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import Logo from '../logo/Logo';
@@ -10,9 +10,14 @@ import { IoIosSettings } from "react-icons/io";
 const Navbar = () => {
     const { logout } = useLogout()
     const { user } = useAuthContext()
+    const navigate = useNavigate()
 
     const handleClick = () => {
         logout()
+    }
+
+    const navSettings = () => {
+        navigate('/settings')
     }
     
     return (
@@ -30,7 +35,7 @@ const Navbar = () => {
                     {user && (
                         <div className="nav-menu">
                             <span>{user.email}</span>
-                            <IoIosSettings className="nav-icon" />
+                            <IoIosSettings onClick={navSettings} className="nav-icon" />
                             <button onClick={handleClick}>Log out</button>
                         </div>
                     )}

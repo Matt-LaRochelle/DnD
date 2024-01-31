@@ -10,6 +10,7 @@ import Forgot from './pages/landing/Forgot'
 import ResetPassword from './pages/landing/Reset'
 
 import Start from './pages/start/Start'
+import Settings from './pages/settings/Settings'
 import Campaign from './pages/campaign/Campaign'
 import Npc from './pages/npc/character/Npc'
 import Pc from './pages/npc/character/Pc'
@@ -30,6 +31,10 @@ function App() {
             <Route 
               path="/"
               element={user ? <Start /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/settings"
+              element={user ? <Settings /> : <Navigate to="/login" />}
             />
             <Route 
               path="/campaign/:id"
