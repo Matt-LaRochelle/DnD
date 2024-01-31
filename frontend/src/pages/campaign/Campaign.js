@@ -64,19 +64,19 @@ const Campaign = () => {
                 <div className='loaded'>
                     <h1 onClick={campaignDetails}>{campaigns.title}</h1>
                     <div className="campaign__Description">
-                        <h3>Description</h3>
+                        <h3 className="campaign__heading">Description</h3>
                         <p>{campaigns.description}</p>
                     </div>
                     <div className='campaign__users'>
                     <button onClick={campaignDetails}>Campaign details</button>
-                        <h4>DM for this campaign: {campaigns.dmUsername}</h4>
+                        <h4 className="campaign__heading">DM for this campaign: {campaigns.dmUsername}</h4>
                         <p>Players: </p>
                         {campaigns.playerUsernames.map((username) => (
                             <p>{username}</p>
                         ))}
                     </div>
                     <div className="campaign__Maps">
-                        <h3>Maps</h3>
+                        <h3 className="campaign__heading">Maps</h3>
                         <ul>
                             <li><strong>Make this dynamic at some point</strong></li>
                             <li>Current map</li>
@@ -87,9 +87,9 @@ const Campaign = () => {
                         {/* <Link to="/map">Maps Page</Link> */}
                     </div>
                     
-                    <h2>PCs</h2>
+                    <h2 className="campaign__heading">PCs</h2>
                     <Pcs dm={campaigns.dmID} />
-                    <h2>NPCs</h2>
+                    <h2 className="campaign__heading">NPCs</h2>
                     <Npcs 
                         dm={campaigns.dmID}
                     />
