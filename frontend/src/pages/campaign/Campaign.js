@@ -15,7 +15,13 @@ const Campaign = () => {
     const [loading, setLoading] = useState(true)
     const [npcs, setNpcs] = useState(null)
 
+    const [playerInfo, setPlayerInfo] = useState([]);
+    const [dmInfo, setDmInfo] = useState({});
+
     // const [campaign, setCampaign] = useState({})
+    // This sets once we receive all campaign info, then we can
+    // fetch the user and dm info from inside the campaign.
+    const [step1, setStep1] = useState(false)
 
     const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
@@ -34,8 +40,7 @@ const Campaign = () => {
 
             if (response.ok) {
                 dispatch({type: 'SET_CAMPAIGN', payload: json})
-                // setCampaign(json)
-                setLoading(false)
+                setStep1(true);
             }
         }
 
@@ -43,6 +48,30 @@ const Campaign = () => {
             fetchCampaign()
         }
     }, [path, user, dispatch])
+
+
+        // Get all users and dm info for the campaign
+        useEffect(() => {
+            const fetchUsers = async () => {
+                const response = await fetch('/api/user/campaign/' + campaigns._id, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                const json = await response.json()
+    
+                if (response.ok) {
+                    setPlayerInfo(json.users)
+                    setDmInfo(json.dm)
+                    console.log({playerInfo, dmInfo})
+                    setLoading(false)
+                }
+            }
+            if (step1) {
+                fetchUsers()
+            }
+        
+        }, [step1])
 
 
     const campaignDetails = () => {
@@ -68,12 +97,23 @@ const Campaign = () => {
                         <p>{campaigns.description}</p>
                     </div>
                     <div className='campaign__users'>
-                    <button onClick={campaignDetails}>Campaign details</button>
-                        <h4 className="campaign__heading">DM for this campaign: {campaigns.dmUsername}</h4>
-                        <p>Players: </p>
-                        {campaigns.playerUsernames.map((username) => (
-                            <p>{username}</p>
-                        ))}
+                        <button onClick={campaignDetails}>Campaign details</button>
+                        <h4 className="campaign__heading">DM</h4>
+                        <div className="campaign__dm">
+                            <div className="avatar-name">
+                                <img src={dmInfo.image} alt={dmInfo.username} />
+                                <p>{dmInfo.username}</p>
+                            </div>
+                        </div>
+                        <h4 className="campaign__heading">Players</h4>
+                        <div className="campaign__players">
+                            {playerInfo.map((player) => (
+                                <div className="avatar-name">
+                                <img src={player.image} alt={player.username} />
+                                <p>{player.username}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     <div className="campaign__Maps">
                         <h3 className="campaign__heading">Maps</h3>

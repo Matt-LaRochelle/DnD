@@ -17,7 +17,16 @@
     top: 5px;
     right: 5px;
 }
-
+.campaign__dm {
+    width: max-content;
+}
+.campaign__dm img {
+    border: 2px solid red;
+}
+.campaign__players {
+    display: flex;
+    flex-wrap: wrap;
+}
 .campaign__Maps {
     border: 2px solid aqua;
     margin-top: 20px;
