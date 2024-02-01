@@ -19,6 +19,9 @@ const campaignSchema = new Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String,
+    },
     playerIDs: [String],
     playerUsernames: [String],
     pcs: [String],

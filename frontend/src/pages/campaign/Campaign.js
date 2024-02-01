@@ -18,6 +18,9 @@ const Campaign = () => {
     const [playerInfo, setPlayerInfo] = useState([]);
     const [dmInfo, setDmInfo] = useState({});
 
+    // This variable says whether the current client is DM of this campaign
+    const [dm, setDm] = useState(false)
+
     // const [campaign, setCampaign] = useState({})
     // This sets once we receive all campaign info, then we can
     // fetch the user and dm info from inside the campaign.
@@ -26,6 +29,12 @@ const Campaign = () => {
     const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (user.id === campaigns.dmID) {
+            setDm(true);
+        }
+    }, [user, campaigns])
 
     useEffect(() => {
         const fetchCampaign = async () => {
@@ -79,6 +88,9 @@ const Campaign = () => {
         console.log("playerUsernames", campaigns.playerUsernames)
     }
 
+    const editCampaign = () => {
+        navigate(`/campaign/edit/${campaigns._id}`)
+    }
 
     const moreInfo = (id) => {
         navigate(`/npc/${id}`);
@@ -98,6 +110,7 @@ const Campaign = () => {
                     </div>
                     <div className='campaign__users'>
                         <button onClick={campaignDetails}>Campaign details</button>
+                        {dm && <button onClick={editCampaign}>Edit this Campaign</button>}
                         <h4 className="campaign__heading">DM</h4>
                         <div className="campaign__dm">
                             <div className="avatar-name">

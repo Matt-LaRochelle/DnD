@@ -13,6 +13,11 @@ export const campaignsReducer = (state, action) => {
             return {
                 campaigns: action.payload
             }
+        // Update a single campaign
+        case 'UPDATE_CAMPAIGN':
+            return {
+                campaigns: action.payload
+            }
         case 'CREATE_CAMPAIGN':
             return {
                 campaigns: [action.payload, ...state.campaigns]

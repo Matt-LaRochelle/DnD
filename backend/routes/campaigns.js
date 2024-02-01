@@ -36,7 +36,7 @@ router.patch('/leave', leaveCampaign)
 
 
 //UPDATE a Campaign
-// router.patch('/:id', updateCampaign)
+router.patch('/:id', updateCampaign)
 
 
 module.exports = router

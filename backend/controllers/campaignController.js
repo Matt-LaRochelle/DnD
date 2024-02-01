@@ -215,7 +215,7 @@ const updateCampaign = async (req, res) => {
 
     const campaign = await Campaign.findOneAndUpdate({_id: id}, {
         ...req.body
-    })
+    }, { new: true })
 
     if (!campaign) {
         return res.status(400).json({error: 'No such campaign'})
