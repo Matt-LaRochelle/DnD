@@ -40,7 +40,7 @@ const Navbar = () => {
                         </div>
                     )}
                     {!user && (
-                        <div>
+                        <div className="logged-out-menu">
                             <Link to='/login'>Login</Link>
                             <Link to='/signup'>Signup</Link>
                         </div>

@@ -59,3 +59,7 @@ nav button {
     border: 2px solid var(--primary);
     margin: 5px 0;
 }
+
+.logged-out-menu a {
+    margin-left: 10px;
+}
