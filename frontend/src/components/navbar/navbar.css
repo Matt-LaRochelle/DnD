@@ -8,6 +8,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 120px;
   }
   header a {
     color: #222;
@@ -50,6 +51,7 @@ nav button {
     align-items: flex-end;
     border-left: 1px solid #f8f8f8;
     padding-left: 20px;
+    background: linear-gradient(to left, #838383, rgb(177, 204, 194)) ;
 }
 
 .nav-menu .nav-icon {
