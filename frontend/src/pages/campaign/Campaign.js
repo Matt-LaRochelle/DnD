@@ -105,8 +105,8 @@ const Campaign = () => {
                 <div className='loaded'>
                     <h1 onClick={campaignDetails}>{campaigns.title}</h1>
                     <div className="campaign__Description">
-                        <h3 className="campaign__heading">Description</h3>
                         <p>{campaigns.description}</p>
+                        <img src={campaigns.image} alt={campaigns.title} />
                     </div>
                     <div className='campaign__users'>
                         <button onClick={campaignDetails}>Campaign details</button>
