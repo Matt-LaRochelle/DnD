@@ -30,8 +30,7 @@
     border: 2px solid red;
 }
 .campaign__players {
-    display: flex;
-    flex-wrap: wrap;
+    margin-top: 40px;
 }
 .campaign__Maps {
     border: 2px solid aqua;

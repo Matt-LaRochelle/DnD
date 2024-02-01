@@ -6,6 +6,8 @@ import './campaignDetails.css'
 // import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useEffect, useState } from 'react'
 
+import CharacterRow from '../../characterRow/CharacterRow'
+
 const CampaignDetails = ({ campaign }) => {
     const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
@@ -94,23 +96,13 @@ const CampaignDetails = ({ campaign }) => {
     return (
         <div key={campaign._id} className="campaignDetails__container">
             <h2>{campaign.title}</h2>
-            <div className="campaignDetails__dm">
-                <h3>Dungeon Master:</h3>
-                <div className="avatar-name">
-                    <img src={dmInfo.image} alt={dmInfo.username} />
-                    <p>{dmInfo.username}</p>
-                </div>
-            </div>
             <h3>Description:</h3> 
             <p>{campaign.description}</p>
-            <h3 className="campaignDetails__list-title">List of players</h3>
             <div className="campaignDetails__list">
-                {playerInfo.map((player) => (
-                    <div className="avatar-name">
-                    <img src={player.image} alt={player.username} />
-                    <p>{player.username}</p>
-                    </div>
-                ))}
+                <CharacterRow 
+                    playerInfo={playerInfo}
+                    dmInfo={dmInfo}
+                />
             </div>
             {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
             <Link to={path} className="campaignDetails__enter">Enter</Link>

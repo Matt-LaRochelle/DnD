@@ -112,7 +112,6 @@ const Campaign = () => {
                     <div className='campaign__users'>
                         <button onClick={campaignDetails}>Campaign details</button>
                         {dm && <button onClick={editCampaign}>Edit this Campaign</button>}
-                        <h4 className="campaign__heading">Players</h4>
                         <div className="campaign__players">
                             <CharacterRow 
                                 dmInfo={dmInfo}
