@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Campaign = require('../models/campaignModel')
 const jwt = require('jsonwebtoken')
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -140,6 +141,56 @@ const getUser = async (req, res) => {
 }
 
 
+// Get all Users which are in a specific campaign
+const getUsers = async (req, res) => {
+    // Create empty variable to store the campaign, returning users and dm
+    let campaign;
+    let userArray;
+    let dm;
+    // Get the campaign ID
+    const campaignID = req.params.campaign
+    console.log("Campaign ID", campaignID)
+    try {
+        campaign = await Campaign.findById(campaignID)
+    } catch (err) {
+        console.log(err)
+        res.status(400).json(err.message)
+    }
+    console.log("campaign", campaign)
+    // Get all users in the campaign
+    try {
+        const users = await User.find({ _id: { $in: campaign.playerIDs } })
+        console.log("Users", users)
+    // For each user, get the user.username, user.image
+        userArray = users.map(user => {
+            return {
+                username: user.username,
+                image: user.image,
+                id: user._id
+            }
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(400).json(err.message)
+    }
+    // Get DM info in the campaign
+    try {
+        const dmInfo = await User.findById(campaign.dmID)
+        dm = {
+            username: dmInfo.username,
+            image: dmInfo.image,
+            id: dmInfo._id
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(400).json(err.message)
+    }
+    // Return users array and dm
+    res.status(200).json({users: userArray, dm})
+
+}
+
 
 // update a user
 const updateUser = async (req, res) => {
@@ -162,4 +213,13 @@ const updateUser = async (req, res) => {
     res.status(200).json(user)
 }
 
-module.exports = { loginUser, signupUser, forgotUser, verifyLink, resetPassword, checkCookies, getUser, updateUser }
+module.exports = { 
+    loginUser, 
+    signupUser, 
+    forgotUser, 
+    verifyLink, 
+    resetPassword, 
+    checkCookies, 
+    getUser,
+    getUsers, 
+    updateUser }

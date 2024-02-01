@@ -9,6 +9,7 @@ const {
     resetPassword, 
     checkCookies,
     getUser,
+    getUsers,
     updateUser } = require('../controllers/userController')
 
 const requireAuth = require('../middleware/requireAuth')
@@ -35,6 +36,8 @@ router.post('/reset', resetPassword)
 router.use(requireAuth)
 
 router.get('/check', checkCookies)
+
+router.get('/campaign/:campaign', getUsers)
 
 router.get('/:id', getUser)
 
