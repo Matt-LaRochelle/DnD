@@ -1,0 +1,14 @@
+.characterRow__container {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+}
+.characterRow__dm {
+    display: flex;
+}
+.characterRow__dm img {
+    border: 2px solid red;
+}
+.characterRow__players {
+    display: flex;
+    flex-wrap: wrap;
+}

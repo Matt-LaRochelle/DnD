@@ -7,6 +7,7 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 import Npcs from '../../components/npc/Npcs';
 import Pcs from '../../components/pcs/Pcs';
 import Loading from '../../components/loading/Loading';
+import CharacterRow from '../../components/characterRow/CharacterRow';
 
 
 const Campaign = () => {
@@ -111,21 +112,12 @@ const Campaign = () => {
                     <div className='campaign__users'>
                         <button onClick={campaignDetails}>Campaign details</button>
                         {dm && <button onClick={editCampaign}>Edit this Campaign</button>}
-                        <h4 className="campaign__heading">DM</h4>
-                        <div className="campaign__dm">
-                            <div className="avatar-name">
-                                <img src={dmInfo.image} alt={dmInfo.username} />
-                                <p>{dmInfo.username}</p>
-                            </div>
-                        </div>
                         <h4 className="campaign__heading">Players</h4>
                         <div className="campaign__players">
-                            {playerInfo.map((player) => (
-                                <div className="avatar-name">
-                                <img src={player.image} alt={player.username} />
-                                <p>{player.username}</p>
-                                </div>
-                            ))}
+                            <CharacterRow 
+                                dmInfo={dmInfo}
+                                playerInfo={playerInfo}
+                            />
                         </div>
                     </div>
                     <div className="campaign__Maps">
