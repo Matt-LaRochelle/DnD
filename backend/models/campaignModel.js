@@ -19,10 +19,6 @@ const campaignSchema = new Schema({
         type: String,
         required: true
     },
-    hidden: {
-        type: Boolean,
-        required: true
-    },
     playerIDs: [String],
     playerUsernames: [String],
     pcs: [String],

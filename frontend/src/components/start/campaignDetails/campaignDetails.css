@@ -7,7 +7,7 @@
     position: relative;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
   }
-  .campaignDetails__container h4 {
+  .campaignDetails__container h2 {
     margin: 0 0 10px 0;
     font-size: 1.2em;
     color: var(--primary);
@@ -17,25 +17,23 @@
     font-size: 0.9em;
   }
   .campaignDetails__container .campaignDetails__dm {
-    margin-bottom: 20px;
-    margin-top: -10px;
-
+    width: max-content;
   }
+  .campaignDetails__container .campaignDetails__dm img {
+    border: 2px solid red;
+  }
+
   .campaignDetails__container .campaignDetails__list-title {
     margin-top: 20px;
-    text-decoration: underline;
   }
+
+
   .campaignDetails__container .campaignDetails__list {
     display: flex;
     flex-wrap: wrap;
   }
-  .campaignDetails__container .campaignDetails__list p {
-    margin: 30px;
-    padding: 10px;
-    border: 2px solid #ddd;
-    width: max-content;
-    box-shadow: 2px 2px 25px 2px rgba(255, 161, 161, 0.358);
-  }
+
+
   .campaignDetails__container span {
     position: absolute;
     top: 20px;

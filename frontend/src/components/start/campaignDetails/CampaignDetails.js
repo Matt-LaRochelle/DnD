@@ -12,10 +12,33 @@ const CampaignDetails = ({ campaign }) => {
     const [showID, setShowID] = useState('')
     const [dmRole, setDmRole] = useState(false);
 
+    const [playerInfo, setPlayerInfo] = useState([]);
+    const [dmInfo, setDmInfo] = useState({});
+
     useEffect(() => {
         if (user.id === campaign.dmID) {
             setDmRole(true);
         }
+    }, [])
+
+    // Get all users and dm info for the campaign
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const response = await fetch('/api/user/campaign/' + campaign._id, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                setPlayerInfo(json.users)
+                setDmInfo(json.dm)
+                console.log({playerInfo, dmInfo})
+            }
+        }
+        fetchUsers()
+    
     }, [])
 
     // This deletes the DM's campaign - only available for DMs
@@ -70,16 +93,25 @@ const CampaignDetails = ({ campaign }) => {
 
     return (
         <div key={campaign._id} className="campaignDetails__container">
-            <h4>Campaign Title {campaign.title}</h4>
-            <p className="campaignDetails__dm"><strong>DM:</strong> {campaign.dmUsername}</p>
-            <p><strong>Description:</strong> {campaign.description}</p>
-            <p className="campaignDetails__list-title">List of players</p>
+            <h2>{campaign.title}</h2>
+            <div className="campaignDetails__dm">
+                <h3>Dungeon Master:</h3>
+                <div className="avatar-name">
+                    <img src={dmInfo.image} alt={dmInfo.username} />
+                    <p>{dmInfo.username}</p>
+                </div>
+            </div>
+            <h3>Description:</h3> 
+            <p>{campaign.description}</p>
+            <h3 className="campaignDetails__list-title">List of players</h3>
             <div className="campaignDetails__list">
-                {campaign.playerUsernames.map((username) => (
-                    <p>{username}</p>
+                {playerInfo.map((player) => (
+                    <div className="avatar-name">
+                    <img src={player.image} alt={player.username} />
+                    <p>{player.username}</p>
+                    </div>
                 ))}
             </div>
-            <p>{campaign.hidden ? "This campaign is hidden." : "This campaign is visible." }</p>
             {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
             <Link to={path} className="campaignDetails__enter">Enter</Link>
 

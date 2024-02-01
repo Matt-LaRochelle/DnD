@@ -135,3 +135,21 @@ input.error {
   top: 110px;
   left: 10px;
 }
+
+.avatar-name {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.avatar-name img {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border-radius: 50%;
+  border: 2px solid blue;
+  object-fit: cover;
+}
+.avatar-name p {
+  font-weight: 700;
+}
