@@ -150,7 +150,7 @@ const updateUser = async (req, res) => {
         return res.status(404).json({error: 'No such user'})
     }
 
-    // How to make it return the new version?
+    // If the req.body is doing a password you have to salt and hash it...
     const user = await User.findOneAndUpdate({_id: id}, {
         ...req.body
     }, { new: true })
