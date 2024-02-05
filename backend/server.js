@@ -6,6 +6,7 @@ const userRoutes = require('./routes/user')
 const campaignRoutes = require('./routes/campaigns')
 const npcRoutes = require('./routes/npc')
 const pcRoutes = require('./routes/pc')
+const mapRoutes = require('./routes/map')
 
 
 // express app
@@ -24,6 +25,7 @@ app.use('/api/user/', userRoutes)
 app.use('/api/campaign/', campaignRoutes)
 app.use('/api/npc/', npcRoutes)
 app.use('/api/pc/', pcRoutes)
+app.use('/api/map/', mapRoutes)
 
 
 // connect to db
