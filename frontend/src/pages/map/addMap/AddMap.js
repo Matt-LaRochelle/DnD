@@ -1,10 +1,10 @@
-import './add.css'
+import '../../npc/addCharacter/add.css'
 import { useEffect, useState } from 'react'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate } from 'react-router-dom'
 
-const AddPC = () => {
+const AddMap = () => {
     const [formState, setFormState] = useState({
         name: '',
         description: '',
@@ -40,16 +40,11 @@ const AddPC = () => {
             return
         }
 
-        const pc = {
-            ...formState, 
-            "campaignID": campaigns._id, 
-            "userID": user.id,
-            "username": user.username
-        }
+        const map = {...formState, "campaignID": campaigns._id}
 
-        const response = await fetch('/api/pc/', {
+        const response = await fetch('/api/map/', {
             method: 'POST',
-            body: JSON.stringify(pc),
+            body: JSON.stringify(map),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}`
@@ -69,12 +64,11 @@ const AddPC = () => {
                 description: '',
                 image: '',
                 secrets: '',
-                lastSeen: '',
                 hidden: false
             })
             setError(null)
             setEmptyFields([])
-            console.log('new pc added', json)
+            console.log('new map added', json)
             // dispatch({type: 'CREATE_CAMPAIGN', payload: json})
             navigate(`/campaign/${campaigns._id}`)
         }
@@ -86,7 +80,7 @@ const AddPC = () => {
 
     return (
         <form className='Add__form' onSubmit={submit}>
-           <h2>Add PC</h2>
+           <h2>Add Map</h2>
             <label>Name</label>
             <input className={emptyFields.includes("name") && "error"} type="text" id="name" onChange={handleChange}></input>
 
@@ -99,16 +93,13 @@ const AddPC = () => {
             <label>Secrets</label>
             <input type="text" id="secrets" onChange={handleChange}></input>
 
-            <label>Last Seen</label>
-            <input type="text" id="lastSeen" onChange={handleChange}></input>
-
-            <label>Hide Character</label>
+            <label>Hide Map</label>
             <input type="checkbox" id="hidden" onChange={handleChange}></input>
 
-            <button type="submit">Add PC</button>
+            <button type="submit">Add Map</button>
             {error && <div className="error" >{error}</div>}
         </form>
     )
 }
 
-export default AddPC
+export default AddMap

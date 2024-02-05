@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 const AddNPC = () => {
     const [formState, setFormState] = useState({
+        name: '',
         description: '',
         image: '',
         secrets: '',
@@ -59,6 +60,7 @@ const AddNPC = () => {
 
         if (response.ok) {
             setFormState({
+                name: '',
                 description: '',
                 image: '',
                 secrets: '',
