@@ -1,14 +1,14 @@
-import '../npcs/npcs.css'
+import './maps.css'
 
 import { useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
-import { usePcsContext } from '../../hooks/usePcsContext'
+import { useMapsContext } from '../../hooks/useMapsContext'
 
 
 
-const Pcs = () => {
+const Maps = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
     const [loading, setLoading] = useState(true)
@@ -17,14 +17,14 @@ const Pcs = () => {
     const [startX, setStartX] = useState(null);
 
     const {campaigns, dispatch} = useCampaignsContext()
-    const { pcs, dispatch: pcsDispatch } = usePcsContext()
+    const { maps, dispatch: mapsDispatch } = useMapsContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
     useEffect(() => {
-        const fetchPcs = async () => {
+        const fetchMaps = async () => {
             setLoading(true);
-            const response = await fetch(`/api/pc/${path}`, {
+            const response = await fetch(`/api/map/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -33,23 +33,23 @@ const Pcs = () => {
             console.log("Step 1: json data from server:", json);
 
             if (response.ok) {
-                pcsDispatch({type: 'SET_PCS', payload: json})
+                mapsDispatch({type: 'SET_MAPS', payload: json})
                 setLoading(false)
             }
         }
 
         if (user) {
-            fetchPcs()
+            fetchMaps()
         }
     }, [path, user, dispatch])
 
 
-    const deletePC = async (id) => {
+    const deleteMap = async (id) => {
         if (!user) {
             return
         }
         setLoading(true);
-        const response = await fetch(`/api/pc/${id}`, {
+        const response = await fetch(`/api/map/${id}`, {
             method: 'DELETE', // Specify the method here
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -59,18 +59,18 @@ const Pcs = () => {
         console.log("Step 1: json data from server:", json);
 
         if (response.ok) {
-            pcsDispatch({type: 'DELETE_PC', payload: json})
+            mapsDispatch({type: 'DELETE_MAP', payload: json})
             setLoading(false)
             
         }
     }
 
     const moreInfo = (id) => {
-        navigate(`/pc/${id}`);
+        navigate(`/map/${id}`);
     }
 
     const handleClick = () => {
-        navigate(`/pc/add`);
+        navigate(`/map/add`);
     }
 
     const swiperClick = (index) => {
@@ -132,18 +132,12 @@ const Pcs = () => {
             // onMouseUp={handleMouseUp}
             >
             <div className="npcs__swiper" style={{transform: `translateX(-${xAxis}px)`}}>
-            {!loading && pcs.filter((pc) => {
-                if (user.id === campaigns.dmID || pc.userID === user.id) {
-                    return true; // Include all PCs
-                } else {
-                    return !pc.hidden; // Exclude PCs with hidden=true
-                }
-            }).map((pc) => (
-                <div className={pc.hidden ? "npc npc-hidden" : "npc"} key={pc._id}>
-                <h3>{pc.name}</h3>
-                    <img src={pc.image} alt={pc.name} />
-                    <button className='button-primary' onClick={() => moreInfo(pc._id)}>More Info</button>
-                    {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deletePC(pc._id)}>Delete</button> || pc.userID === user.id && <button className="button-secondary" onClick={() => deletePC(pc._id)}>Delete</button>}
+            {!loading && maps.map((map) => (
+                <div className={map.hidden ? "npc npc-hidden" : "npc"} key={map._id} style={{ display: map.hidden && user.id !== campaigns.dmID && "none"}}>
+                <h3>{map.name}</h3>
+                    <img src={map.image} alt={map.name} />
+                    <button className='button-primary' onClick={() => moreInfo(map._id)}>More Info</button>
+                    {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteMap(map._id)}>Delete</button>}
                 </div>
                 ))}
             {/* {!loading && npcs.map((npc) => (
@@ -154,31 +148,29 @@ const Pcs = () => {
                     {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteNPC(npc._id)}>Delete</button>}
                 </div>
             ))} */}
-            
-            <div className="npc" >
-                <h3>Add PC</h3>
-                <img src="https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg=" alt="Add NPC" />
-                <p onClick={handleClick} className='add'>+</p>
-            </div>
+            {campaigns.dmID === user.id && 
+                <div className="npc" >
+                    <h3>Add Map</h3>
+                    <img src="https://garden.spoonflower.com/c/14409649/p/f/m/7ymlkg-hbhMsJgmHbo_kFYPOIs3PddAIZ-Jsp793-WT9emAe4cmy/Grid%20wallpaper%20-%20cloud%20grey%20grid%20jumbo%20scale%20.jpg" alt="Add Map" />
+                    <p onClick={handleClick} className='add'>+</p>
+                </div>}
             </div>
             <div className="npcs__buttons">
-            {!loading && pcs.filter((pc) => {
-                if (user.id === campaigns.dmID || pc.userID === user.id) {
-                    return true; // Include all PCs
+            {!loading && maps.filter((map) => {
+                if (user.id === campaigns.dmID) {
+                    return true; // Include all maps
                 } else {
-                    return !pc.hidden; // Exclude PCs with hidden=true
+                    return !map.hidden; // Exclude maps with hidden=true
                 }
-            }).map((pc, index) => (
+            }).map((map, index) => (
                 <div 
                     className="npcs__button" 
                     onClick={() => swiperClick(index)}
                 />
             ))} 
-                
-                
             </div>
         </div>
     )
 }
 
-export default Pcs
+export default Maps

@@ -4,7 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 
-import Npcs from '../../components/npc/Npcs';
+import Maps from '../../components/maps/Maps';
+import Npcs from '../../components/npcs/Npcs';
 import Pcs from '../../components/pcs/Pcs';
 import Loading from '../../components/loading/Loading';
 import CharacterRow from '../../components/characterRow/CharacterRow';
@@ -119,25 +120,12 @@ const Campaign = () => {
                             />
                         </div>
                     </div>
-                    <div className="campaign__Maps">
-                        <h3 className="campaign__heading">Maps</h3>
-                        <ul>
-                            <li><strong>Make this dynamic at some point</strong></li>
-                            <li>Current map</li>
-                            <li>Recent map</li>
-                            <li>Recent map</li>
-                            <li>Recent map</li>
-                        </ul>
-                        {/* <Link to="/map">Maps Page</Link> */}
-                    </div>
-                    
+                    <h2 className="campaign__heading">Maps</h2>
+                    <Maps dm={campaigns.dmID} />
                     <h2 className="campaign__heading">PCs</h2>
                     <Pcs dm={campaigns.dmID} />
                     <h2 className="campaign__heading">NPCs</h2>
-                    <Npcs 
-                        dm={campaigns.dmID}
-                    />
-                    
+                    <Npcs dm={campaigns.dmID} />                    
                 </div>  
             }
         </div>
