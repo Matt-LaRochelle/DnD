@@ -13,6 +13,7 @@ import Start from './pages/start/Start'
 import Settings from './pages/settings/Settings'
 import Campaign from './pages/campaign/Campaign'
 import EditCampaign from './pages/campaign/EditCampaign'
+import Map from './pages/map/map/Map'
 import AddMap from './pages/map/addMap/AddMap'
 import EditMap from './pages/map/editMap/EditMap'
 import Npc from './pages/npc/character/Npc'
@@ -46,6 +47,10 @@ function App() {
             <Route 
               path="/campaign/edit/:id"
               element={user ? <EditCampaign /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/map/:id"
+              element={user ? <Map /> : <Navigate to="/login" />}
             />
             <Route 
               path="/map/add"
