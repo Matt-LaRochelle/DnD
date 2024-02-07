@@ -34,10 +34,6 @@ const EditMap = () => {
         });
     }
 
-    useEffect(() => {
-        console.log(formState)
-    }, [formState])
-
 
     useEffect(() => {
         // Fetch a map's information
@@ -71,7 +67,6 @@ const EditMap = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-        console.log("submitting", formState);
 
         if (!user) {
             alert("You must be logged in.")
@@ -104,7 +99,6 @@ const EditMap = () => {
             body: JSON.stringify(updatedData)
         })
         const json = await response.json()
-        console.log("JSON response:", json)
 
         if (response.ok) {
             console.log(json)

@@ -17,12 +17,10 @@ const CampaignStart = () => {
 
     const handleClick = () => {
         setShowForm(showForm => !showForm);
-        console.log(user);
     }
 
     const handleHidden = () => {
         setHidden(hidden => !hidden);
-        console.log(user.id)
     }
 
 
@@ -55,7 +53,6 @@ const CampaignStart = () => {
             setDescription('')
             setError(null)
             setEmptyFields([])
-            console.log('new campaign added', json)
             dispatch({type: 'CREATE_CAMPAIGN', payload: json})
         }
     }

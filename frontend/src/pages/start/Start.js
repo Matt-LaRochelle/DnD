@@ -20,7 +20,6 @@ const Start = () => {
     useEffect(() => {
         // Fetch the campaigns which this user is a DM or Player for
         const fetchUserCampaignList = async () => {
-            console.log('useEffect is running'); // This will log to the console every time useEffect runs
             setLoading(true);
             const response = await fetch('/api/campaign/', {
                 headers: {

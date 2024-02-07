@@ -13,7 +13,6 @@ const CampaignJoin = () => {
 
     const handleClick = () => {
         setShowForm(showForm => !showForm);
-        console.log(user.id)
     }
 
     const handleSubmit = async (e) => {
@@ -42,7 +41,6 @@ const CampaignJoin = () => {
         if (response.ok) {
             setCampaignID('')
             setError(null)
-            console.log('new campaign added', json)
             dispatch({type: 'CREATE_CAMPAIGN', payload: json})
         }
     }

@@ -41,7 +41,7 @@ function ResetPassword() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true)
-    // TODO: Send password reset request to server
+
     if (password === confirmPassword) {
       const response = await fetch('/api/user/reset', {
         method: 'POST',
@@ -55,7 +55,6 @@ function ResetPassword() {
         }
         if (response.ok) {
             const text = JSON.stringify(json)
-            console.log("got things back: " + text)
             setError(null)
             setIsLoading(false)
             setCompleteReset(true)

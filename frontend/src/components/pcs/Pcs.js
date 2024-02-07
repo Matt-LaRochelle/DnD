@@ -30,7 +30,6 @@ const Pcs = () => {
                 }
             })
             const json = await response.json()
-            console.log("Step 1: json data from server:", json);
 
             if (response.ok) {
                 pcsDispatch({type: 'SET_PCS', payload: json})
@@ -56,7 +55,6 @@ const Pcs = () => {
             }
         })
         const json = await response.json()
-        console.log("Step 1: json data from server:", json);
 
         if (response.ok) {
             pcsDispatch({type: 'DELETE_PC', payload: json})
@@ -75,7 +73,6 @@ const Pcs = () => {
 
     const swiperClick = (index) => {
         setXAxis(() => index * 280)
-        console.log("Swiper Clicked", xAxis);
     }
 
 

@@ -17,8 +17,6 @@ const Map = () => {
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
 
-    console.log("campaign id", campaigns._id)
-
     useEffect(() => {
         // Fetch an Map's information
         const fetchMapInfo = async () => {

@@ -24,7 +24,7 @@ const EditPC = () => {
 
     const location = useLocation()
     const path = location.pathname.split("/")[3]
-    console.log(path)
+
 
     const handleChange = (event) => {
         const isCheckbox = event.target.type === 'checkbox';
@@ -33,10 +33,6 @@ const EditPC = () => {
             [event.target.id]: isCheckbox ? event.target.checked : event.target.value
         });
     }
-
-    useEffect(() => {
-        console.log(formState)
-    }, [formState])
 
 
     useEffect(() => {
@@ -71,7 +67,6 @@ const EditPC = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-        console.log("submitting", formState);
 
         if (!user) {
             alert("You must be logged in.")

@@ -9,7 +9,6 @@ export const campaignsReducer = (state, action) => {
                 campaigns: action.payload
             }
         case 'SET_CAMPAIGN':
-            console.log("Step 2 set campaign context", action.payload)
             return {
                 campaigns: action.payload
             }
@@ -35,6 +34,8 @@ export const CampaignsContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(campaignsReducer, {
         campaigns: null
     })
+
+    console.log('CampaignsContext state: ', state)
 
     return (
         <CampaignsContext.Provider value={{...state, dispatch}}>

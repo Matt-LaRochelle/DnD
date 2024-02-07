@@ -21,17 +21,14 @@ const Settings = () => {
     })
 
     const editUsername = () => {
-        console.log('username')
         setEUsername(!eUsername)
     }
 
     const editPassword = () => {
-        console.log('password')
         setEPassword(!ePassword)
     }
 
     const editImage = () => {
-        console.log('image')
         setEImage(!eImage)
     }
 
@@ -42,9 +39,6 @@ const Settings = () => {
         });
     }
 
-    useEffect(() => {
-        console.log(formState)
-    }, [formState])
 
 
     const submit = async (e) => {
@@ -77,10 +71,8 @@ const Settings = () => {
             body: JSON.stringify(updatedData)
         })
         const json = await response.json()
-        console.log("JSON response:", json)
 
         if (response.ok) {
-            console.log(json)
             dispatch({type: 'UPDATE', payload: json})
             setEUsername(false)
             setEPassword(false)

@@ -17,8 +17,6 @@ const Pc = () => {
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
 
-    console.log("campaign id", campaigns._id)
-
     useEffect(() => {
         // Fetch an NPC's information
         const fetchPCinfo = async () => {

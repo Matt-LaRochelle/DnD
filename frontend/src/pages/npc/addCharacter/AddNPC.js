@@ -28,10 +28,6 @@ const AddNPC = () => {
         });
     }
 
-    useEffect(() => {
-        console.log(formState)
-    }, [formState])
-
 
     const submit = async (e) => {
         e.preventDefault();
@@ -69,7 +65,6 @@ const AddNPC = () => {
             })
             setError(null)
             setEmptyFields([])
-            console.log('new npc added', json)
             // dispatch({type: 'CREATE_CAMPAIGN', payload: json})
             navigate(`/campaign/${campaigns._id}`)
         }

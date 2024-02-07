@@ -36,7 +36,6 @@ const CampaignDetails = ({ campaign }) => {
             if (response.ok) {
                 setPlayerInfo(json.users)
                 setDmInfo(json.dm)
-                console.log({playerInfo, dmInfo})
             }
         }
         fetchUsers()

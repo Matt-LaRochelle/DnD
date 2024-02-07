@@ -47,8 +47,6 @@ const Campaign = () => {
                 }
             })
             const json = await response.json()
-            console.log("Step 1: json data from server:", json);
-
             if (response.ok) {
                 dispatch({type: 'SET_CAMPAIGN', payload: json})
                 setStep1(true);
@@ -74,7 +72,6 @@ const Campaign = () => {
                 if (response.ok) {
                     setPlayerInfo(json.users)
                     setDmInfo(json.dm)
-                    console.log({playerInfo, dmInfo})
                     setLoading(false)
                 }
             }

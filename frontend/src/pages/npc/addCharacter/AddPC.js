@@ -28,10 +28,6 @@ const AddPC = () => {
         });
     }
 
-    useEffect(() => {
-        console.log(formState)
-    }, [formState])
-
 
     const submit = async (e) => {
         e.preventDefault();
@@ -74,7 +70,6 @@ const AddPC = () => {
             })
             setError(null)
             setEmptyFields([])
-            console.log('new pc added', json)
             // dispatch({type: 'CREATE_CAMPAIGN', payload: json})
             navigate(`/campaign/${campaigns._id}`)
         }

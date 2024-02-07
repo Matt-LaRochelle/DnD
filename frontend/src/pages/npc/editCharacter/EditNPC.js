@@ -24,7 +24,6 @@ const EditNPC = () => {
 
     const location = useLocation()
     const path = location.pathname.split("/")[3]
-    console.log(path)
 
     const handleChange = (event) => {
         const isCheckbox = event.target.type === 'checkbox';
@@ -33,10 +32,6 @@ const EditNPC = () => {
             [event.target.id]: isCheckbox ? event.target.checked : event.target.value
         });
     }
-
-    useEffect(() => {
-        console.log(formState)
-    }, [formState])
 
 
     useEffect(() => {
@@ -71,7 +66,6 @@ const EditNPC = () => {
 
     const submit = async (e) => {
         e.preventDefault();
-        console.log("submitting", formState);
 
         if (!user) {
             alert("You must be logged in.")
@@ -107,10 +101,8 @@ const EditNPC = () => {
             body: JSON.stringify(updatedData)
         })
         const json = await response.json()
-        console.log("JSON response:", json)
 
         if (response.ok) {
-            console.log(json)
             navigate(`/campaign/${campaigns._id}`)
         }
 

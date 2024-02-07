@@ -30,7 +30,6 @@ const Npcs = () => {
                 }
             })
             const json = await response.json()
-            console.log("Step 1: json data from server:", json);
 
             if (response.ok) {
                 npcsDispatch({type: 'SET_NPCS', payload: json})
@@ -56,7 +55,6 @@ const Npcs = () => {
             }
         })
         const json = await response.json()
-        console.log("Step 1: json data from server:", json);
 
         if (response.ok) {
             npcsDispatch({type: 'DELETE_NPC', payload: json})
@@ -75,7 +73,6 @@ const Npcs = () => {
 
     const swiperClick = (index) => {
         setXAxis(() => index * 280)
-        console.log("Swiper Clicked", xAxis);
     }
 
 

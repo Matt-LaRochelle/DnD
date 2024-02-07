@@ -28,10 +28,6 @@ const AddMap = () => {
         });
     }
 
-    useEffect(() => {
-        console.log(formState)
-    }, [formState])
-
 
     const submit = async (e) => {
         e.preventDefault();
@@ -68,7 +64,6 @@ const AddMap = () => {
             })
             setError(null)
             setEmptyFields([])
-            console.log('new map added', json)
             // dispatch({type: 'CREATE_CAMPAIGN', payload: json})
             navigate(`/campaign/${campaigns._id}`)
         }

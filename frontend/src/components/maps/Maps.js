@@ -30,7 +30,6 @@ const Maps = () => {
                 }
             })
             const json = await response.json()
-            console.log("Step 1: json data from server:", json);
 
             if (response.ok) {
                 mapsDispatch({type: 'SET_MAPS', payload: json})
@@ -56,7 +55,6 @@ const Maps = () => {
             }
         })
         const json = await response.json()
-        console.log("Step 1: json data from server:", json);
 
         if (response.ok) {
             mapsDispatch({type: 'DELETE_MAP', payload: json})
@@ -75,7 +73,6 @@ const Maps = () => {
 
     const swiperClick = (index) => {
         setXAxis(() => index * 280)
-        console.log("Swiper Clicked", xAxis);
     }
 
 
