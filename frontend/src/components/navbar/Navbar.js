@@ -1,6 +1,6 @@
 import './navbar.css'
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useLogout } from '../../hooks/useLogout'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
@@ -27,6 +27,8 @@ import { useState } from 'react';
 const Navbar = () => {
     const { logout } = useLogout()
     const { user } = useAuthContext()
+    const location = useLocation()
+    const path = location.pathname
     const { campaigns } = useCampaignsContext()
     const navigate = useNavigate()
 
@@ -44,9 +46,13 @@ const Navbar = () => {
     const navSettings = () => {
         navigate('/settings')
     }
+
+    const giveLocation = () => {
+        console.log(location.pathname)
+    }
     
     return (
-        <header>
+        <header onClick={giveLocation} >
             <div className="container">
                 <Link to="/">
                     <div className="navbar__title">
