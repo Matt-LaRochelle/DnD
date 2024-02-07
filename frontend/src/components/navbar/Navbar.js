@@ -43,10 +43,6 @@ const Navbar = () => {
         setNav(!nav)
     }
 
-    const navSettings = () => {
-        navigate('/settings')
-    }
-
     const giveLocation = () => {
         console.log(location.pathname)
     }
