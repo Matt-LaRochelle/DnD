@@ -60,14 +60,10 @@ const EditCampaign = () => {
         // Only add things that were updated
         const updatedData = {};
 
-        if (formState.title) {
-            updatedData.title = formState.title;
-        }
-        if (formState.description) {
-            updatedData.description = formState.description;
-        }
-        if (formState.image) {
-            updatedData.image = formState.image;
+        for (const [key, value] of Object.entries(formState)) {
+            if (value) {
+                updatedData[key] = value
+            }
         }
 
         const response = await fetch('/api/campaign/' + campaigns._id, {

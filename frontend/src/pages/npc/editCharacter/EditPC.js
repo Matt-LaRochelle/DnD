@@ -76,22 +76,11 @@ const EditPC = () => {
         // Only add things that were updated
         const updatedData = {};
 
-        if (formState.name) {
-            updatedData.name = formState.name;
+        for (const [key, value] of Object.entries(formState)) {
+            if (value) {
+                updatedData[key] = value
+            }
         }
-        if (formState.description) {
-            updatedData.description = formState.description;
-        }
-        if (formState.image) {
-            updatedData.image = formState.image;
-        }
-        if (formState.secrets) {
-            updatedData.secrets = formState.secrets;
-        }
-        if (formState.lastSeen) {
-            updatedData.lastSeen = formState.lastSeen;
-        }
-        updatedData.hidden = formState.hidden;
 
         const response = await fetch('/api/pc/' + pcs._id, {
             method: 'PATCH',
