@@ -77,7 +77,7 @@ const EditPC = () => {
         const updatedData = {};
 
         for (const [key, value] of Object.entries(formState)) {
-            if (value) {
+            if (value !== undefined && value !== "") {
                 updatedData[key] = value
             }
         }
