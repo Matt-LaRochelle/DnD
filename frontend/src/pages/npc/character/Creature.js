@@ -58,14 +58,16 @@ const Creature = () => {
                         <div>
                             <p><strong>Description</strong></p>
                             <p>{creature.description}</p>
+                            <p><strong>Alignment</strong></p>
+                            <p>{creature.alignment}</p>
                             {campaigns.dmID === user.id && 
                             <div>
                                 <p><strong>Secrets</strong></p>
                                 <p>{creature.secrets}</p>
                             </div>
                             }
-                            <p><strong>Last Seen</strong></p>
-                            <p>{creature.lastSeen}</p>
+                            <p><strong>Native to</strong></p>
+                            <p>{creature.nativeTo}</p>
                             {campaigns.dmID === user.id && 
                         <button className="button-primary" onClick={() => navigate(`/creature/edit/${creature._id}`)}>Edit</button>
                             }

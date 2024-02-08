@@ -22,6 +22,7 @@ import AddNPC from './pages/npc/addCharacter/AddNPC'
 import AddPC from './pages/npc/addCharacter/AddPC'
 import AddCreature from './pages/npc/addCharacter/AddCreature'
 import Creature from './pages/npc/character/Creature'
+import EditCreature from './pages/npc/editCharacter/EditCreature'
 import EditNPC from './pages/npc/editCharacter/EditNPC'
 import EditPC from './pages/npc/editCharacter/EditPC'
 
@@ -93,6 +94,10 @@ function App() {
             <Route 
               path="/creature/:id"
               element={user ? <Creature /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/creature/edit/:id"
+              element={user ? <EditCreature /> : <Navigate to="/login" />}
             />
             <Route 
               path="/login"
