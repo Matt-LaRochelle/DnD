@@ -7,6 +7,7 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 import Maps from '../../components/maps/Maps';
 import Npcs from '../../components/npcs/Npcs';
 import Pcs from '../../components/pcs/Pcs';
+import Creatures from '../../components/creatures/Creatures';
 import Loading from '../../components/loading/Loading';
 import CharacterRow from '../../components/characterRow/CharacterRow';
 
@@ -123,6 +124,8 @@ const Campaign = () => {
                     <Pcs dm={campaigns.dmID} />
                     <h2 className="campaign__heading">NPCs</h2>
                     <Npcs dm={campaigns.dmID} />                    
+                    <h2 className="campaign__heading">Creatures</h2>
+                    <Creatures dm={campaigns.dmID} />                    
                 </div>  
             }
         </div>

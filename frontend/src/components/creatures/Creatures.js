@@ -1,10 +1,10 @@
-// import './maps.css'
+import '../maps/maps.css'
 
 import { useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
-import { useMapsContext } from '../../hooks/useMapsContext'
+import { useCreaturesContext } from '../../hooks/useCreaturesContext'
 
 
 
@@ -17,14 +17,14 @@ const Creatures = () => {
     const [startX, setStartX] = useState(null);
 
     const {campaigns, dispatch} = useCampaignsContext()
-    const { maps, dispatch: mapsDispatch } = useMapsContext()
+    const { creatures, dispatch: creaturesDispatch } = useCreaturesContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
     useEffect(() => {
-        const fetchMaps = async () => {
+        const fetchCreatures = async () => {
             setLoading(true);
-            const response = await fetch(`/api/map/${path}`, {
+            const response = await fetch(`/api/creature/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -32,23 +32,23 @@ const Creatures = () => {
             const json = await response.json()
 
             if (response.ok) {
-                mapsDispatch({type: 'SET_MAPS', payload: json})
+                creaturesDispatch({type: 'SET_CREATURES', payload: json})
                 setLoading(false)
             }
         }
 
         if (user) {
-            fetchMaps()
+            fetchCreatures()
         }
     }, [path, user, dispatch])
 
 
-    const deleteMap = async (id) => {
+    const deleteCreature = async (id) => {
         if (!user) {
             return
         }
         setLoading(true);
-        const response = await fetch(`/api/map/${id}`, {
+        const response = await fetch(`/api/creature/${id}`, {
             method: 'DELETE', // Specify the method here
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -57,18 +57,18 @@ const Creatures = () => {
         const json = await response.json()
 
         if (response.ok) {
-            mapsDispatch({type: 'DELETE_MAP', payload: json})
+            creaturesDispatch({type: 'DELETE_CREATURE', payload: json})
             setLoading(false)
             
         }
     }
 
     const moreInfo = (id) => {
-        navigate(`/map/${id}`);
+        navigate(`/creature/${id}`);
     }
 
     const handleClick = () => {
-        navigate(`/map/add`);
+        navigate(`/creature/add`);
     }
 
     const swiperClick = (index) => {
@@ -129,37 +129,30 @@ const Creatures = () => {
             // onMouseUp={handleMouseUp}
             >
             <div className="npcs__swiper" style={{transform: `translateX(-${xAxis}px)`}}>
-            {!loading && maps.map((map) => (
-                <div className={map.hidden ? "npc npc-hidden" : "npc"} key={map._id} style={{ display: map.hidden && user.id !== campaigns.dmID && "none"}}>
-                <h3>{map.name}</h3>
-                    <img src={map.image} alt={map.name} />
-                    <button className='button-primary' onClick={() => moreInfo(map._id)}>More Info</button>
-                    {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteMap(map._id)}>Delete</button>}
+            {!loading && creatures.map((creature) => (
+                <div className={creature.hidden ? "npc npc-hidden" : "npc"} key={creature._id} style={{ display: creature.hidden && user.id !== campaigns.dmID && "none"}}>
+                <h3>{creature.name}</h3>
+                    <img src={creature.image} alt={creature.name} />
+                    <button className='button-primary' onClick={() => moreInfo(creature._id)}>More Info</button>
+                    {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteCreature(creature._id)}>Delete</button>}
                 </div>
                 ))}
-            {/* {!loading && npcs.map((npc) => (
-                <div className={npc.hidden ? "npc npc-hidden" : "npc"} key={npc._id}>
-                    <h3>{npc.name}</h3>
-                    <img src={npc.image} alt={npc.name} />
-                    <button className='button-primary' onClick={() => moreInfo(npc._id)}>More Info</button>
-                    {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteNPC(npc._id)}>Delete</button>}
-                </div>
-            ))} */}
+
             {campaigns.dmID === user.id && 
                 <div className="npc" >
-                    <h3>Add Map</h3>
-                    <img src="https://garden.spoonflower.com/c/14409649/p/f/m/7ymlkg-hbhMsJgmHbo_kFYPOIs3PddAIZ-Jsp793-WT9emAe4cmy/Grid%20wallpaper%20-%20cloud%20grey%20grid%20jumbo%20scale%20.jpg" alt="Add Map" />
+                    <h3>Add Creature</h3>
+                    <img src="https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg=" alt="Add Map" />
                     <p onClick={handleClick} className='add'>+</p>
                 </div>}
             </div>
             <div className="npcs__buttons">
-            {!loading && maps.filter((map) => {
+            {!loading && creatures.filter((creature) => {
                 if (user.id === campaigns.dmID) {
-                    return true; // Include all maps
+                    return true; // Include all creatures
                 } else {
-                    return !map.hidden; // Exclude maps with hidden=true
+                    return !creature.hidden; // Exclude creatures with hidden=true
                 }
-            }).map((map, index) => (
+            }).map((creature, index) => (
                 <div 
                     className="npcs__button" 
                     onClick={() => swiperClick(index)}
