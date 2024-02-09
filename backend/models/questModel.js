@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const npcSchema = new Schema({
+const questSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -31,4 +31,4 @@ const npcSchema = new Schema({
     }
 }, { timestamps: true })
 
-module.exports = mongoose.model('Npc', npcSchema)
+module.exports = mongoose.model('Quest', questSchema)
