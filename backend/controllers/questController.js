@@ -42,12 +42,21 @@ const getQuest = async (req, res) => {
 
 // DM creates a new quest
 const createQuest = async (req, res) => {
-    const {name, description, image, secrets, lastSeen, hidden, campaignID} = req.body
+    const {
+        title, 
+        description, 
+        image, 
+        type, 
+        givenBy, 
+        returnTo, 
+        hidden, 
+        campaignID
+    } = req.body
     
     // Check that user filled out all information
     let emptyFields = []
-    if (!name) {
-        emptyFields.push('name')
+    if (!title) {
+        emptyFields.push('title')
     }
 
     if(emptyFields.length > 0) {
@@ -67,7 +76,16 @@ const createQuest = async (req, res) => {
 
     // Add doc to db
     try {
-        const quest = await Quest.create({name, description, image, secrets, lastSeen, hidden, campaignID})
+        const quest = await Quest.create({
+            title, 
+            description, 
+            image, 
+            type, 
+            givenBy, 
+            returnTo, 
+            hidden, 
+            campaignID
+        })
         res.status(200).json(quest);
     } catch (error) {
         res.status(400).json({ error: error.message });
