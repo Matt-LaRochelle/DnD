@@ -3,11 +3,12 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const userRoutes = require('./routes/user')
-const campaignRoutes = require('./routes/campaigns')
+const campaignRoutes = require('./routes/campaign')
 const npcRoutes = require('./routes/npc')
 const pcRoutes = require('./routes/pc')
 const mapRoutes = require('./routes/map')
 const creatureRoutes = require('./routes/creature')
+const questRoutes = require('./routes/quest')
 
 
 // express app
@@ -28,6 +29,7 @@ app.use('/api/npc/', npcRoutes)
 app.use('/api/pc/', pcRoutes)
 app.use('/api/map/', mapRoutes)
 app.use('/api/creature/', creatureRoutes)
+app.use('/api/quest/', questRoutes)
 
 
 // connect to db
