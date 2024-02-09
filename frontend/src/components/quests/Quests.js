@@ -131,7 +131,7 @@ const Quests = () => {
             <div className="npcs__swiper" style={{transform: `translateX(-${xAxis}px)`}}>
             {!loading && quests.map((quest) => (
                 <div className={quest.hidden ? "npc npc-hidden" : "npc"} key={quest._id} style={{ display: quest.hidden && user.id !== campaigns.dmID && "none"}}>
-                <h3>{quest.name}</h3>
+                <h3>{quest.title}</h3>
                     <img src={quest.image} alt={quest.name} />
                     <button className='button-primary' onClick={() => moreInfo(quest._id)}>More Info</button>
                     {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteQuest(quest._id)}>Delete</button>}

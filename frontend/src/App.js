@@ -21,6 +21,9 @@ import Pc from './pages/npc/character/Pc'
 import AddNPC from './pages/npc/addCharacter/AddNPC'
 import AddPC from './pages/npc/addCharacter/AddPC'
 import AddCreature from './pages/npc/addCharacter/AddCreature'
+import AddQuest from './pages/npc/addCharacter/AddQuest'
+import Quest from './pages/npc/character/Quest'
+import EditQuest from './pages/npc/editCharacter/EditQuest'
 import Creature from './pages/npc/character/Creature'
 import EditCreature from './pages/npc/editCharacter/EditCreature'
 import EditNPC from './pages/npc/editCharacter/EditNPC'
@@ -61,7 +64,7 @@ function App() {
               path="/map/add"
               element={user ? <AddMap /> : <Navigate to="/login" />}
             />
-               <Route 
+            <Route 
               path="/map/edit/:id"
               element={user ? <EditMap /> : <Navigate to="/login" />}
             />
@@ -100,6 +103,18 @@ function App() {
             <Route 
               path="/creature/edit/:id"
               element={user ? <EditCreature /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/quest/add"
+              element={user ? <AddQuest /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/quest/:id"
+              element={user ? <Quest /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/quest/edit/:id"
+              element={user ? <EditQuest /> : <Navigate to="/login" />}
             />
             <Route 
               path="/login"
