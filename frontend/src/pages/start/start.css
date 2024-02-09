@@ -1,3 +1,13 @@
+.start {
+    padding: 30px;
+    background: #8ba1a172;
+    backdrop-filter: blur(16px);
+    border-radius: 4px;
+    box-shadow: var(--clear);
+    color: var(--black);
+    border: 1px solid var(--white);
+}
+
 .start__add {
     display: flex;
     justify-content: space-around;

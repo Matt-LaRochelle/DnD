@@ -6,11 +6,12 @@
     padding: 20px;
     position: relative;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+    color: var(--white);
   }
   .campaignDetails__container h2 {
     margin: 0 0 10px 0;
     font-size: 1.2em;
-    color: var(--primary);
+    color: var(--primary-200);
   }
   .campaignDetails__container p {
     margin: 0;
@@ -44,8 +45,8 @@
   .campaignDetails__container a:visited {
     display: block;
     text-decoration: none;
-    color: var(--primary);
-    border: 2px solid var(--primary);
+    color: var(--primary-800);
+    border: 2px solid var(--primary-800);
     padding: 8px 20px;
     width: max-content;
     background: linear-gradient(to right, #dffaf0, #d5f8f3);
@@ -54,7 +55,7 @@
 
   .campaignDetails__container a:hover,
   .campaignDetails__id-checker:hover {
-    color: #333;
+    color: var(--black);
     background: linear-gradient(to right, #d9e8e2, #c1ebe5);
   }
 
@@ -62,6 +63,7 @@
     position: absolute;
     bottom: 20px;
     right: 20px;
+    color: var(--black);
   }
   .campaign-details__id {
     position: absolute;

@@ -25,12 +25,14 @@ import Creature from './pages/npc/character/Creature'
 import EditCreature from './pages/npc/editCharacter/EditCreature'
 import EditNPC from './pages/npc/editCharacter/EditNPC'
 import EditPC from './pages/npc/editCharacter/EditPC'
+import Background from './components/background/Background';
 
 function App() {
   const { user } = useAuthContext()
 
   return (
     <div className="App">
+      <Background />
       <BrowserRouter>
         <Navbar />
         <div className="pages">
