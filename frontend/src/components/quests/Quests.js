@@ -1,4 +1,4 @@
-import './npcs.css'
+import '../npcs/npcs.css'
 
 import { useEffect, useState, useRef } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
@@ -148,7 +148,7 @@ const Quests = () => {
             {campaigns.dmID === user.id && 
                 <div className="npc" >
                     <h3>Add Quest</h3>
-                    <img src="https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg=" alt="Add Quest" />
+                    <img src="https://static.vecteezy.com/system/resources/previews/002/766/904/non_2x/quest-linear-icons-set-search-for-missing-piece-keys-for-unlocking-map-for-treasure-part-of-quest-customizable-thin-line-contour-symbols-isolated-outline-illustrations-editable-stroke-vector.jpg" alt="Add Quest" />
                     <p onClick={handleClick} className='add'>+</p>
                 </div>}
             </div>
