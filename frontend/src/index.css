@@ -10,11 +10,14 @@
 
 /* layout */
 :root {
-  --primary: #1aac83;
+  --primary: #034e3f;
   --error: #e7195a;
+  --black: #222;
+  --clear: 4px 4px 10px 0 rgba(0, 0, 0, 0.74);
 }
 body {
-  background: linear-gradient(#454545, #222) ;
+  /* background: linear-gradient(#454545, #222) ; */
+  background: center / cover no-repeat url('./images/simon-berger-hxMdsEaiSyE-unsplash.jpg');
   margin: 0;
   font-family: "Poppins";
   width: 100vw;

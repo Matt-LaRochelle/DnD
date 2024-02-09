@@ -3,8 +3,11 @@ form.signup, form.login {
     max-width: 400px;
     margin: 40px auto;
     padding: 20px;
-    background: #252525;
+    background: #8ba1a172;
+    backdrop-filter: blur(16px);
     border-radius: 4px;
+    box-shadow: var(--clear);
+    color: var(--black);
   }
 
   form.signup a,
