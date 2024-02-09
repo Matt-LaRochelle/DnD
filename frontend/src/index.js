@@ -7,6 +7,7 @@ import { PcsContextProvider } from './context/PcContext';
 import { NpcsContextProvider } from './context/NpcContext';
 import { MapsContextProvider } from './context/MapContext';
 import { CreaturesContextProvider } from './context/CreatureContext';
+import { QuestsContextProvider } from './context/QuestContext';
 import { AuthContextProvider } from './context/AuthContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,9 +18,11 @@ root.render(
         <PcsContextProvider>
           <NpcsContextProvider>
             <MapsContextProvider>
-              <CreaturesContextProvider>
-                <App />
-              </CreaturesContextProvider>
+              <QuestsContextProvider>
+                <CreaturesContextProvider>
+                  <App />
+                </CreaturesContextProvider>
+              </QuestsContextProvider>
             </MapsContextProvider>
           </NpcsContextProvider>
         </PcsContextProvider>
