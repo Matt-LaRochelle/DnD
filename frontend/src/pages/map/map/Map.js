@@ -1,9 +1,17 @@
-import '../../npc/character/character.css'
+import './map.css'
 
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import Draggable from 'react-draggable';
+
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { usePcsContext } from '../../../hooks/usePcsContext'
+import { useNpcsContext } from '../../../hooks/useNpcsContext'
+import { useMapsContext } from '../../../hooks/useMapsContext'
+import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
+
+import Avatar from '../../../components/avatar/Avatar'
 
 import Loading from '../../../components/loading/Loading'
 
@@ -13,6 +21,7 @@ const Map = () => {
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
+    const { pcs } = usePcsContext()
     const location = useLocation()
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
@@ -50,24 +59,40 @@ const Map = () => {
                 ?
                 <Loading />
                 :
-                <div className='character__container'>
+                <div className='map__container glass'>
                     <h1>{map.name}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
-                    <div className='character__grid'>
-                    <img src={map.image} alt={map.name} />
-                        <div>
-                            <p><strong>Description</strong></p>
-                            <p>{map.description}</p>
-                            {campaigns.dmID === user.id && 
+                    <div className="map__box">
+                        <Draggable>
+                            <div className='map__image' style={{    
+                                backgroundImage: `url(${map.image})`,
+                                backgroundRepeat: 'no-repeat'
+                            }}>
+                            </div>
+                        </Draggable>
+                    </div>
+                    <div>
+                        <h2>Characters</h2>
+                        <ul className="map-pc-row">
+                            {pcs.map(pc => (
+                                <li key={pc._id}>
+                                    <Avatar image={pc.image} name={pc.name} hideName={true} />
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <p><strong>Description</strong></p>
+                        <p>{map.description}</p>
+                        {campaigns.dmID === user.id && 
                             <div>
                                 <p><strong>Secrets</strong></p>
                                 <p>{map.secrets}</p>
                             </div>
-                            }
-                            {campaigns.dmID === user.id && 
-                        <button className="button-primary" onClick={() => navigate(`/map/edit/${map._id}`)}>Edit</button>
-                            }
-                        </div>
+                        }
+                        {campaigns.dmID === user.id && 
+                            <button className="button-primary" onClick={() => navigate(`/map/edit/${map._id}`)}>Edit</button>
+                        }
                     </div>
                     
                 </div>

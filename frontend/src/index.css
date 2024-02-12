@@ -33,6 +33,7 @@ body {
   padding: 20px;
   margin: 0 auto;
   color: #e8e8e8;
+  position: relative;
 }
 
 /* homepage */
@@ -138,24 +139,18 @@ input.error {
 
 .back {
   position: absolute;
-  top: 110px;
+  top: 10px;
   left: 10px;
 }
 
-.avatar-name {
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.avatar-name img {
-  width: 100px;
-  height: 100px;
-  margin: 10px;
-  border-radius: 50%;
-  border: 2px solid blue;
-  object-fit: cover;
-}
-.avatar-name p {
-  font-weight: 700;
+
+
+.glass {
+  padding: 30px;
+  background: #8ba1a172;
+  backdrop-filter: blur(16px);
+  border-radius: 4px;
+  box-shadow: var(--clear);
+  color: var(--black);
+  border: 1px solid var(--white);
 }

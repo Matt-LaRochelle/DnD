@@ -1,0 +1,30 @@
+.map__container {
+
+}
+
+.map__container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.map__image {
+    width: 10000px;
+    height: 10000px;    
+    background: var(--black);
+    background-image: no-repeat;
+}
+.map__box {
+    width: 100%;
+    height: min(900px, 80vh);
+    border: 1px solid var(--primary-200);
+    box-shadow: var(--clear);
+    overflow: hidden;
+}
+.map__image:hover {
+    cursor:all-scroll;
+}
+.map-pc-row {
+    display: flex;
+    list-style-type: none;
+}
+

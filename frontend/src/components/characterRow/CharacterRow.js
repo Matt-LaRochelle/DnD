@@ -1,22 +1,24 @@
 import './characterRow.css'
 
+import Avatar from '../avatar/Avatar'
+
 const CharacterRow = ({dmInfo, playerInfo}) => {
     return (
         <div className="characterRow__container">
             <h2>DM</h2>
             <h2>Players</h2>
             <div className="characterRow__dm">
-                <div className="avatar-name">
-                    <img src={dmInfo.image} alt={dmInfo.username} />
-                    <p>{dmInfo.username}</p>
-                </div>
+                <Avatar 
+                    image={dmInfo.image} 
+                    name={dmInfo.username}
+                    hideName={false} />
             </div>
             <div className="characterRow__players">
                 {playerInfo.map((player) => (
-                    <div className="avatar-name">
-                        <img src={player.image} alt={player.username} />
-                        <p>{player.username}</p>
-                    </div>
+                    <Avatar
+                        image={player.image}
+                        name={player.username}
+                        hideName={false} />
                 ))}
             </div>
         </div>
