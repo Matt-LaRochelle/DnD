@@ -18,6 +18,7 @@ import Loading from '../../../components/loading/Loading'
 const Map = () => {
     const [loading, setLoading] = useState(true)
     const [map, setMap] = useState(null)
+    const [characterList, setCharacterList] = useState([])
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
@@ -25,6 +26,11 @@ const Map = () => {
     const location = useLocation()
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
+
+
+    useEffect(() => {
+        console.log(characterList)
+    }, [characterList])
 
     useEffect(() => {
         // Fetch an Map's information
@@ -52,6 +58,13 @@ const Map = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
 
+    const addCharacter = (id) => {
+        setCharacterList([...characterList, id])
+    }
+    const removeCharacter = (id) => {
+        setCharacterList(characterList.filter(character => character !== id))
+    }
+
 
     return (
         <div>
@@ -63,6 +76,15 @@ const Map = () => {
                     <h1>{map.name}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className="map__box">
+                        <div className="movable-characters glass">
+                            {characterList.map((character, index) => (
+                                <Avatar 
+                                    key={index} 
+                                    image={pcs.find(pc => pc._id === character).image} 
+                                    name={pcs.find(pc => pc._id === character).name} 
+                                    hideName={true} />
+                            ))}
+                        </div>
                         <Draggable>
                             <div className='map__image' style={{    
                                 backgroundImage: `url(${map.image})`,
@@ -77,6 +99,8 @@ const Map = () => {
                             {pcs.map(pc => (
                                 <li key={pc._id}>
                                     <Avatar image={pc.image} name={pc.name} hideName={true} />
+                                    <p className="add" onClick={() => addCharacter(pc._id)}>+</p>
+                                    <p className="add" onClick={() => removeCharacter(pc._id)}>-</p>
                                 </li>
                             ))}
                         </ul>
