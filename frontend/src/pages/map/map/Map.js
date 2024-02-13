@@ -141,6 +141,28 @@ const Map = () => {
         setCurrentAvatarCoordinates({ x: data.x, y: data.y });
         setTrackedAvatarCoordinates({ x: data.x - mapCoordinates.x, y: data.y - mapCoordinates.y });
         };
+    const handleStop = async () => {
+        // Update the x and y coordinates of the character in the characterList
+        const characterList = maps.characterList
+        const index = characterList.findIndex(character => character._id === pcs[avatarMenu]._id)
+        characterList[index] = {
+            x: trackedAvatarCoordinates.x,
+            y: trackedAvatarCoordinates.y
+        }
+        const response = await fetch('/api/map/' + maps._id, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${user.token}`
+            },
+            body: JSON.stringify({characterList})
+        })
+        const json = await response.json()
+
+        if (response.ok) {
+            console.log(json)
+        }
+    }
 
     // Setting map coordinates when the map moves
     const handleMapDrag = (e, data) => {
@@ -166,7 +188,8 @@ const Map = () => {
                                         position={currentAvatarCoordinates}
                                         scale={1}
                                         handle="strong"
-                                        onDrag={handleDrag}>
+                                        onDrag={handleDrag}
+                                        onStop={handleStop}>
                                     <div className="movable-avatar">
                                         <div onClick={() => showAvatarMenu(index)} >
                                             <Avatar 
