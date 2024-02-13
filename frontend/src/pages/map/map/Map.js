@@ -2,8 +2,8 @@ import './map.css'
 
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
-import Draggable from 'react-draggable';
 
+// Context
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { usePcsContext } from '../../../hooks/usePcsContext'
@@ -11,23 +11,32 @@ import { useNpcsContext } from '../../../hooks/useNpcsContext'
 import { useMapsContext } from '../../../hooks/useMapsContext'
 import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
 
+// Components
 import Avatar from '../../../components/avatar/Avatar'
 import Loading from '../../../components/loading/Loading'
 
+// Icons
 import { MdOutlineContactPage } from "react-icons/md";
 import { MdOutlineAdd } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 import { IoIosMove } from "react-icons/io";
+
+// 3rd Party
+import Draggable from 'react-draggable';
 
 const Map = () => {
     const [loading, setLoading] = useState(true)
     const [map, setMap] = useState(null)
     const [characterList, setCharacterList] = useState([])
     const [avatarMenu, setAvatarMenu] = useState(null)
+    const [mapCoordinates, setMapCoordinates] = useState([0, 0])
+
+    const [position, setPosition] = useState({ x: 0, y: 0 });
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
     const { pcs } = usePcsContext()
+
     const location = useLocation()
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
@@ -78,6 +87,29 @@ const Map = () => {
         setAvatarMenu(index)
     }
 
+    const handleDrag = (e, data) => {
+        setPosition({ x: data.x, y: data.y });
+        };
+    const handleMapDrag = (e, data) => {
+        console.log(data);
+        setMapCoordinates([data.x, data.y])
+        };
+
+    // useEffect(() => {
+    //     // Update avatar position based on mapCoordinates
+    //     setPosition({
+    //         x: mapCoordinates[0],
+    //         y: mapCoordinates[1]
+    //     });
+    // }, [mapCoordinates]);
+
+    // Update avatar position based on map position
+useEffect(() => {
+    setPosition(prevPosition => ({
+        x: prevPosition.x - mapCoordinates.x,
+        y: prevPosition.y - mapCoordinates.y
+    }));
+}, [mapCoordinates]);
 
     return (
         <div>
@@ -86,16 +118,17 @@ const Map = () => {
                 <Loading />
                 :
                 <div className='map__container glass'>
-                    <h1>{map.name}</h1>
+                    <h1>{map.name} Coordinates: {mapCoordinates}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className="map__box">
                         <div className="movable-characters glass">
                             {characterList.map((character, index) => (
                                 <Draggable
-                                        defaultPosition={{x: 0, y: 0}}
-                                        position={null}
+                                        // defaultPosition={{x: 0, y: 0}}
+                                        position={position}
                                         scale={1}
-                                        handle="strong">
+                                        handle="strong"
+                                        onDrag={handleDrag}>
                                     <div className="movable-avatar">
                                         <div onClick={() => showAvatarMenu(index)} >
                                             <Avatar 
@@ -111,12 +144,13 @@ const Map = () => {
                                                 <p className="button-secondary avatar-remove" onClick={() => removeCharacter(index)}><MdDeleteOutline /></p>
                                                 <p className="button-primary avatar-move"><strong><IoIosMove /></strong></p>
                                                 <p>{pcs.find(pc => pc._id === character).name}</p>
+                                                <p>{position.x}, {position.y}</p>
                                             </div>}
                                     </div>
                                 </Draggable>
                             ))}
                         </div>
-                        <Draggable>
+                        <Draggable onDrag={handleMapDrag}>
                             <div className='map__image' style={{    
                                 backgroundImage: `url(${map.image})`,
                                 backgroundRepeat: 'no-repeat'
