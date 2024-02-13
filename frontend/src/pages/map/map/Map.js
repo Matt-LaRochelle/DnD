@@ -26,8 +26,8 @@ import Draggable from 'react-draggable';
 
 const Map = () => {
     const [loading, setLoading] = useState(true)
-    const [map, setMap] = useState(null)
-    const [characterList, setCharacterList] = useState([])
+    // const [map, setMap] = useState(null)
+    // const [characterList, setCharacterList] = useState([])
     const [avatarMenu, setAvatarMenu] = useState(null)
 
     const [mapCoordinates, setMapCoordinates] = useState({ x: 0, y: 0})
@@ -36,6 +36,7 @@ const Map = () => {
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
+    const { maps, dispatch } = useMapsContext()
     const { pcs } = usePcsContext()
 
     const location = useLocation()
@@ -43,9 +44,9 @@ const Map = () => {
     const navigate = useNavigate()
 
 
-    useEffect(() => {
-        console.log(characterList)
-    }, [characterList])
+    // useEffect(() => {
+    //     console.log(characterList)
+    // }, [characterList])
 
     useEffect(() => {
         // Fetch an Map's information
@@ -59,7 +60,7 @@ const Map = () => {
             const mapInfo = await response.json()
 
             if (response.ok) {
-                setMap(mapInfo)
+                dispatch({ type: 'SET_MAP', payload: mapInfo })
                 setLoading(false)
             }
         }
@@ -73,13 +74,60 @@ const Map = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
 
-    const addCharacter = (id) => {
-        setCharacterList([...characterList, id])
+    const addCharacter = async (id) => {
+        if (!user) {
+            alert("You must be logged in.")
+            return
+        }
+        const characterList = maps.characterList
+        const newCharacter = {
+            _id: id,
+            x: 0,
+            y: 0
+        }
+        characterList.push(newCharacter)
+        const response = await fetch('/api/map/' + maps._id, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${user.token}`
+            },
+            body: JSON.stringify({characterList})
+        })
+        const json = await response.json()
+
+        if (response.ok) {
+            console.log(json)
+        }
     }
-    const removeCharacter = (index) => {
-        setCharacterList(characterList.filter((character, i) => i !== index))
+    const removeCharacter = async (index, id) => {
+        if (!user) {
+            alert("You must be logged in.")
+            return
+        }
+        console.log(index, id)
+        // If this character matches the index in characterList AND the id in that index, then remove it from the list
+        if (maps.characterList[index]._id === id) {
+            const newCharacterList = maps.characterList.filter((character, i) => i !== index)
+            console.log(newCharacterList)
+            
+            const response = await fetch('/api/map/' + maps._id, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            },
+            body: JSON.stringify({characterList: newCharacterList})
+        })
+        const json = await response.json()
+        
+        if (response.ok) {
+            console.log(json)
+        }
         setAvatarMenu(null)
     }
+    }
+
     const showAvatarMenu = (index) => {
         if (avatarMenu === index) {
             setAvatarMenu(null)
@@ -108,11 +156,11 @@ const Map = () => {
                 <Loading />
                 :
                 <div className='map__container glass'>
-                    <h1>{map.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
+                    <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className="map__box">
                         <div className="movable-characters glass">
-                            {characterList.map((character, index) => (
+                            {maps.characterList.map((character, index) => (
                                 <Draggable
                                         defaultPosition={{x: 0, y: 0}}
                                         position={currentAvatarCoordinates}
@@ -123,17 +171,17 @@ const Map = () => {
                                         <div onClick={() => showAvatarMenu(index)} >
                                             <Avatar 
                                                 key={index} 
-                                                image={pcs.find(pc => pc._id === character).image} 
-                                                name={pcs.find(pc => pc._id === character).name} 
+                                                image={pcs.find(pc => pc._id === character._id).image} 
+                                                name={pcs.find(pc => pc._id === character._id).name} 
                                                 hideName={true} 
                                                 />
                                         </div>
                                         {avatarMenu === index && 
                                             <div className="avatar-menu glass">
-                                                <Link to={`/pc/${character}`} className="button-primary avatar-info"><MdOutlineContactPage /></Link>
-                                                <p className="button-secondary avatar-remove" onClick={() => removeCharacter(index)}><MdDeleteOutline /></p>
+                                                <Link to={`/pc/${character._id}`} className="button-primary avatar-info"><MdOutlineContactPage /></Link>
+                                                <p className="button-secondary avatar-remove" onClick={() => removeCharacter(index, character._id)}><MdDeleteOutline /></p>
                                                 <p className="button-primary avatar-move"><strong><IoIosMove /></strong></p>
-                                                <p>{pcs.find(pc => pc._id === character).name}</p>
+                                                <p>{pcs.find(pc => pc._id === character._id).name}</p>
                                                 <p>{currentAvatarCoordinates.x}, {currentAvatarCoordinates.y}</p>
                                                 <p>{trackedAvatarCoordinates.x}, {trackedAvatarCoordinates.y}</p>
                                             </div>}
@@ -144,7 +192,7 @@ const Map = () => {
 
                         <Draggable onDrag={handleMapDrag}>
                             <div className='map__image' style={{    
-                                backgroundImage: `url(${map.image})`,
+                                backgroundImage: `url(${maps.image})`,
                                 backgroundRepeat: 'no-repeat'
                             }}>
 
@@ -165,15 +213,15 @@ const Map = () => {
                     </div>
                     <div>
                         <p><strong>Description</strong></p>
-                        <p>{map.description}</p>
+                        <p>{maps.description}</p>
                         {campaigns.dmID === user.id && 
                             <div>
                                 <p><strong>Secrets</strong></p>
-                                <p>{map.secrets}</p>
+                                <p>{maps.secrets}</p>
                             </div>
                         }
                         {campaigns.dmID === user.id && 
-                            <button className="button-primary" onClick={() => navigate(`/map/edit/${map._id}`)}>Edit</button>
+                            <button className="button-primary" onClick={() => navigate(`/map/edit/${maps._id}`)}>Edit</button>
                         }
                     </div>
                     

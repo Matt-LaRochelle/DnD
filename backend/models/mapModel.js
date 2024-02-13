@@ -16,6 +16,9 @@ const mapSchema = new Schema({
     secrets: {
         type: String,
     },
+    characterList: {
+        type: Array,
+    },
     hidden: {
         type: Boolean,
     },
