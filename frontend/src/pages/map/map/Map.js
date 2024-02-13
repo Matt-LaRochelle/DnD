@@ -1,7 +1,7 @@
 import './map.css'
 
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 import Draggable from 'react-draggable';
 
 import { useAuthContext } from '../../../hooks/useAuthContext'
@@ -12,13 +12,18 @@ import { useMapsContext } from '../../../hooks/useMapsContext'
 import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
 
 import Avatar from '../../../components/avatar/Avatar'
-
 import Loading from '../../../components/loading/Loading'
+
+import { MdOutlineContactPage } from "react-icons/md";
+import { MdOutlineAdd } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
+import { IoIosMove } from "react-icons/io";
 
 const Map = () => {
     const [loading, setLoading] = useState(true)
     const [map, setMap] = useState(null)
     const [characterList, setCharacterList] = useState([])
+    const [avatarMenu, setAvatarMenu] = useState(null)
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
@@ -61,8 +66,16 @@ const Map = () => {
     const addCharacter = (id) => {
         setCharacterList([...characterList, id])
     }
-    const removeCharacter = (id) => {
-        setCharacterList(characterList.filter(character => character !== id))
+    const removeCharacter = (index) => {
+        setCharacterList(characterList.filter((character, i) => i !== index))
+        setAvatarMenu(null)
+    }
+    const showAvatarMenu = (index) => {
+        if (avatarMenu === index) {
+            setAvatarMenu(null)
+            return
+        }
+        setAvatarMenu(index)
     }
 
 
@@ -78,11 +91,29 @@ const Map = () => {
                     <div className="map__box">
                         <div className="movable-characters glass">
                             {characterList.map((character, index) => (
-                                <Avatar 
-                                    key={index} 
-                                    image={pcs.find(pc => pc._id === character).image} 
-                                    name={pcs.find(pc => pc._id === character).name} 
-                                    hideName={true} />
+                                <Draggable
+                                        defaultPosition={{x: 0, y: 0}}
+                                        position={null}
+                                        scale={1}
+                                        handle="strong">
+                                    <div className="movable-avatar">
+                                        <div onClick={() => showAvatarMenu(index)} >
+                                            <Avatar 
+                                                key={index} 
+                                                image={pcs.find(pc => pc._id === character).image} 
+                                                name={pcs.find(pc => pc._id === character).name} 
+                                                hideName={true} 
+                                                />
+                                        </div>
+                                        {avatarMenu === index && 
+                                            <div className="avatar-menu glass">
+                                                <Link to={`/pc/${character}`} className="button-primary avatar-info"><MdOutlineContactPage /></Link>
+                                                <p className="button-secondary avatar-remove" onClick={() => removeCharacter(index)}><MdDeleteOutline /></p>
+                                                <p className="button-primary avatar-move"><strong><IoIosMove /></strong></p>
+                                                <p>{pcs.find(pc => pc._id === character).name}</p>
+                                            </div>}
+                                    </div>
+                                </Draggable>
                             ))}
                         </div>
                         <Draggable>
@@ -100,7 +131,6 @@ const Map = () => {
                                 <li key={pc._id}>
                                     <Avatar image={pc.image} name={pc.name} hideName={true} />
                                     <p className="add" onClick={() => addCharacter(pc._id)}>+</p>
-                                    <p className="add" onClick={() => removeCharacter(pc._id)}>-</p>
                                 </li>
                             ))}
                         </ul>
