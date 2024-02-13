@@ -32,7 +32,7 @@ const Map = () => {
 
     const [mapCoordinates, setMapCoordinates] = useState({ x: 0, y: 0})
     const [currentAvatarCoordinates, setCurrentAvatarCoordinates] = useState({ x: 0, y: 0})
-    const [adjustedAvatarCoordinates, setAdjustedAvatarCoordinates] = useState({ x: 0, y: 0 });
+    const [trackedAvatarCoordinates, setTrackedAvatarCoordinates] = useState({ x: 0, y: 0 });
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
@@ -91,6 +91,7 @@ const Map = () => {
     // Setting avatar coordinates when the avatar moves
     const handleDrag = (e, data) => {
         setCurrentAvatarCoordinates({ x: data.x, y: data.y });
+        setTrackedAvatarCoordinates({ x: data.x - mapCoordinates.x, y: data.y - mapCoordinates.y });
         };
 
     // Setting map coordinates when the map moves
@@ -134,7 +135,7 @@ const Map = () => {
                                                 <p className="button-primary avatar-move"><strong><IoIosMove /></strong></p>
                                                 <p>{pcs.find(pc => pc._id === character).name}</p>
                                                 <p>{currentAvatarCoordinates.x}, {currentAvatarCoordinates.y}</p>
-                                                <p>{currentAvatarCoordinates.x}, {currentAvatarCoordinates.y}</p>
+                                                <p>{trackedAvatarCoordinates.x}, {trackedAvatarCoordinates.y}</p>
                                             </div>}
                                     </div>
                                 </Draggable>
