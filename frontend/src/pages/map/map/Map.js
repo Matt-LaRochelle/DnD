@@ -29,9 +29,10 @@ const Map = () => {
     const [map, setMap] = useState(null)
     const [characterList, setCharacterList] = useState([])
     const [avatarMenu, setAvatarMenu] = useState(null)
-    const [mapCoordinates, setMapCoordinates] = useState([0, 0])
 
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [mapCoordinates, setMapCoordinates] = useState({ x: 0, y: 0})
+    const [currentAvatarCoordinates, setCurrentAvatarCoordinates] = useState({ x: 0, y: 0})
+    const [adjustedAvatarCoordinates, setAdjustedAvatarCoordinates] = useState({ x: 0, y: 0 });
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
@@ -87,29 +88,17 @@ const Map = () => {
         setAvatarMenu(index)
     }
 
+    // Setting avatar coordinates when the avatar moves
     const handleDrag = (e, data) => {
-        setPosition({ x: data.x, y: data.y });
+        setCurrentAvatarCoordinates({ x: data.x, y: data.y });
         };
+
+    // Setting map coordinates when the map moves
     const handleMapDrag = (e, data) => {
         console.log(data);
-        setMapCoordinates([data.x, data.y])
+        setMapCoordinates({x: data.x, y: data.y})
+        setCurrentAvatarCoordinates({ x: (currentAvatarCoordinates.x + data.deltaX), y: (currentAvatarCoordinates.y + data.deltaY) });
         };
-
-    // useEffect(() => {
-    //     // Update avatar position based on mapCoordinates
-    //     setPosition({
-    //         x: mapCoordinates[0],
-    //         y: mapCoordinates[1]
-    //     });
-    // }, [mapCoordinates]);
-
-    // Update avatar position based on map position
-useEffect(() => {
-    setPosition(prevPosition => ({
-        x: prevPosition.x - mapCoordinates.x,
-        y: prevPosition.y - mapCoordinates.y
-    }));
-}, [mapCoordinates]);
 
     return (
         <div>
@@ -118,14 +107,14 @@ useEffect(() => {
                 <Loading />
                 :
                 <div className='map__container glass'>
-                    <h1>{map.name} Coordinates: {mapCoordinates}</h1>
+                    <h1>{map.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className="map__box">
                         <div className="movable-characters glass">
                             {characterList.map((character, index) => (
                                 <Draggable
-                                        // defaultPosition={{x: 0, y: 0}}
-                                        position={position}
+                                        defaultPosition={{x: 0, y: 0}}
+                                        position={currentAvatarCoordinates}
                                         scale={1}
                                         handle="strong"
                                         onDrag={handleDrag}>
@@ -144,17 +133,21 @@ useEffect(() => {
                                                 <p className="button-secondary avatar-remove" onClick={() => removeCharacter(index)}><MdDeleteOutline /></p>
                                                 <p className="button-primary avatar-move"><strong><IoIosMove /></strong></p>
                                                 <p>{pcs.find(pc => pc._id === character).name}</p>
-                                                <p>{position.x}, {position.y}</p>
+                                                <p>{currentAvatarCoordinates.x}, {currentAvatarCoordinates.y}</p>
+                                                <p>{currentAvatarCoordinates.x}, {currentAvatarCoordinates.y}</p>
                                             </div>}
                                     </div>
                                 </Draggable>
                             ))}
                         </div>
+
                         <Draggable onDrag={handleMapDrag}>
                             <div className='map__image' style={{    
                                 backgroundImage: `url(${map.image})`,
                                 backgroundRepeat: 'no-repeat'
                             }}>
+
+
                             </div>
                         </Draggable>
                     </div>
