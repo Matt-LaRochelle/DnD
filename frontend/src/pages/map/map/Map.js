@@ -44,9 +44,9 @@ const Map = () => {
     const navigate = useNavigate()
 
 
-    useEffect(() => {
-        console.log("client character list", clientCharacterList)
-    }, [clientCharacterList])
+    // useEffect(() => {
+    //     console.log("client character list", clientCharacterList)
+    // }, [clientCharacterList])
 
     useEffect(() => {
         // Fetch an Map's information
@@ -113,18 +113,28 @@ const Map = () => {
         const json = await response.json()
 
         if (response.ok) {
-            console.log("add character:", json)
             dispatch({ type: 'SET_MAP', payload: json })
             // This is what needs to be tracked on the client side
             // Take all DB characters and format them for client side.
             const returnedCharacterList = json.characterList.map(character => {
+                if (character._id === id) {
+                return {
+                    _id: character._id,
+                    currentX: character.x,
+                    currentY: character.y,
+                    trackedX: character.x,
+                    trackedY: character.y
+                }
+            } else {
                 return {
                     _id: character._id,
                     currentX: character.x + mapCoordinates.x,
                     currentY: character.y + mapCoordinates.y,
                     trackedX: character.x,
                     trackedY: character.y
+                
                 }
+            }
             })
             setClientCharacterList(returnedCharacterList)
         }
@@ -136,12 +146,13 @@ const Map = () => {
             alert("You must be logged in.")
             return
         }
-        console.log(index, id)
-        // If this character matches the index in characterList AND the id in that index, then remove it from the list
-        if (maps.characterList[index]._id === id) {
-            const newCharacterList = maps.characterList.filter((character, i) => i !== index)
-            console.log(newCharacterList)
-            
+
+        // go through each item in maps.characterList. If an item has an _id that matches id, remove it from the list.
+        const newCharacterList = maps.characterList.filter((character) => {
+            return character._id !== id;
+        });
+        console.log("new character list", newCharacterList)
+
             const response = await fetch('/api/map/' + maps._id, {
             method: 'PATCH',
             headers: {
@@ -153,22 +164,20 @@ const Map = () => {
         const json = await response.json()
         
         if (response.ok) {
-            console.log("delete character:", json)
             dispatch({ type: 'SET_MAP', payload: json })
             // This is what needs to be tracked on the client side
             const updatedCharacterList = json.characterList.map(character => {
                 return {
                     _id: character._id,
-                    currentX: character.x,
-                    currentY: character.y,
-                    trackedX: character.x + mapCoordinates.x,
-                    trackedY: character.y + mapCoordinates.y
+                    currentX: character.x + mapCoordinates.x,
+                    currentY: character.y + mapCoordinates.y,
+                    trackedX: character.x,
+                    trackedY: character.y
                 }
             })
             setClientCharacterList(updatedCharacterList)
         }
         setAvatarMenu(null)
-    }
     }
 
     // Show the menu for clicked avatar
@@ -245,57 +254,7 @@ const Map = () => {
             dispatch({ type: 'SET_MAP', payload: json })
             console.log(maps)
         }
-
-
-
-        // Take the data from updatedDBCharacter and format it for the DB
-
-    
-        // // Map over clientCharacterList to create a new array
-        // let newCharacterList = clientCharacterList.map(character => {
-        //     // If the character's _id matches the target id, return a new object with the updated values
-        //     if (character._id === characterID) {
-        //         return {
-        //             _id: characterID,
-        //             currentX: data.x,
-        //             currentY: data.y,
-        //             trackedX: data.x - mapCoordinates.x,
-        //             trackedY: data.y - mapCoordinates.y
-        //         };
-        //     } else {
-        //         // If the character's _id doesn't match the target id, return the character as is
-        //         return character;
-        //     }
-        // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // Update the x and y coordinates of the character in the characterList
-        // const currentCharacterList = clientCharacterList
-
-        // Update the maps characterList with trackedX and trackedY
-        // const dbCharacterDataFormat = {
-        //     _id: e.target.id,
-        //     x: data.x - mapCoordinates.x,
-        //     y: data.y - mapCoordinates.y
-        // }
-        // const index = currentCharacterList.map(character => character._id === e.target.id)
-        // console.log("index:", index)
-        // currentCharacterList[index] = dbCharacterDataFormat
-        // console.log("db:", currentCharacterList)
-
-    }
+    };
 
 
     // Setting map coordinates when the map moves
