@@ -115,7 +115,10 @@ const Map = () => {
             console.log("add character:", json)
             dispatch({ type: 'SET_MAP', payload: json })
             // This is what needs to be tracked on the client side
+            // This sets all characters to 0. It should set the new character to 0 and the rest stay in their current positions
             const returnedCharacterList = json.characterList.map(character => {
+                
+                if (character._id === id) {
                 return {
                     _id: character._id,
                     currentX: 0,
@@ -123,6 +126,9 @@ const Map = () => {
                     trackedX: 0,
                     trackedY: 0
                 }
+            } else {
+                return character;
+            }
             })
             setClientCharacterList(returnedCharacterList)
         }
@@ -155,12 +161,16 @@ const Map = () => {
             dispatch({ type: 'SET_MAP', payload: json })
             // This is what needs to be tracked on the client side
             const updatedCharacterList = json.characterList.map(character => {
-                return {
-                    _id: character._id,
-                    currentX: 0,
-                    currentY: 0,
-                    trackedX: character.x,
-                    trackedY: character.y
+                if (character._id === id) {
+                    return {
+                        _id: character._id,
+                        currentX: 0,
+                        currentY: 0,
+                        trackedX: 0,
+                        trackedY: 0
+                    }
+                } else {
+                    return character;
                 }
             })
             setClientCharacterList(updatedCharacterList)
@@ -207,19 +217,52 @@ const Map = () => {
 // This is where the problem is happening - the format changes.
     const handleStop = async (e, data) => {
         // Update the database character x and y coordinates to match the trackedX and trackedY of this specific avatar
+        console.log("stopped")
+        // let characterID = e.target.id;
+    
+        // // Map over clientCharacterList to create a new array
+        // let newCharacterList = clientCharacterList.map(character => {
+        //     // If the character's _id matches the target id, return a new object with the updated values
+        //     if (character._id === characterID) {
+        //         return {
+        //             _id: characterID,
+        //             currentX: data.x,
+        //             currentY: data.y,
+        //             trackedX: data.x - mapCoordinates.x,
+        //             trackedY: data.y - mapCoordinates.y
+        //         };
+        //     } else {
+        //         // If the character's _id doesn't match the target id, return the character as is
+        //         return character;
+        //     }
+        // });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Update the x and y coordinates of the character in the characterList
-        const currentCharacterList = clientCharacterList
+        // const currentCharacterList = clientCharacterList
 
         // Update the maps characterList with trackedX and trackedY
-        const dbCharacterDataFormat = {
-            _id: e.target.id,
-            x: data.x - mapCoordinates.x,
-            y: data.y - mapCoordinates.y
-        }
-        const index = currentCharacterList.findIndex(character => character._id === e.target.id)
-        currentCharacterList[index] = dbCharacterDataFormat
-        console.log("db:", currentCharacterList)
+        // const dbCharacterDataFormat = {
+        //     _id: e.target.id,
+        //     x: data.x - mapCoordinates.x,
+        //     y: data.y - mapCoordinates.y
+        // }
+        // const index = currentCharacterList.map(character => character._id === e.target.id)
+        // console.log("index:", index)
+        // currentCharacterList[index] = dbCharacterDataFormat
+        // console.log("db:", currentCharacterList)
 
     }
 
