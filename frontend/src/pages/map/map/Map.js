@@ -84,6 +84,7 @@ const Map = () => {
         }
     }, [user])
 
+
     const goBack = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
@@ -312,7 +313,23 @@ const Map = () => {
             }
         })
         setClientCharacterList(newCharacterList)
+        console.log("done")
         };
+
+    const handleMapDragStop = (e, data) => {
+        console.log("map drag stop")
+        const newCharacterList = maps.characterList.map(character => {
+            return {
+                _id: character._id,
+                currentX: character.x + mapCoordinates.x,
+                currentY: character.y + mapCoordinates.y,
+                trackedX: character.x,
+                trackedY: character.y
+            }
+        })
+        setClientCharacterList(newCharacterList)
+        console.log("done")
+    }
 
     return (
         <div>
@@ -357,7 +374,9 @@ const Map = () => {
                             ))}
                         </div>
 
-                        <Draggable onDrag={handleMapDrag}>
+                        <Draggable 
+                            onDrag={handleMapDrag}
+                            onStop={handleMapDragStop}>
                             <div className='map__image' style={{    
                                 backgroundImage: `url(${maps.image})`,
                                 backgroundRepeat: 'no-repeat'
