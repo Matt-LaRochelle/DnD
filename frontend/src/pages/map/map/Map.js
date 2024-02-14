@@ -68,8 +68,8 @@ const Map = () => {
                 const buildingCharacterList = json.characterList.map(character => {
                     return {
                         _id: character._id,
-                        currentX: 0,
-                        currentY: 0,
+                        currentX: character.x + mapCoordinates.x,
+                        currentY: character.y + mapCoordinates.y,
                         trackedX: character.x,
                         trackedY: character.y
                     }
@@ -115,20 +115,15 @@ const Map = () => {
             console.log("add character:", json)
             dispatch({ type: 'SET_MAP', payload: json })
             // This is what needs to be tracked on the client side
-            // This sets all characters to 0. It should set the new character to 0 and the rest stay in their current positions
+            // Take all DB characters and format them for client side.
             const returnedCharacterList = json.characterList.map(character => {
-                
-                if (character._id === id) {
                 return {
                     _id: character._id,
-                    currentX: 0,
-                    currentY: 0,
-                    trackedX: 0,
-                    trackedY: 0
+                    currentX: character.x + mapCoordinates.x,
+                    currentY: character.y + mapCoordinates.y,
+                    trackedX: character.x,
+                    trackedY: character.y
                 }
-            } else {
-                return character;
-            }
             })
             setClientCharacterList(returnedCharacterList)
         }
@@ -161,16 +156,12 @@ const Map = () => {
             dispatch({ type: 'SET_MAP', payload: json })
             // This is what needs to be tracked on the client side
             const updatedCharacterList = json.characterList.map(character => {
-                if (character._id === id) {
-                    return {
-                        _id: character._id,
-                        currentX: 0,
-                        currentY: 0,
-                        trackedX: 0,
-                        trackedY: 0
-                    }
-                } else {
-                    return character;
+                return {
+                    _id: character._id,
+                    currentX: character.x,
+                    currentY: character.y,
+                    trackedX: character.x + mapCoordinates.x,
+                    trackedY: character.y + mapCoordinates.y
                 }
             })
             setClientCharacterList(updatedCharacterList)
@@ -209,7 +200,7 @@ const Map = () => {
             }
         });
     
-        // Update the state with the new array
+        // Update the client state with the new array
         setClientCharacterList(newCharacterList);
     };
 
@@ -217,8 +208,47 @@ const Map = () => {
 // This is where the problem is happening - the format changes.
     const handleStop = async (e, data) => {
         // Update the database character x and y coordinates to match the trackedX and trackedY of this specific avatar
-        console.log("stopped")
-        // let characterID = e.target.id;
+        let characterID = e.target.id;
+        if (!characterID) {
+            return
+        }
+        let clientFormatCharacter = clientCharacterList.find(character => character._id === characterID)
+        let updatedDBCharacter = {
+            _id: clientFormatCharacter._id,
+            x: clientFormatCharacter.trackedX,
+            y: clientFormatCharacter.trackedY
+        }
+        console.log("updatedDBCharacter:", updatedDBCharacter)
+        // add updatedDBCharacter to the maps.characterList item with the same _id
+        const updatedCharacterList = maps.characterList.map(character => {
+            if (character._id === characterID) {
+                return updatedDBCharacter
+            } else {
+                return character
+            }
+        })
+        
+        // Update the database with the new characterList
+        const response = await fetch('/api/map/' + maps._id, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            },
+            body: JSON.stringify({characterList: updatedCharacterList})
+        })
+        const json = await response.json()
+        
+        if (response.ok) {
+            console.log("update character:", json)
+            dispatch({ type: 'SET_MAP', payload: json })
+            console.log(maps)
+        }
+
+
+
+        // Take the data from updatedDBCharacter and format it for the DB
+
     
         // // Map over clientCharacterList to create a new array
         // let newCharacterList = clientCharacterList.map(character => {

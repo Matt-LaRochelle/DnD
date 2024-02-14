@@ -20,8 +20,8 @@
     z-index: 1;
 }
 .movable-characters {
-    display: flex;
-    width: min(500px, 90%);
+    /* display: flex;
+    width: min(500px, 90%); */
     /* height: 180px; */
     /* overflow-x: scroll;
     overflow-y: visible; */
@@ -32,7 +32,7 @@
     left: 8px; */
 }
 .movable-avatar {
-    position: relative;
+    position: absolute;
     z-index: 4;
 }
 .avatar-menu {
