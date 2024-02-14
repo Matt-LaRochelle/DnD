@@ -27,7 +27,7 @@ import Draggable from 'react-draggable';
 const Map = () => {
     const [loading, setLoading] = useState(true)
     // const [map, setMap] = useState(null)
-    // const [characterList, setCharacterList] = useState([])
+    const [clientCharacterList, setClientCharacterList] = useState([])
     const [avatarMenu, setAvatarMenu] = useState(null)
 
     const [mapCoordinates, setMapCoordinates] = useState({ x: 0, y: 0})
@@ -44,9 +44,9 @@ const Map = () => {
     const navigate = useNavigate()
 
 
-    // useEffect(() => {
-    //     console.log(characterList)
-    // }, [characterList])
+    useEffect(() => {
+        console.log("client character list", clientCharacterList)
+    }, [clientCharacterList])
 
     useEffect(() => {
         // Fetch an Map's information
@@ -57,10 +57,24 @@ const Map = () => {
                     'Authorization': `Bearer ${user.token}`
                 }
             })
-            const mapInfo = await response.json()
+            const json = await response.json()
 
             if (response.ok) {
-                dispatch({ type: 'SET_MAP', payload: mapInfo })
+                dispatch({ type: 'SET_MAP', payload: json })
+                // Set the characterList to be the maps characterList but with a 
+                // different format: { _id: "id", currentX: 0, currentY: 0, trackedX: 0, trackedY: 0}
+
+                // This is what needs to be tracked on the client side
+                const buildingCharacterList = json.characterList.map(character => {
+                    return {
+                        _id: character._id,
+                        currentX: 0,
+                        currentY: 0,
+                        trackedX: character.x,
+                        trackedY: character.y
+                    }
+                })
+                setClientCharacterList(buildingCharacterList)
                 setLoading(false)
             }
         }
@@ -74,32 +88,47 @@ const Map = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
 
+    // Add a character to the map
     const addCharacter = async (id) => {
         if (!user) {
             alert("You must be logged in.")
             return
         }
-        const characterList = maps.characterList
+        let dbCharacterList = maps.characterList
         const newCharacter = {
             _id: id,
             x: 0,
             y: 0
         }
-        characterList.push(newCharacter)
+        dbCharacterList.push(newCharacter)
         const response = await fetch('/api/map/' + maps._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${user.token}`
             },
-            body: JSON.stringify({characterList})
+            body: JSON.stringify({characterList: dbCharacterList})
         })
         const json = await response.json()
 
         if (response.ok) {
-            console.log(json)
+            console.log("add character:", json)
+            dispatch({ type: 'SET_MAP', payload: json })
+            // This is what needs to be tracked on the client side
+            const returnedCharacterList = json.characterList.map(character => {
+                return {
+                    _id: character._id,
+                    currentX: 0,
+                    currentY: 0,
+                    trackedX: 0,
+                    trackedY: 0
+                }
+            })
+            setClientCharacterList(returnedCharacterList)
         }
     }
+
+    // Remove a character from the map
     const removeCharacter = async (index, id) => {
         if (!user) {
             alert("You must be logged in.")
@@ -122,12 +151,25 @@ const Map = () => {
         const json = await response.json()
         
         if (response.ok) {
-            console.log(json)
+            console.log("delete character:", json)
+            dispatch({ type: 'SET_MAP', payload: json })
+            // This is what needs to be tracked on the client side
+            const updatedCharacterList = json.characterList.map(character => {
+                return {
+                    _id: character._id,
+                    currentX: 0,
+                    currentY: 0,
+                    trackedX: character.x,
+                    trackedY: character.y
+                }
+            })
+            setClientCharacterList(updatedCharacterList)
         }
         setAvatarMenu(null)
     }
     }
 
+    // Show the menu for clicked avatar
     const showAvatarMenu = (index) => {
         if (avatarMenu === index) {
             setAvatarMenu(null)
@@ -138,37 +180,65 @@ const Map = () => {
 
     // Setting avatar coordinates when the avatar moves
     const handleDrag = (e, data) => {
-        setCurrentAvatarCoordinates({ x: data.x, y: data.y });
-        setTrackedAvatarCoordinates({ x: data.x - mapCoordinates.x, y: data.y - mapCoordinates.y });
-        };
-    const handleStop = async () => {
-        // Update the x and y coordinates of the character in the characterList
-        const characterList = maps.characterList
-        const index = characterList.findIndex(character => character._id === pcs[avatarMenu]._id)
-        characterList[index] = {
-            x: trackedAvatarCoordinates.x,
-            y: trackedAvatarCoordinates.y
-        }
-        const response = await fetch('/api/map/' + maps._id, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.token}`
-            },
-            body: JSON.stringify({characterList})
-        })
-        const json = await response.json()
+        let characterID = e.target.id;
+    
+        // Map over clientCharacterList to create a new array
+        let newCharacterList = clientCharacterList.map(character => {
+            // If the character's _id matches the target id, return a new object with the updated values
+            if (character._id === characterID) {
+                return {
+                    _id: characterID,
+                    currentX: data.x,
+                    currentY: data.y,
+                    trackedX: data.x - mapCoordinates.x,
+                    trackedY: data.y - mapCoordinates.y
+                };
+            } else {
+                // If the character's _id doesn't match the target id, return the character as is
+                return character;
+            }
+        });
+    
+        // Update the state with the new array
+        setClientCharacterList(newCharacterList);
+    };
 
-        if (response.ok) {
-            console.log(json)
+
+// This is where the problem is happening - the format changes.
+    const handleStop = async (e, data) => {
+        // Update the database character x and y coordinates to match the trackedX and trackedY of this specific avatar
+
+        // Update the x and y coordinates of the character in the characterList
+        const currentCharacterList = clientCharacterList
+
+        // Update the maps characterList with trackedX and trackedY
+        const dbCharacterDataFormat = {
+            _id: e.target.id,
+            x: data.x - mapCoordinates.x,
+            y: data.y - mapCoordinates.y
         }
+        const index = currentCharacterList.findIndex(character => character._id === e.target.id)
+        currentCharacterList[index] = dbCharacterDataFormat
+        console.log("db:", currentCharacterList)
+
     }
+
 
     // Setting map coordinates when the map moves
     const handleMapDrag = (e, data) => {
         console.log(data);
         setMapCoordinates({x: data.x, y: data.y})
-        setCurrentAvatarCoordinates({ x: (currentAvatarCoordinates.x + data.deltaX), y: (currentAvatarCoordinates.y + data.deltaY) });
+        // Update the trackedX and trackedY of each character in the characterList
+        const newCharacterList = clientCharacterList.map(character => {
+            return {
+                _id: character._id,
+                currentX: character.currentX + data.deltaX,
+                currentY: character.currentY + data.deltaY,
+                trackedX: character.currentX,
+                trackedY: character.currentY
+            }
+        })
+        setClientCharacterList(newCharacterList)
         };
 
     return (
@@ -182,15 +252,16 @@ const Map = () => {
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className="map__box">
                         <div className="movable-characters glass">
-                            {maps.characterList.map((character, index) => (
+                            {clientCharacterList.map((character, index) => (
                                 <Draggable
                                         defaultPosition={{x: 0, y: 0}}
-                                        position={currentAvatarCoordinates}
+                                        position={{x: character.currentX, y: character.currentY}}
                                         scale={1}
                                         handle="strong"
                                         onDrag={handleDrag}
-                                        onStop={handleStop}>
-                                    <div className="movable-avatar">
+                                        onStop={handleStop}
+                                        >
+                                    <div className="movable-avatar" ariaLabel={character._id}>
                                         <div onClick={() => showAvatarMenu(index)} >
                                             <Avatar 
                                                 key={index} 
@@ -203,10 +274,10 @@ const Map = () => {
                                             <div className="avatar-menu glass">
                                                 <Link to={`/pc/${character._id}`} className="button-primary avatar-info"><MdOutlineContactPage /></Link>
                                                 <p className="button-secondary avatar-remove" onClick={() => removeCharacter(index, character._id)}><MdDeleteOutline /></p>
-                                                <p className="button-primary avatar-move"><strong><IoIosMove /></strong></p>
+                                                <p  className="button-primary avatar-move"><strong><IoIosMove id={character._id}/></strong></p>
                                                 <p>{pcs.find(pc => pc._id === character._id).name}</p>
-                                                <p>{currentAvatarCoordinates.x}, {currentAvatarCoordinates.y}</p>
-                                                <p>{trackedAvatarCoordinates.x}, {trackedAvatarCoordinates.y}</p>
+                                                <p>{character.currentX}, {character.currentY}</p>
+                                                <p>{character.trackedX}, {character.trackedY}</p>
                                             </div>}
                                     </div>
                                 </Draggable>
