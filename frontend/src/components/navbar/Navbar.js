@@ -80,9 +80,11 @@ const Navbar = () => {
                         </div>
                     )}
                     {!user && (
-                        <div className="logged-out-menu">
-                            <Link to='/login'>Login</Link>
-                            <Link to='/signup'>Signup</Link>
+                        <div className={nav ? "nav-menu active" : "nav-menu"}>
+                            <ul>
+                                <li onClick={() => setNav(!nav)}><Link to='/login'>Login</Link></li>
+                                <li onClick={() => setNav(!nav)}><Link to='/signup'>Signup</Link></li>
+                            </ul>
                         </div>
                     )}
                     {nav ? <IoIosClose className="menu-icon" onClick={toggleNav} /> : <IoMdMenu className="menu-icon" onClick={toggleNav} /> }
