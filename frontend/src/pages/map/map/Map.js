@@ -1,6 +1,6 @@
 import './map.css'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 
 // Context
@@ -42,6 +42,15 @@ const Map = () => {
     const location = useLocation()
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
+
+    const [highlightedAvatar, setHighlightedAvatar] = useState(null);
+
+
+    // Create a ref for each avatar in your render method
+    // const avatarRefs = clientCharacterList.reduce((acc, character) => {
+    //     acc[character._id] = React.createRef();
+    //     return acc;
+    // }, {});
 
 
     // useEffect(() => {
@@ -192,6 +201,7 @@ const Map = () => {
     // Setting avatar coordinates when the avatar moves
     const handleDrag = (e, data) => {
         let characterID = e.target.id;
+        console.log("dragging... characterID:", characterID)
     
         // Map over clientCharacterList to create a new array
         let newCharacterList = clientCharacterList.map(character => {
@@ -219,6 +229,7 @@ const Map = () => {
     const handleStop = async (e, data) => {
         // Update the database character x and y coordinates to match the trackedX and trackedY of this specific avatar
         let characterID = e.target.id;
+        console.log("characterID:", characterID)
         if (!characterID) {
             return
         }
@@ -228,7 +239,6 @@ const Map = () => {
             x: clientFormatCharacter.trackedX,
             y: clientFormatCharacter.trackedY
         }
-        console.log("updatedDBCharacter:", updatedDBCharacter)
         // add updatedDBCharacter to the maps.characterList item with the same _id
         const updatedCharacterList = maps.characterList.map(character => {
             if (character._id === characterID) {
@@ -250,10 +260,17 @@ const Map = () => {
         const json = await response.json()
         
         if (response.ok) {
-            console.log("update character:", json)
             dispatch({ type: 'SET_MAP', payload: json })
-            console.log(maps)
-        }
+
+            // Change the border color of the avatar
+            // Highlight the avatar
+            setHighlightedAvatar(characterID);
+
+            // Remove the highlight after 1 second
+            setTimeout(() => {
+                setHighlightedAvatar(null);
+            }, 1000);
+                }
     };
 
 
@@ -310,7 +327,7 @@ const Map = () => {
                                         onDrag={handleDrag}
                                         onStop={handleStop}
                                         >
-                                    <div className="movable-avatar" ariaLabel={character._id}>
+                                    <div className="movable-avatar" ariaLabel={character._id} style={character._id === highlightedAvatar ? { border: '4px solid lime' } : {}}>
                                         <div onClick={() => showAvatarMenu(index)} >
                                             <Avatar 
                                                 key={index} 
@@ -320,13 +337,15 @@ const Map = () => {
                                                 />
                                         </div>
                                         {avatarMenu === index && 
-                                            <div className="avatar-menu glass">
+                                            <div className="avatar-menu">
                                                 <Link to={`/pc/${character._id}`} className="button-primary avatar-info"><MdOutlineContactPage /></Link>
                                                 <p className="button-secondary avatar-remove" onClick={() => removeCharacter(index, character._id)}><MdDeleteOutline /></p>
-                                                <p  className="button-primary avatar-move"><strong><IoIosMove id={character._id}/></strong></p>
-                                                <p>{pcs.find(pc => pc._id === character._id).name}</p>
-                                                <p>{character.currentX}, {character.currentY}</p>
-                                                <p>{character.trackedX}, {character.trackedY}</p>
+                                                <p className="button-primary avatar-move"><strong><IoIosMove id={character._id}/></strong></p>
+                                                <div className="debugging-avatar-div glass">
+                                                    <p>{pcs.find(pc => pc._id === character._id).name}</p>
+                                                    <p>{character.currentX}, {character.currentY}</p>
+                                                    <p>{character.trackedX}, {character.trackedY}</p>
+                                                </div>
                                             </div>}
                                     </div>
                                 </Draggable>

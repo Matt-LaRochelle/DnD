@@ -34,6 +34,9 @@
 .movable-avatar {
     position: absolute;
     z-index: 4;
+    border-radius: 50%;
+    background: rgba(54, 54, 183, 0.413);
+    backdrop-filter: blur(50px);
 }
 .avatar-menu {
     width: inherit;
@@ -45,22 +48,55 @@
     margin: 0; */
     z-index: 5;
     font-size: 1.4rem;
+
 }
 .avatar-info {
     position: absolute;
     right: 86%;
-    top: -110px;
+    top: 30px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 0;
+    padding: 4px;
+    padding-left: 6px;
+    border: 2px solid var(--primary-800);
 }
 .avatar-remove {
     position: absolute;
-    left: 86%;
-    top: -110px;
+    right: -20px;
+    top: 30px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 0;
+    padding: 4px;
+    border: 2px solid var(--error);
 }
 .avatar-move {
     position: absolute;
-    top: -190px;
+    top: -40px;
     left: 50%;
     transform: translate(-50%, 0);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 0;
+    padding: 4px;
+    padding-left: 5.4px;
+    border: 2px solid var(--primary-800);
+    z-index: 20;
+}
+.debugging-avatar-div {
+    position: absolute;
+    bottom: -162px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: max-content;
+    background-color: var(--secondary-200);
 }
 .map__image {
     width: 10000px;
