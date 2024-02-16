@@ -115,7 +115,7 @@ const Campaign = () => {
                     <h1 onClick={campaignDetails}>{campaigns.title}</h1>
                     <div className="campaign__Description">
                         {settings.description && <p>{campaigns.description}</p>}
-                        {settings.image && <img src={campaigns.image} alt={campaigns.title} />}
+                        {settings.image && campaigns.image && <img src={campaigns.image} alt={campaigns.title} />}
                     </div>
                     <div className='campaign__users'>
                         {dm && <button className="button-primary" onClick={editCampaign}>Edit this Campaign</button>}
@@ -128,36 +128,30 @@ const Campaign = () => {
                             </div>
                         }
                     </div>
-                    {settings.maps &&
-                    <div>
-                        <h2 className="campaign__heading">Maps</h2>
-                        <Maps dm={campaigns.dmID} />
-                    </div>
-                    }
-                    {settings.playerCharacters &&
-                    <div>
-                        <h2 className="campaign__heading">PCs</h2>
-                        <Pcs dm={campaigns.dmID} />
-                    </div>
-                    }
-                    {settings.nonPlayerCharacters &&
-                    <div>
-                        <h2 className="campaign__heading">NPCs</h2>
-                        <Npcs dm={campaigns.dmID} />                    
-                    </div>
-                    }
-                    {settings.creatures &&
-                    <div>
-                        <h2 className="campaign__heading">Creatures</h2>
-                        <Creatures dm={campaigns.dmID} />                    
-                    </div>
-                    }
-                    {settings.quests &&
-                    <div>
-                        <h2 className="campaign__heading">Quests</h2>
-                        <Quests dm={campaigns.dmID} />                    
-                    </div>
-                    }
+                    <div style={settings.maps ? {} : {display: "none"}}>
+    <h2 className="campaign__heading">Maps</h2>
+    <Maps dm={campaigns.dmID} />
+</div>
+
+<div style={settings.playerCharacters ? {} : {display: "none"}}>
+    <h2 className="campaign__heading">PCs</h2>
+    <Pcs dm={campaigns.dmID} />
+</div>
+
+<div style={settings.nonPlayerCharacters ? {} : {display: "none"}}>
+    <h2 className="campaign__heading">NPCs</h2>
+    <Npcs dm={campaigns.dmID} />                    
+</div>
+
+<div style={settings.creatures ? {} : {display: "none"}}>
+    <h2 className="campaign__heading">Creatures</h2>
+    <Creatures dm={campaigns.dmID} />                    
+</div>
+
+<div style={settings.quests ? {} : {display: "none"}}>
+    <h2 className="campaign__heading">Quests</h2>
+    <Quests dm={campaigns.dmID} />                    
+</div>
                 </div>  
             }
         </div>

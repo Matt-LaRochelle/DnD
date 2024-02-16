@@ -93,7 +93,7 @@ const Map = () => {
         }
     }, [user])
 
-
+console.log("pcs-context:", pcs)
     const goBack = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
