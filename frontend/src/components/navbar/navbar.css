@@ -72,7 +72,7 @@ nav button {
 
 .nav-menu ul li a:hover {
     text-decoration: none;
-    color: #7de654;
+    color: var(--primary-400);
     transition: 0.3s;
 }
 
@@ -90,11 +90,12 @@ nav button {
         position: absolute;
         top: 10px;
         right: 10px;
-        border: 5px solid rgb(124, 205, 124);
+        border: 5px solid var(--white);
         z-index: 10;
         font-size: 3rem;
-        color: rgb(1, 132, 1);
-        background: linear-gradient(rgb(218, 244, 218), rgb(201, 250, 201));
+        color: var(--white);
+        background: transparent;
+        transition: 500ms;
     }
     .nav-menu {
         position: fixed;
@@ -104,8 +105,10 @@ nav button {
         top: 0;
         width: 100vw;
         height: 100vh;
+        border: 0;
         z-index: 1;
-        background: linear-gradient(to left, #001f09, rgba(1, 91, 59, 1));
+        background: linear-gradient(to left, #001e1fc8, rgba(1, 81, 91, 0.832));
+        backdrop-filter: blur(8px);
         transition: 350ms;
     }
     .nav-menu ul {
@@ -119,9 +122,9 @@ nav button {
         width: 170px;
     }
     .menu-icon:hover {
-        background: linear-gradient(hsl(120, 54%, 95%), hsl(120, 83%, 92%));
-        color: hsl(120, 98%, 36%);
-        border: 5px solid rgb(167, 213, 167);
+        background: var(--white);
+        color: var(--black);
+        border: 5px solid var(--white);
         cursor: pointer;
     }
 

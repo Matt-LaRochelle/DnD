@@ -64,17 +64,30 @@ const Navbar = () => {
                             <ul>
                                 <li onClick={() => setNav(!nav)}><Link to="/settings"><FaRegUserCircle className='nav-icon' />{user.username}</Link></li>
                                 <li onClick={() => setNav(!nav)}><Link to="/"><FaHome className='nav-icon' />Home</Link></li>
-                                <li onClick={() => setNav(!nav)}><Link to ="/campaign"><TbWorld className="nav-icon" />Campaign</Link></li>
+                                {/* If campaigns === {} then show these, else if campaigns === [] then don't show these */}
+                                {/* <li onClick={() => setNav(!nav)}><Link to ="/campaign"><TbWorld className="nav-icon" />Campaign</Link></li>
                                 <li onClick={() => setNav(!nav)}><Link to ="/settings"><IoIosSettings className="nav-icon" />Settings</Link></li>
                                 <li onClick={() => setNav(!nav)}><Link to='/characters'><FaPeopleGroup className="nav-icon" />Characters</Link></li>
                                 <li onClick={() => setNav(!nav)}><Link to='/maps'><LiaMapSolid className="nav-icon" />Maps</Link></li>
-                                <li onClick={() => setNav(!nav)}><Link to='/quests'><GiOpenTreasureChest className="nav-icon" />Quests</Link></li>
+                                <li onClick={() => setNav(!nav)}><Link to='/quests'><GiOpenTreasureChest className="nav-icon" />Quests</Link></li> */}
                                 {/* <li onClick={() => setNav(!nav)}><Link to='/lore'><FaBookAtlas className="nav-icon" />Lore</Link></li> */}
                                 {/* <li onClick={() => setNav(!nav)}><Link to='/news'><GiNewspaper className="nav-icon" />News</Link></li> */}
-                                <li onClick={() => setNav(!nav)}><Link to='/creatures'><GiSeaCreature className="nav-icon" />Creatures</Link></li>
+                                {/* <li onClick={() => setNav(!nav)}><Link to='/creatures'><GiSeaCreature className="nav-icon" />Creatures</Link></li> */}
                                 {/* <li onClick={() => setNav(!nav)}><Link to='/journal'><BsJournal className="nav-icon" />Journal</Link></li> */}
                                 {/* <li onClick={() => setNav(!nav)}><Link to='/quotes'><RiDoubleQuotesR className="nav-icon" />Quotes</Link></li> */}
                                 {/* <li onClick={() => setNav(!nav)}><Link to='/bingo'><MdGridOn className="nav-icon" />Bingo</Link></li> */}
+
+
+                                {(!Array.isArray(campaigns) || campaigns === null) && (
+                                    <>
+                                        <li onClick={() => setNav(!nav)}><Link to={`/campaign/${campaigns?._id}`}><TbWorld className="nav-icon" />Campaign</Link></li>
+                                        <li onClick={() => setNav(!nav)}><Link to="/settings"><IoIosSettings className="nav-icon" />Settings</Link></li>
+                                        <li onClick={() => setNav(!nav)}><Link to='/characters'><FaPeopleGroup className="nav-icon" />Characters</Link></li>
+                                        <li onClick={() => setNav(!nav)}><Link to='/maps'><LiaMapSolid className="nav-icon" />Maps</Link></li>
+                                        <li onClick={() => setNav(!nav)}><Link to='/quests'><GiOpenTreasureChest className="nav-icon" />Quests</Link></li>
+                                        <li onClick={() => setNav(!nav)}><Link to='/creatures'><GiSeaCreature className="nav-icon" />Creatures</Link></li>
+                                    </>
+                                )}
                                 <li onClick={() => setNav(!nav)}><button onClick={handleClick}>Log out</button></li>
                             </ul>
                         </div>

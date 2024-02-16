@@ -29,6 +29,7 @@ import EditCreature from './pages/npc/editCharacter/EditCreature'
 import EditNPC from './pages/npc/editCharacter/EditNPC'
 import EditPC from './pages/npc/editCharacter/EditPC'
 import Background from './components/background/Background';
+import Characters from './pages/collections/characters/Characters';
 
 function App() {
   const { user } = useAuthContext()
@@ -55,6 +56,10 @@ function App() {
             <Route 
               path="/campaign/edit/:id"
               element={user ? <EditCampaign /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/characters"
+              element={user ? <Characters /> : <Navigate to="/login" />}
             />
             <Route 
               path="/map/:id"

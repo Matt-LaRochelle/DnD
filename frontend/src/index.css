@@ -10,9 +10,13 @@
 
 /* layout */
 :root {
-  --primary-200: #d5f8f3;
-  --primary-500:#078d72;
-  --primary-800: #034e3f;
+  --primary-200: hsl(168, 85%, 90%);
+  --primary-300: hsl(168, 87%, 82%);
+  --primary-400: hsl(168, 89%, 70%);
+  --primary-500: hsl(168, 89%, 55%);
+  --primary-600: hsl(168, 89%, 40%);
+  --primary-700:hsl(168, 91%, 29%);
+  --primary-800: hsl(168, 93%, 16%);
   --secondary-200: #ead5f8;
   --secondary-500: #9b34eb;
   --secondary-800: #5e1f7f;
