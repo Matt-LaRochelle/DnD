@@ -80,7 +80,7 @@ const Quests = () => {
             {campaigns.dmID === user.id && 
                 <div className="npc" >
                     <h3>Add Quest</h3>
-                    <img src="https://www.animal-symbols.com/pictures/animal-symbol_3.png" alt="Add Quest" />
+                    <img src="https://static.vecteezy.com/system/resources/previews/002/766/904/non_2x/quest-linear-icons-set-search-for-missing-piece-keys-for-unlocking-map-for-treasure-part-of-quest-customizable-thin-line-contour-symbols-isolated-outline-illustrations-editable-stroke-vector.jpg" alt="Add Quest" />
                     <p onClick={handleClick} className='add'>+</p>
                 </div>}
             </div>

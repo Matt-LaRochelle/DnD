@@ -80,7 +80,7 @@ const Maps = () => {
             {campaigns.dmID === user.id && 
                 <div className="npc" >
                     <h3>Add Map</h3>
-                    <img src="https://www.animal-symbols.com/pictures/animal-symbol_3.png" alt="Add Map" />
+                    <img src="https://garden.spoonflower.com/c/14409649/p/f/m/7ymlkg-hbhMsJgmHbo_kFYPOIs3PddAIZ-Jsp793-WT9emAe4cmy/Grid%20wallpaper%20-%20cloud%20grey%20grid%20jumbo%20scale%20.jpg" alt="Add Map" />
                     <p onClick={handleClick} className='add'>+</p>
                 </div>}
             </div>

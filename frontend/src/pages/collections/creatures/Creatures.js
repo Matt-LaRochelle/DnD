@@ -80,7 +80,7 @@ const Creatures = () => {
             {campaigns.dmID === user.id && 
                 <div className="npc" >
                     <h3>Add Creature</h3>
-                    <img src="https://www.animal-symbols.com/pictures/animal-symbol_3.png" alt="Add Map" />
+                    <img src="https://www.animal-symbols.com/pictures/animal-symbol_3.png" alt="Add Creature" />
                     <p onClick={handleClick} className='add'>+</p>
                 </div>}
             </div>

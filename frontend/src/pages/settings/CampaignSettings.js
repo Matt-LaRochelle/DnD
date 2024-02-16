@@ -18,6 +18,8 @@ const CampaignSettings = () => {
         creatures: true,
         quests: true
     });
+    const [error, setError] = useState(false);
+    const [complete, setComplete] = useState(false);
 
     const handleChange = (event) => {
         setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
@@ -61,6 +63,18 @@ const CampaignSettings = () => {
         if (response.ok) {
             console.log(json)
             dispatch({type: 'UPDATE_CAMPAIGN', payload: json})
+            // Set complete to true for 5 seconds
+            
+            setComplete(true)
+            setTimeout(() => {
+                setComplete(false)
+            }, 5000)
+        }
+        else {
+            setError(json.message)
+            setTimeout(() => {
+                setError(false)
+            }, 5000)
         }
     }
 
@@ -125,6 +139,8 @@ const CampaignSettings = () => {
         </label>
     </div>
     <button className="button-primary" onClick={save}>Save</button>
+    {error && <p>{error}</p>}
+    {complete && <p>Settings saved!</p>}
 </div>
     );
 }
