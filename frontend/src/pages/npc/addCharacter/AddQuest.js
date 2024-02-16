@@ -101,7 +101,7 @@ const AddQuest = () => {
             <label>Return To</label>
             <input type="text" id="returnTo" onChange={handleChange}></input>
 
-            <label>Hide Character</label>
+            <label>Hide Quest</label>
             <input type="checkbox" id="hidden" onChange={handleChange}></input>
 
             <button className="button-primary" type="submit">Add Quest</button>

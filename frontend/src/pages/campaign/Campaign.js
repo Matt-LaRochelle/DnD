@@ -2,6 +2,11 @@ import './campaign.css'
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
+import { usePcsContext } from '../../hooks/usePcsContext';
+import { useNpcsContext } from '../../hooks/useNpcsContext';
+import { useCreaturesContext } from '../../hooks/useCreaturesContext';
+import { useQuestsContext } from '../../hooks/useQuestsContext';
+import { useMapsContext } from '../../hooks/useMapsContext';
 import { useAuthContext } from '../../hooks/useAuthContext'
 
 import Maps from '../../components/maps/Maps';
@@ -17,7 +22,7 @@ const Campaign = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
     const [loading, setLoading] = useState(true)
-    const [npcs, setNpcs] = useState(null)
+
 
     const [playerInfo, setPlayerInfo] = useState([]);
     const [dmInfo, setDmInfo] = useState({});
@@ -30,10 +35,17 @@ const Campaign = () => {
     // const [campaign, setCampaign] = useState({})
     // This sets once we receive all campaign info, then we can
     // fetch the user and dm info from inside the campaign.
-    const [step1, setStep1] = useState(false)
+    const [stepOne, setStepOne] = useState(false)
+    const [loadData, setLoadData] = useState([])
 
     const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
+    const { pcs, dispatch: dispatchPcs } = usePcsContext()
+    const { npcs, dispatch: dispatchNpcs } = useNpcsContext()
+    const { creatures, dispatch: dispatchCreatures } = useCreaturesContext()
+    const { quests, dispatch: dispatchQuests } = useQuestsContext()
+    const { maps, dispatch: dispatchMaps } = useMapsContext()
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -42,7 +54,17 @@ const Campaign = () => {
         }
     }, [user, campaigns])
 
+    useEffect(() => {
+        if (loadData.length === 7) {
+            setLoading(false)
+        }
+    }, [loadData])
 
+
+// ------------------------Get all campaign info------------------------
+// ------------------------Get all campaign info------------------------
+// ------------------------Get all campaign info------------------------
+// ------------------------Get all campaign info------------------------
 
     useEffect(() => {
         const fetchCampaign = async () => {
@@ -55,7 +77,8 @@ const Campaign = () => {
             const json = await response.json()
             if (response.ok) {
                 dispatch({type: 'SET_CAMPAIGN', payload: json})
-                setStep1(true);
+                setLoadData(prevLoadData => [...prevLoadData, "campaign"])
+                setStepOne(true);
                 setSettings(json.playerSettings.find(setting => setting.id === user.id).settings);
                 console.log("settings", settings)
             }
@@ -80,14 +103,128 @@ const Campaign = () => {
                 if (response.ok) {
                     setPlayerInfo(json.users)
                     setDmInfo(json.dm)
-                    setLoading(false)
+                    setLoadData(prevLoadData => [...prevLoadData, "users"])
                 }
             }
-            if (step1) {
+            if (user && stepOne) {
                 fetchUsers()
             }
         
-        }, [step1])
+        }, [user, stepOne])
+
+    // Get all npcs for the campaign
+    useEffect(() => {
+        const fetchNpcs = async () => {
+            const response = await fetch('/api/npc/' + campaigns._id, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                dispatchNpcs({type: 'SET_NPCS', payload: json})
+                setLoadData(prevLoadData => [...prevLoadData, "npcs"])
+            }
+        }
+        if (user && stepOne) {
+            fetchNpcs()
+        }
+    
+    }, [user, stepOne])
+
+    // Get all pcs for the campaign
+    useEffect(() => {
+        const fetchPcs = async () => {
+            const response = await fetch('/api/pc/' + campaigns._id, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                dispatchPcs({type: 'SET_PCS', payload: json})
+                setLoadData(prevLoadData => [...prevLoadData, "pcs"])
+            }
+        }
+        if (user && stepOne) {
+            fetchPcs()
+        }
+    
+    }, [user, stepOne])
+
+    // Get all creatures for the campaign
+    useEffect(() => {
+        const fetchCreatures = async () => {
+            const response = await fetch('/api/creature/' + campaigns._id, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                dispatchCreatures({type: 'SET_CREATURES', payload: json})
+                setLoadData(prevLoadData => [...prevLoadData, "creatures"])
+            }
+        }
+        if (user && stepOne) {
+            fetchCreatures()
+        }
+    
+    }, [user, stepOne])
+
+    // Get all maps info for the campaign
+    useEffect(() => {
+        const fetchMaps = async () => {
+            const response = await fetch('/api/map/' + campaigns._id, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                dispatchMaps({type: 'SET_MAPS', payload: json})
+                setLoadData(prevLoadData => [...prevLoadData, "maps"])
+            }
+        }
+        if (user && stepOne) {
+            fetchMaps()
+        }
+    
+    }, [user, stepOne])
+
+    // Get all quests info for the campaign
+    useEffect(() => {
+        const fetchQuests = async () => {
+            const response = await fetch('/api/quest/' + campaigns._id, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                dispatchQuests({type: 'SET_QUESTS', payload: json})
+                setLoadData(prevLoadData => [...prevLoadData, "quests"])
+            }
+        }
+        if (user && stepOne) {
+            fetchQuests()
+        }
+    
+    }, [user, stepOne])
+
+
+
+// ------------------------Get all campaign info------------------------
+// ------------------------Get all campaign info------------------------
+// ------------------------Get all campaign info------------------------
+// ------------------------Get all campaign info------------------------
+
+
 
 
     const campaignDetails = () => {
@@ -131,9 +268,9 @@ const Campaign = () => {
                     </div>
                     <div style={
                         (dm  && !settings.maps) ? {display: "block"} :
-                        (campaigns.maps.length === 0 ||
+                        (maps.length === 0 ||
                         !settings.maps || 
-                        campaigns.maps.every(map => map.hidden)) ? 
+                        maps.every(map => map.hidden)) ? 
                         {display: "none"} : {}
                     }>
                         <h2 className="campaign__heading">Maps</h2>
@@ -147,9 +284,9 @@ const Campaign = () => {
 
                     <div style={
                         (dm  && settings.nonPlayerCharacters) ? {display: "block"} :
-                        (campaigns.npcs.length === 0 ||
+                        (npcs.length === 0 ||
                         !settings.nonPlayerCharacters || 
-                        campaigns.npcs.every(npc => npc.hidden)) ? 
+                        npcs.every(npc => npc.hidden)) ? 
                         {display: "none"} : {}
                     }>
                         <h2 className="campaign__heading">NPCs</h2>
@@ -158,9 +295,9 @@ const Campaign = () => {
 
                     <div style={
                         (dm  && settings.creatures) ? {display: "block"} :
-                        (campaigns.creatures.length === 0 ||
+                        (creatures.length === 0 ||
                         !settings.creatures || 
-                        campaigns.creatures.every(creature => creature.hidden)) ? 
+                        creatures.every(creature => creature.hidden)) ? 
                         {display: "none"} : {}
                     }>
                         <h2 className="campaign__heading">Creatures</h2>
@@ -169,9 +306,9 @@ const Campaign = () => {
 
                     <div style={
                         (dm  && settings.quests) ? {display: "block"} :
-                        (campaigns.quests.length === 0 ||
+                        (quests.length === 0 ||
                         !settings.quests || 
-                        campaigns.quests.every(quest => quest.hidden)) ? 
+                        quests.every(quest => quest.hidden)) ? 
                         {display: "none"} : {}
                     }>
                         <h2 className="campaign__heading">Quests</h2>
