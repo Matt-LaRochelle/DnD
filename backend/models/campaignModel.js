@@ -24,6 +24,9 @@ const campaignSchema = new Schema({
     },
     playerIDs: [String],
     playerUsernames: [String],
+    playerSettings: {
+        type: Array
+    },
     pcs: [String],
     npcs: [String],
     maps: [String],

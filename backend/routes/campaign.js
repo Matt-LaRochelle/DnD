@@ -6,6 +6,7 @@ const {
     deleteCampaign,
     joinCampaign,
     leaveCampaign,
+    userSettingsCampaign,
     updateCampaign
 } = require('../controllers/campaignController')
 const requireAuth = require('../middleware/requireAuth')
@@ -33,6 +34,8 @@ router.patch('/join', joinCampaign)
 // UPDATE Leave a campaign
 router.patch('/leave', leaveCampaign)
 
+// UPDATE User settings for a campaign
+router.patch('/settings', userSettingsCampaign)
 
 
 //UPDATE a Campaign

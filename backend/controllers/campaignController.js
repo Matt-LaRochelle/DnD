@@ -191,6 +191,39 @@ const leaveCampaign = async (req, res) => {
     }
 }
 
+const userSettingsCampaign = async (req, res) => {
+    const { campaignID, id, username, settings } = req.body
+
+    console.log("userSettingsCampaign", campaignID, id, username, settings)
+    if (!mongoose.Types.ObjectId.isValid(campaignID)) {
+        return res.status(404).json({error: 'No such campaign'})
+    }
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'No such user'})
+    }
+
+    try {
+        const updatedCampaign = await Campaign.findByIdAndUpdate(
+            campaignID,
+            { 
+                $push: { 
+                    playerSettings: {
+                        id,
+                        username,
+                        settings
+                    }
+                }
+            },
+            { new: true }
+        );
+
+        res.status(200).json(updatedCampaign);
+    } catch (err) {
+        console.log(err)
+        res.status(400).json(err.message)
+    }
+}
+
 
 
 
@@ -232,5 +265,6 @@ module.exports = {
     deleteCampaign,
     joinCampaign,
     leaveCampaign,
+    userSettingsCampaign,
     updateCampaign
 }
