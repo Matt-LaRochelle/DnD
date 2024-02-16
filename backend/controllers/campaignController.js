@@ -46,6 +46,7 @@ const createCampaign = async (req, res) => {
     if (!description) {
         emptyFields.push('description')
     }
+    console.log(emptyFields)
     if(emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields})
     }
@@ -57,7 +58,26 @@ const createCampaign = async (req, res) => {
 
     // Add doc to db
     try {
-        const campaign = await Campaign.create({title, dmID, dmUsername, description, hidden})
+        const campaign = await Campaign.create({
+            title, 
+            dmID, 
+            dmUsername, 
+            description, 
+            hidden,
+            playerSettings: [{
+                id: dmID,
+                username: dmUsername,
+                settings: {
+                    description: true,
+                    image: true,
+                    players: true,
+                    maps: true,
+                    playerCharacters: true,
+                    nonPlayerCharacters: true,
+                    creatures: true,
+                    quests: true
+                }}]
+            })
         res.status(200).json(campaign);
     } catch (error) {
         res.status(400).json({ error: error.message });
