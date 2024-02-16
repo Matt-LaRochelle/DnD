@@ -4,3 +4,8 @@
     object-fit: cover;
     border-radius: 20px;
 }
+
+.settings__container .settings-edit {
+    padding: 40px;
+    color: var(--primary-800);
+}

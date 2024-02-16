@@ -1,0 +1,73 @@
+.campaignSettings__container .checkbox-container{
+    display: grid;
+    grid-template-columns: 200px 70px;
+    grid-template-rows: 50px;
+}
+/* .campaignSettings__container label,
+.campaignSettings__container input {
+    display: flex;
+    align-items: center;
+    border: 1px solid white;
+} */
+
+.checkbox-container {
+    border-top: 1px solid var(--black);
+    margin-top: 5px;
+    padding-top: 5px;
+    max-width: 260px;
+}
+/* Hide the default checkbox */
+.slider-checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a new slider */
+.slider {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: .4s;
+}
+
+/* Create the slider track */
+/* .slider::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: .4s;
+} */
+
+/* Create the slider knob */
+.slider-round {
+    content: "";
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: .4s;
+}
+
+/* Change the slider color when checked */
+.slider-checkbox:checked + .slider::before {
+    background-color: var(--primary-200);
+}
+
+/* Move the slider knob when checked */
+.slider-checkbox:checked + .slider-round {
+    transform: translateX(26px);
+}

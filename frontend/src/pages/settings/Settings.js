@@ -84,23 +84,23 @@ const Settings = () => {
 
     return (
         <div className="settings__container glass">
-            <h1>Settings</h1>
+            <h1>Your Account</h1>
             <p><strong>Email: </strong>{user.email}</p>
-            <p><strong>Username: </strong>{user.username}</p><FaEdit onClick={editUsername}/>
+            <p><strong>Username: </strong>{user.username}</p><button className="button-primary" onClick={editUsername}>Edit</button>
             {eUsername && 
                 <div>
                     <input type="text" id="username" onChange={handleChange} />
                     <button onClick={submit}>Save</button>
                 </div>
             }
-            <p><strong>Password</strong></p><FaEdit onClick={editPassword} />
+            <p><strong>Password</strong></p><button className="button-primary" onClick={editPassword}>Edit</button>
             {ePassword && 
                 <div>
                     <input type="text" id="password" onChange={handleChange} />
                     <button onClick={submit}>Save</button>
                 </div>
             }
-            <p><strong>Image:</strong></p><FaEdit onClick={editImage} />
+            <p><strong>Image:</strong></p><button className="button-primary" onClick={editImage}>Edit</button>
             {eImage && 
                 <div>
                     <input type="text" id="image" onChange={handleChange} />

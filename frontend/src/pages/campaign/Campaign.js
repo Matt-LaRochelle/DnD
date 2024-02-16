@@ -110,8 +110,7 @@ const Campaign = () => {
                         <img src={campaigns.image} alt={campaigns.title} />
                     </div>
                     <div className='campaign__users'>
-                        <button onClick={campaignDetails}>Campaign details</button>
-                        {dm && <button onClick={editCampaign}>Edit this Campaign</button>}
+                        {dm && <button className="button-primary" onClick={editCampaign}>Edit this Campaign</button>}
                         <div className="campaign__players">
                             <CharacterRow 
                                 dmInfo={dmInfo}

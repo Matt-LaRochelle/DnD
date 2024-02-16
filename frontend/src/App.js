@@ -9,7 +9,7 @@ import Signup from './pages/landing/Signup';
 import Forgot from './pages/landing/Forgot'
 import ResetPassword from './pages/landing/Reset'
 
-import Start from './pages/start/Start'
+import Home from './pages/home/Home'
 import Settings from './pages/settings/Settings'
 import Campaign from './pages/campaign/Campaign'
 import EditCampaign from './pages/campaign/EditCampaign'
@@ -33,6 +33,7 @@ import Characters from './pages/collections/characters/Characters';
 import Creatures from './pages/collections/creatures/Creatures';
 import Maps from './pages/collections/maps/Maps';
 import Quests from './pages/collections/quests/Quests';
+import CampaignSettings from './pages/settings/CampaignSettings';
 
 function App() {
   const { user } = useAuthContext()
@@ -46,11 +47,15 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={user ? <Start /> : <Navigate to="/login" />}
+              element={user ? <Home /> : <Navigate to="/login" />}
             />
             <Route 
               path="/settings"
               element={user ? <Settings /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/campaign-settings"
+              element={user ? <CampaignSettings /> : <Navigate to="/login" />}
             />
             <Route 
               path="/campaign/:id"
