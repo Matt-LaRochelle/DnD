@@ -32,6 +32,7 @@ import Background from './components/background/Background';
 import Characters from './pages/collections/characters/Characters';
 import Creatures from './pages/collections/creatures/Creatures';
 import Maps from './pages/collections/maps/Maps';
+import Quests from './pages/collections/quests/Quests';
 
 function App() {
   const { user } = useAuthContext()
@@ -70,6 +71,10 @@ function App() {
             <Route
               path="/maps"
               element={user ? <Maps /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/quests"
+              element={user ? <Quests /> : <Navigate to="/login" />}
             />
             <Route 
               path="/map/:id"
