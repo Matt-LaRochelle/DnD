@@ -147,9 +147,9 @@ const Campaign = () => {
 
                     <div style={
                         (dm  && settings.nonPlayerCharacters) ? {display: "block"} :
-                        (campaigns.nonPlayerCharacters.length === 0 ||
+                        (campaigns.npcs.length === 0 ||
                         !settings.nonPlayerCharacters || 
-                        campaigns.nonPlayerCharacters.every(npc => npc.hidden)) ? 
+                        campaigns.npcs.every(npc => npc.hidden)) ? 
                         {display: "none"} : {}
                     }>
                         <h2 className="campaign__heading">NPCs</h2>
