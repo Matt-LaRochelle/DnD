@@ -142,7 +142,22 @@ const joinCampaign = async (req, res) => {
             { 
                 $push: { 
                     playerIDs: playerID,
-                    playerUsernames: playerUsername
+                    playerUsernames: playerUsername,
+                    playerSettings: {
+                        id: playerID,
+                        username: playerUsername,
+                        settings: {
+                            description: true,
+                            image: true,
+                            players: true,
+                            maps: true,
+                            playerCharacters: true,
+                            nonPlayerCharacters: true,
+                            creatures: true,
+                            quests: true
+                        }
+                    
+                    }
                 }
             },
             { new: true }
@@ -159,7 +174,7 @@ const joinCampaign = async (req, res) => {
 // Player leaves an existing campaign
 const leaveCampaign = async (req, res) => {
 
-    const { campaignID, playerID, playerUsername } = req.body
+    const { campaignID, playerID, playerUsername, playerSettings } = req.body
 
 
     if (!mongoose.Types.ObjectId.isValid(campaignID)) {
@@ -178,7 +193,8 @@ const leaveCampaign = async (req, res) => {
             { 
                 $pull: { 
                     playerIDs: playerID,
-                    playerUsernames: playerUsername
+                    playerUsernames: playerUsername,
+                    playerSettings: playerSettings
                 }
             },
             { new: true }

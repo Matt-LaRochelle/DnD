@@ -65,7 +65,8 @@ const CampaignDetails = ({ campaign }) => {
         const leavingPlayer = {
             campaignID: campaign._id,
             playerID: user.id,
-            playerUsername: user.username
+            playerUsername: user.username,
+            playerSettings: campaign.playerSettings.find(setting => setting.id === user.id)
         }
 
         const response = await fetch("/api/campaign/leave", {
