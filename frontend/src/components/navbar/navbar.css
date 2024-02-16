@@ -35,6 +35,8 @@ header {
 
 .navbar__logo:hover {
     animation: spin .07s linear infinite;
+    /* animation: spin 80s linear infinite; */
+    /* animation: spin 5s linear infinite; */
 }
 
 .navbar__title {
@@ -91,7 +93,8 @@ nav button {
 }
 
 .menu-icon,
-.nav-icon {
+.nav-icon,
+.small-menu-right {
     display: none;
 }
 .logged-out-menu a {
@@ -99,11 +102,25 @@ nav button {
 }
 
 @media screen and (max-width: 1600px) {
-    .menu-icon {
+    #small-menu-right {
         display: block;
         position: absolute;
         top: 10px;
         right: 10px;
+        z-index: 20;
+        display: flex;
+        gap: 25px;
+    }
+    #small-menu-right img {
+        width: 50px;
+        height: 50px;
+        margin: 0;
+    }
+    .menu-icon {
+        display: block;
+        /* position: absolute;
+        top: 10px;
+        right: 10px; */
         border: 5px solid var(--white);
         z-index: 10;
         font-size: 3rem;
@@ -150,5 +167,26 @@ nav button {
         margin-right: 20px;
         font-size: 1.8rem;
         margin-bottom: -8px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    header .container {
+        /* max-width: 1000px; */
+        margin: 0 auto;
+        padding: 10px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 70px;
+      }
+
+    .navbar__logo {
+        height: 40px;
+        width: 40px;
+        margin-right: 20px;
+    }
+    .navbar__title h1 {
+        font-size: 1.5rem;
     }
 }

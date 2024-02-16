@@ -5,6 +5,7 @@ import { useLogout } from '../../hooks/useLogout'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import Logo from '../logo/Logo';
+import Avatar from '../avatar/Avatar';
 
 import { IoMdMenu } from "react-icons/io";
 import { IoIosClose } from "react-icons/io";
@@ -100,7 +101,14 @@ const Navbar = () => {
                             </ul>
                         </div>
                     )}
-                    {nav ? <IoIosClose className="menu-icon" onClick={toggleNav} /> : <IoMdMenu className="menu-icon" onClick={toggleNav} /> }
+                        <div id="small-menu-right">
+                            {user && <Avatar 
+                                username={user.username}
+                                image={user.image}
+                                hideName={true}  
+                                />}
+                            {nav ? <IoIosClose className="menu-icon" onClick={toggleNav} /> : <IoMdMenu className="menu-icon" onClick={toggleNav} /> }
+                        </div>
                 </nav>
             </div>
         </header>
