@@ -110,7 +110,7 @@ const AddCreature = () => {
             <label>Hide Character</label>
             <input type="checkbox" id="hidden" onChange={handleChange}></input>
 
-            <button type="submit">Add NPC</button>
+            <button className="button-primary" type="submit">Add Creature</button>
             {error && <div className="error" >{error}</div>}
         </form>
     )

@@ -94,6 +94,7 @@ const Campaign = () => {
         console.log("Step end: campaign:", campaigns)
         console.log("playerUsernames", campaigns.playerUsernames)
     }
+    console.log("dm", dm)
 
     const editCampaign = () => {
         navigate(`/campaign/edit/${campaigns._id}`)
@@ -128,30 +129,54 @@ const Campaign = () => {
                             </div>
                         }
                     </div>
-                    <div style={settings.maps ? {} : {display: "none"}}>
-    <h2 className="campaign__heading">Maps</h2>
-    <Maps dm={campaigns.dmID} />
-</div>
+                    <div style={
+                        (dm  && !settings.maps) ? {display: "block"} :
+                        (campaigns.maps.length === 0 ||
+                        !settings.maps || 
+                        campaigns.maps.every(map => map.hidden)) ? 
+                        {display: "none"} : {}
+                    }>
+                        <h2 className="campaign__heading">Maps</h2>
+                        <Maps dm={campaigns.dmID} />
+                    </div>
 
-<div style={settings.playerCharacters ? {} : {display: "none"}}>
-    <h2 className="campaign__heading">PCs</h2>
-    <Pcs dm={campaigns.dmID} />
-</div>
+                    <div style={settings.playerCharacters ? {} : {display: "none"}}>
+                        <h2 className="campaign__heading">PCs</h2>
+                        <Pcs dm={campaigns.dmID} />
+                    </div>
 
-<div style={settings.nonPlayerCharacters ? {} : {display: "none"}}>
-    <h2 className="campaign__heading">NPCs</h2>
-    <Npcs dm={campaigns.dmID} />                    
-</div>
+                    <div style={
+                        (dm  && settings.nonPlayerCharacters) ? {display: "block"} :
+                        (campaigns.nonPlayerCharacters.length === 0 ||
+                        !settings.nonPlayerCharacters || 
+                        campaigns.nonPlayerCharacters.every(npc => npc.hidden)) ? 
+                        {display: "none"} : {}
+                    }>
+                        <h2 className="campaign__heading">NPCs</h2>
+                        <Npcs dm={campaigns.dmID} />                    
+                    </div>
 
-<div style={settings.creatures ? {} : {display: "none"}}>
-    <h2 className="campaign__heading">Creatures</h2>
-    <Creatures dm={campaigns.dmID} />                    
-</div>
+                    <div style={
+                        (dm  && settings.creatures) ? {display: "block"} :
+                        (campaigns.creatures.length === 0 ||
+                        !settings.creatures || 
+                        campaigns.creatures.every(creature => creature.hidden)) ? 
+                        {display: "none"} : {}
+                    }>
+                        <h2 className="campaign__heading">Creatures</h2>
+                        <Creatures dm={campaigns.dmID} />                    
+                    </div>
 
-<div style={settings.quests ? {} : {display: "none"}}>
-    <h2 className="campaign__heading">Quests</h2>
-    <Quests dm={campaigns.dmID} />                    
-</div>
+                    <div style={
+                        (dm  && settings.quests) ? {display: "block"} :
+                        (campaigns.quests.length === 0 ||
+                        !settings.quests || 
+                        campaigns.quests.every(quest => quest.hidden)) ? 
+                        {display: "none"} : {}
+                    }>
+                        <h2 className="campaign__heading">Quests</h2>
+                        <Quests dm={campaigns.dmID} />                    
+                    </div>
                 </div>  
             }
         </div>
