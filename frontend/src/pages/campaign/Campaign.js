@@ -22,6 +22,8 @@ const Campaign = () => {
     const [playerInfo, setPlayerInfo] = useState([]);
     const [dmInfo, setDmInfo] = useState({});
 
+    const [settings, setSettings] = useState(null)
+
     // This variable says whether the current client is DM of this campaign
     const [dm, setDm] = useState(false)
 
@@ -40,6 +42,8 @@ const Campaign = () => {
         }
     }, [user, campaigns])
 
+
+
     useEffect(() => {
         const fetchCampaign = async () => {
             setLoading(true);
@@ -52,6 +56,8 @@ const Campaign = () => {
             if (response.ok) {
                 dispatch({type: 'SET_CAMPAIGN', payload: json})
                 setStep1(true);
+                setSettings(json.playerSettings.find(setting => setting.id === user.id).settings);
+                console.log("settings", settings)
             }
         }
 
@@ -97,6 +103,8 @@ const Campaign = () => {
         navigate(`/npc/${id}`);
     }
 
+
+
     return (
         <div className="campaign__Container">
             {loading 
@@ -106,28 +114,50 @@ const Campaign = () => {
                 <div className='loaded'>
                     <h1 onClick={campaignDetails}>{campaigns.title}</h1>
                     <div className="campaign__Description">
-                        <p>{campaigns.description}</p>
-                        <img src={campaigns.image} alt={campaigns.title} />
+                        {settings.description && <p>{campaigns.description}</p>}
+                        {settings.image && <img src={campaigns.image} alt={campaigns.title} />}
                     </div>
                     <div className='campaign__users'>
                         {dm && <button className="button-primary" onClick={editCampaign}>Edit this Campaign</button>}
-                        <div className="campaign__players">
-                            <CharacterRow 
-                                dmInfo={dmInfo}
-                                playerInfo={playerInfo}
-                            />
-                        </div>
+                        {settings.players && 
+                            <div className="campaign__players">
+                                <CharacterRow 
+                                    dmInfo={dmInfo}
+                                    playerInfo={playerInfo}
+                                />
+                            </div>
+                        }
                     </div>
-                    <h2 className="campaign__heading">Maps</h2>
-                    <Maps dm={campaigns.dmID} />
-                    <h2 className="campaign__heading">PCs</h2>
-                    <Pcs dm={campaigns.dmID} />
-                    <h2 className="campaign__heading">NPCs</h2>
-                    <Npcs dm={campaigns.dmID} />                    
-                    <h2 className="campaign__heading">Creatures</h2>
-                    <Creatures dm={campaigns.dmID} />                    
-                    <h2 className="campaign__heading">Quests</h2>
-                    <Quests dm={campaigns.dmID} />                    
+                    {settings.maps &&
+                    <div>
+                        <h2 className="campaign__heading">Maps</h2>
+                        <Maps dm={campaigns.dmID} />
+                    </div>
+                    }
+                    {settings.playerCharacters &&
+                    <div>
+                        <h2 className="campaign__heading">PCs</h2>
+                        <Pcs dm={campaigns.dmID} />
+                    </div>
+                    }
+                    {settings.nonPlayerCharacters &&
+                    <div>
+                        <h2 className="campaign__heading">NPCs</h2>
+                        <Npcs dm={campaigns.dmID} />                    
+                    </div>
+                    }
+                    {settings.creatures &&
+                    <div>
+                        <h2 className="campaign__heading">Creatures</h2>
+                        <Creatures dm={campaigns.dmID} />                    
+                    </div>
+                    }
+                    {settings.quests &&
+                    <div>
+                        <h2 className="campaign__heading">Quests</h2>
+                        <Quests dm={campaigns.dmID} />                    
+                    </div>
+                    }
                 </div>  
             }
         </div>

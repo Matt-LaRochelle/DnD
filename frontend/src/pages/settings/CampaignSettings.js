@@ -1,10 +1,13 @@
 import './campaignSettings.css'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCampaignsContext } from '../../hooks/useCampaignsContext';
 
 const CampaignSettings = () => {
+    const { user } = useAuthContext();
+    const { campaigns, dispatch } = useCampaignsContext();
+
     const [checkboxes, setCheckboxes] = useState({
         description: true,
         image: true,
@@ -16,12 +19,17 @@ const CampaignSettings = () => {
         quests: true
     });
 
-    const { user } = useAuthContext();
-    const { campaigns, dispatch } = useCampaignsContext();
-
     const handleChange = (event) => {
         setCheckboxes({ ...checkboxes, [event.target.name]: event.target.checked });
     };
+
+    useEffect(() => {
+        if (campaigns) {
+            let updatedSettings = campaigns.playerSettings.find(setting => setting.id === user.id).settings;
+            console.log("updated Settings:", updatedSettings)
+            setCheckboxes(updatedSettings)
+        }
+    }, [])
 
     const save = async () => {
         console.log(checkboxes, campaigns._id, user.id);
