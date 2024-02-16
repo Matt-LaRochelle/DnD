@@ -21,6 +21,21 @@ header {
     height: 100px;
     width: 100px;
     margin-right: 20px;
+    transition: animation 1s;
+}
+
+/* Define the keyframes animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.navbar__logo:hover {
+    animation: spin 0.2s linear infinite;
 }
 
 .navbar__title {
