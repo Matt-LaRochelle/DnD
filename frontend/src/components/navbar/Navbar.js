@@ -102,11 +102,17 @@ const Navbar = () => {
                         </div>
                     )}
                         <div id="small-menu-right">
-                            {user && <Avatar 
-                                username={user.username}
-                                image={user.image}
-                                hideName={true}  
-                                />}
+                            {user && 
+                            <Link 
+                                to="/settings"
+                                onClick={nav ? () => setNav(!nav) : null}
+                                >
+                                <Avatar 
+                                    username={user.username}
+                                    image={user.image}
+                                    hideName={true}  
+                                    />
+                            </Link>}
                             {nav ? <IoIosClose className="menu-icon" onClick={toggleNav} /> : <IoMdMenu className="menu-icon" onClick={toggleNav} /> }
                         </div>
                 </nav>

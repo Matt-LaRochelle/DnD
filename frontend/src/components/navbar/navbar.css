@@ -116,6 +116,9 @@ nav button {
         height: 50px;
         margin: 0;
     }
+    #small-menu-right img:hover {
+        animation: spin 7s linear infinite;
+    }
     .menu-icon {
         display: block;
         /* position: absolute;
