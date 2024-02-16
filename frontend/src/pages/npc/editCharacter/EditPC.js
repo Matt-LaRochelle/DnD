@@ -103,7 +103,7 @@ const EditPC = () => {
 
 
     return (
-        <form className='editCharacter__form'>
+        <form className='editCharacter__form glass'>
            <h2>Edit PC</h2>
             <label>Name</label>
             <div>

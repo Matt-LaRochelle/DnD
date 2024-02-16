@@ -50,7 +50,7 @@ const Pc = () => {
                 ?
                 <Loading />
                 :
-                <div className='character__container'>
+                <div className='character__container glass'>
                     <h1>{pc.name}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>

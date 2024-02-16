@@ -77,7 +77,7 @@ const AddQuest = () => {
 
 
     return (
-        <form className='Add__form' onSubmit={submit}>
+        <form className='Add__form glass' onSubmit={submit}>
            <h2>Add Quest</h2>
             <label>Title</label>
             <input className={emptyFields.includes("title") && "error"} type="text" id="title" onChange={handleChange}></input>

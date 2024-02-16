@@ -105,7 +105,7 @@ const EditQuest = () => {
 
 
     return (
-        <form className='editCharacter__form'>
+        <form className='editCharacter__form glass'>
            <h2>Edit Quest</h2>
             <label>Title</label>
             <div>

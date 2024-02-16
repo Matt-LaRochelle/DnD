@@ -83,7 +83,7 @@ const Settings = () => {
     }
 
     return (
-        <div className="settings__container">
+        <div className="settings__container glass">
             <h1>Settings</h1>
             <p><strong>Email: </strong>{user.email}</p>
             <p><strong>Username: </strong>{user.username}</p><FaEdit onClick={editUsername}/>

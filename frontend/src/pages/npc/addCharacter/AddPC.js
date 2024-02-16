@@ -80,7 +80,7 @@ const AddPC = () => {
 
 
     return (
-        <form className='Add__form' onSubmit={submit}>
+        <form className='Add__form glass' onSubmit={submit}>
            <h2>Add PC</h2>
             <label>Name</label>
             <input className={emptyFields.includes("name") && "error"} type="text" id="name" onChange={handleChange}></input>

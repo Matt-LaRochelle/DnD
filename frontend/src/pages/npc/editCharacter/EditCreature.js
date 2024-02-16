@@ -104,7 +104,7 @@ const EditCreature = () => {
 
 
     return (
-        <form className='editCharacter__form'>
+        <form className='editCharacter__form glass'>
            <h2>Edit Creature</h2>
             <label>Name</label>
             <div>

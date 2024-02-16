@@ -89,7 +89,7 @@ const EditCampaign = () => {
     }
 
     return (
-        <div className="settings__container">
+        <div className="settings__container glass">
             <h1>Campaign Editor</h1>
             <p><strong>Campaign title: </strong>{campaigns.title}</p><FaEdit onClick={editTitle}/>
             {eTitle && 
