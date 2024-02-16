@@ -43,21 +43,22 @@
   .campaignDetails__container a,
   .campaignDetails__container a:focus,
   .campaignDetails__container a:visited {
-    display: block;
+    /* display: block; */
     text-decoration: none;
-    color: var(--primary-800);
+    font-weight: 500;
+    /* color: var(--primary-800);
     border: 2px solid var(--primary-800);
     padding: 8px 20px;
     width: max-content;
     background: linear-gradient(to right, #dffaf0, #d5f8f3);
-    margin: 20px 0;
+    margin: 20px 0; */
   }
 
-  .campaignDetails__container a:hover,
+  /* .campaignDetails__container a:hover,
   .campaignDetails__id-checker:hover {
     color: var(--black);
     background: linear-gradient(to right, #d9e8e2, #c1ebe5);
-  }
+  } */
 
   .campaignDetails__id-checker {
     position: absolute;

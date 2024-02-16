@@ -4,9 +4,9 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 import './start.css'
 
 // components
-import CampaignDetails from '../../components/start/campaignDetails/CampaignDetails'
-import CampaignStart from '../../components/start/campaignStart/CampaignStart'
-import CampaignJoin from '../../components/start/campaignJoin/CampaignJoin'
+import CampaignDetails from '../../components/home/campaignDetails/CampaignDetails'
+import CampaignStart from '../../components/home/campaignStart/CampaignStart'
+import CampaignJoin from '../../components/home/campaignJoin/CampaignJoin'
 
 const Start = () => {
     // Can I make sure that loading is set to true when the component mounts?

@@ -104,7 +104,7 @@ const CampaignDetails = ({ campaign }) => {
                 />
             </div>
             {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
-            <Link to={path} className="campaignDetails__enter">Enter</Link>
+            <Link to={path} className="button-primary campaignDetails__enter">Enter</Link>
 
             {dmRole 
                 ?   <div>
