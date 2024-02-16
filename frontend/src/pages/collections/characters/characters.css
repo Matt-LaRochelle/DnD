@@ -2,6 +2,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin: 0 auto;
-    padding: 0 1rem;
+    margin: 0 auto 100px;
+    padding: 1rem;
+    background: linear-gradient(rgba(33, 2, 2, 0.683), black) ;
+    border-radius: 10px;
 }
