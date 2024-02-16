@@ -30,6 +30,7 @@ import EditNPC from './pages/npc/editCharacter/EditNPC'
 import EditPC from './pages/npc/editCharacter/EditPC'
 import Background from './components/background/Background';
 import Characters from './pages/collections/characters/Characters';
+import Creatures from './pages/collections/creatures/Creatures';
 
 function App() {
   const { user } = useAuthContext()
@@ -60,6 +61,10 @@ function App() {
             <Route
               path="/characters"
               element={user ? <Characters /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/creatures"
+              element={user ? <Creatures /> : <Navigate to="/login" />}
             />
             <Route 
               path="/map/:id"
