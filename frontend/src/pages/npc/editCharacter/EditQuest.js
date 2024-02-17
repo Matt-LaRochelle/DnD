@@ -166,7 +166,7 @@ const EditQuest = () => {
                 placeholder={quests.returnTo}></input>
             {formState.returnTo && <button onClick={submit} className="button-primary">Save</button>}
            
-            <label>Hide Character</label>
+            <label>Hide Quest</label>
             <input 
                 type="checkbox" 
                 id="hidden" 

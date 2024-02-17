@@ -145,7 +145,7 @@ const EditMap = () => {
                 onChange={handleChange}
                 placeholder={maps.secrets}></input>
             {formState.secrets && <button onClick={submit} className="button-primary">Save</button>}
-            <label>Hide Character</label>
+            <label>Hide Map</label>
             <input 
                 type="checkbox" 
                 id="hidden" 
