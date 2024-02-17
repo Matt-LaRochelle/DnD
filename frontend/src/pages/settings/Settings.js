@@ -14,10 +14,12 @@ const Settings = () => {
     const [eUsername, setEUsername] = useState(false)
     const [ePassword, setEPassword] = useState(false)
     const [eImage, setEImage] = useState(false)
+    const [eBImage, setEBImage] = useState(false)
     const [formState, setFormState] = useState({
         username: '',
         password: '',
-        image: ''
+        image: '',
+        backgroundImage: ''
     })
 
     const editUsername = () => {
@@ -30,6 +32,9 @@ const Settings = () => {
 
     const editImage = () => {
         setEImage(!eImage)
+    }
+    const editBgImage = () => {
+        setEBImage(!eBImage)
     }
 
     const handleChange = (event) => {
@@ -61,6 +66,9 @@ const Settings = () => {
         if (formState.image) {
             updatedData.image = formState.image;
         }
+        if (formState.backgroundImage) {
+            updatedData.backgroundImage = formState.backgroundImage;
+        }
 
         const response = await fetch('/api/user/' + user.id, {
             method: 'PATCH',
@@ -77,6 +85,7 @@ const Settings = () => {
             setEUsername(false)
             setEPassword(false)
             setEImage(false)
+            setEBImage(false)
         }
 
 
@@ -108,6 +117,14 @@ const Settings = () => {
                 </div>
             }
             <img src={user.image} alt="user image" />
+            <p><strong>Background Image:</strong></p><button className="button-primary" onClick={editBgImage}>Edit</button>
+            {eBImage && 
+                <div>
+                    <input type="text" id="backgroundImage" onChange={handleChange} />
+                    <button onClick={submit}>Save</button>
+                </div>
+            }
+            <img src={user.backgroundImage ? user.backgroundImage : "https://i.pinimg.com/originals/0a/fe/39/0afe399b3f0a454632c7fea074a3f0cb.jpg"} alt="user image" />
         </div>
     )
 }

@@ -267,7 +267,7 @@ const Campaign = () => {
                         }
                     </div>
                     <div style={
-                        (dm  && !settings.maps) ? {display: "block"} :
+                        (dm  && settings.maps) ? {display: "block"} :
                         (maps.length === 0 ||
                         !settings.maps || 
                         maps.every(map => map.hidden)) ? 
