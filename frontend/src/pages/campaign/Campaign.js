@@ -9,6 +9,8 @@ import { useQuestsContext } from '../../hooks/useQuestsContext';
 import { useMapsContext } from '../../hooks/useMapsContext';
 import { useAuthContext } from '../../hooks/useAuthContext'
 
+import DOMPurify from 'dompurify'
+
 import Maps from '../../components/maps/Maps';
 import Npcs from '../../components/npcs/Npcs';
 import Pcs from '../../components/pcs/Pcs';
@@ -37,6 +39,7 @@ const Campaign = () => {
     // fetch the user and dm info from inside the campaign.
     const [stepOne, setStepOne] = useState(false)
     const [loadData, setLoadData] = useState([])
+    const [campaignDescription, setCampaignDescription] = useState("")
 
     const {campaigns, dispatch} = useCampaignsContext() 
     const { user } = useAuthContext()
@@ -243,6 +246,21 @@ const Campaign = () => {
 
 
 
+    // For handling inner HTML
+    useEffect(()=> {
+        const cleanHtml = () => {
+            console.log(campaigns.description)
+            if (campaigns.description) {
+                let cleanCampaignDescription = DOMPurify.sanitize(campaigns.description)
+                setCampaignDescription(cleanCampaignDescription)
+            }
+        }
+        if (campaigns && stepOne) {
+            cleanHtml()
+        }
+    }, [campaigns, stepOne])
+
+
     return (
         <div className="campaign__Container">
             {loading 
@@ -252,7 +270,7 @@ const Campaign = () => {
                 <div className='loaded'>
                     <h1 onClick={campaignDetails}>{campaigns.title}</h1>
                     <div className="campaign__Description">
-                        {settings.description && <p>{campaigns.description}</p>}
+                        {settings.description && <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>}
                         {settings.image && campaigns.image && <img src={campaigns.image} alt={campaigns.title} />}
                     </div>
                     <div className='campaign__users'>

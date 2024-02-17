@@ -5,6 +5,8 @@ import { useAuthContext } from '../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useNavigate } from 'react-router-dom'
 
+import Editor from '../../components/editor/Editor'
+
 import { FaEdit } from "react-icons/fa";
 
 
@@ -21,6 +23,7 @@ const EditCampaign = () => {
         description: '',
         image: ''
     })
+    const [description, setDescription] = useState('')
 
     const editTitle = () => {
         console.log('title')
@@ -66,6 +69,10 @@ const EditCampaign = () => {
             }
         }
 
+        if (description) {
+            updatedData['description'] = description
+        }
+
         const response = await fetch('/api/campaign/' + campaigns._id, {
             method: 'PATCH',
             headers: {
@@ -101,7 +108,8 @@ const EditCampaign = () => {
             <p><strong>Description</strong>{campaigns.description}</p><FaEdit onClick={editDescription} />
             {eDescription && 
                 <div>
-                    <input type="text" id="description" onChange={handleChange} />
+                    {/* <input type="text" id="description" onChange={handleChange} /> */}
+                    <Editor value={description} onChange={setDescription} />
                     <button onClick={submit}>Save</button>
                 </div>
             }

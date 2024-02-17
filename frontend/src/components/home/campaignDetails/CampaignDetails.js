@@ -2,6 +2,7 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { Link } from 'react-router-dom'
 import './campaignDetails.css'
+import DOMPurify from 'dompurify'
 // date fns
 // import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useEffect, useState } from 'react'
@@ -16,6 +17,8 @@ const CampaignDetails = ({ campaign }) => {
 
     const [playerInfo, setPlayerInfo] = useState([]);
     const [dmInfo, setDmInfo] = useState({});
+
+    const [campaignDescription, setCampaignDescription] = useState('')
 
     useEffect(() => {
         if (user.id === campaign.dmID) {
@@ -93,11 +96,25 @@ const CampaignDetails = ({ campaign }) => {
     // We can use this link later to go to the actual campaign
     const path = `/campaign/${campaign._id}`
 
+
+    // For handling inner HTML
+    useEffect(()=> {
+        const cleanHtml = () => {
+            if (campaign.description) {
+                let cleanCampaignDescription = DOMPurify.sanitize(campaign.description)
+                setCampaignDescription(cleanCampaignDescription)
+            }
+        }
+        if (campaign) {
+            cleanHtml()
+        }
+    }, [campaign])
+
     return (
         <div key={campaign._id} className="campaignDetails__container">
             <h2>{campaign.title}</h2>
             <h3>Description:</h3> 
-            <p>{campaign.description}</p>
+            <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
             <div className="campaignDetails__list">
                 <CharacterRow 
                     playerInfo={playerInfo}
