@@ -6,6 +6,7 @@ import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useNavigate } from 'react-router-dom'
 
 import Editor from '../../components/editor/Editor'
+import DOMPurify from 'dompurify'
 
 import { FaEdit } from "react-icons/fa";
 
@@ -14,6 +15,8 @@ const EditCampaign = () => {
     const { user } = useAuthContext()
     const { campaigns, dispatch } = useCampaignsContext()
     const navigate = useNavigate()
+    
+    const [campaignDescription, setCampaignDescription] = useState('')
 
     const [eTitle, setETitle] = useState(false)
     const [eDescription, setEDescription] = useState(false)
@@ -50,6 +53,20 @@ const EditCampaign = () => {
     useEffect(() => {
         console.log(formState)
     }, [formState])
+
+        // For handling inner HTML
+        useEffect(()=> {
+            const cleanHtml = () => {
+                console.log(campaigns.description)
+                if (campaigns.description) {
+                    let cleanCampaignDescription = DOMPurify.sanitize(campaigns.description)
+                    setCampaignDescription(cleanCampaignDescription)
+                }
+            }
+            if (campaigns) {
+                cleanHtml()
+            }
+        }, [campaigns])
 
 
     const submit = async (e) => {
@@ -105,7 +122,7 @@ const EditCampaign = () => {
                     <button onClick={submit}>Save</button>
                 </div>
             }
-            <p><strong>Description</strong>{campaigns.description}</p><FaEdit onClick={editDescription} />
+            <p><strong>Description</strong></p><p dangerouslySetInnerHTML={{__html: campaignDescription}}></p><FaEdit onClick={editDescription} />
             {eDescription && 
                 <div>
                     {/* <input type="text" id="description" onChange={handleChange} /> */}
