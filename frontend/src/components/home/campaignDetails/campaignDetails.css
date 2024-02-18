@@ -13,9 +13,12 @@
     font-size: 1.2em;
     color: var(--primary-200);
   }
-  .campaignDetails__container p {
+  /* .campaignDetails__container p {
     margin: 0;
     font-size: 0.9em;
+  } */
+  .campaingDetails__description {
+    margin: 8px 0 25px;
   }
   .campaignDetails__container .campaignDetails__dm {
     width: max-content;

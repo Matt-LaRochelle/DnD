@@ -114,7 +114,7 @@ const CampaignDetails = ({ campaign }) => {
         <div key={campaign._id} className="campaignDetails__container">
             <h2>{campaign.title}</h2>
             <h3>Description:</h3> 
-            <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
+            <p className="campaingDetails__description" dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
             <div className="campaignDetails__list">
                 <CharacterRow 
                     playerInfo={playerInfo}
