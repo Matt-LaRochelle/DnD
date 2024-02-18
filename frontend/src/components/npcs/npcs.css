@@ -30,6 +30,7 @@
 }
 .npc h3 {
     text-align: center;
+    white-space: nowrap;
 }
 .npc img {
     width: 205px;

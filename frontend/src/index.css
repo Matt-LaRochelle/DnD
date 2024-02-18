@@ -141,8 +141,10 @@ input.error {
   border-right: 2px solid var(--error-800);
   padding: 8px 20px;
   width: max-content;
+  font-weight: 900;
   background: linear-gradient(to right, #fadfdf, #f8d5d5);
   margin: 20px 0;
+  transition: .5s;
 }
 
 .button-secondary:hover {
