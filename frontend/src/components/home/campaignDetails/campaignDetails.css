@@ -3,7 +3,7 @@
     border: 2px solid #ddd;
     border-radius: 14px;
     margin: 20px auto;
-    padding: 20px;
+    padding: 20px 20px 100px;
     position: relative;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
     color: var(--white);
@@ -62,11 +62,18 @@
     background: linear-gradient(to right, #d9e8e2, #c1ebe5);
   } */
 
+  .campaignDetails__container .campaignDetails__enter {
+    position: absolute;
+    left: 20px;
+    bottom: 0px;
+  }
+
   .campaignDetails__id-checker {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    color: var(--black);
+    font-weight: 500;
+    color: var(--primary-800);
   }
   .campaign-details__id {
     position: absolute;
