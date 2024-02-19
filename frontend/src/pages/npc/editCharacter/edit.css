@@ -1,9 +1,8 @@
 .editCharacter__form {
     border: 2px solid blue;
-    width: 200px;
+    width: min(80vw, 700px);
     height: max-content;
     border-radius: 20px;
-    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -26,13 +25,10 @@
     margin-top: 10px;
 }
 
-.edit-input {
-    background: transparent;
-    border: none;
-    height: 1px;
-    transition: 1s;
+.edit-input[type: checkbox] {
+    margin-left: 
 }
-.edit-input::placeholder {
+/* .edit-input::placeholder {
     color: #fff;
 }
 
@@ -44,4 +40,4 @@
 }
 .edit-input:focus::placeholder {
     color: #555;
-}
+} */

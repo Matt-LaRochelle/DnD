@@ -5,10 +5,17 @@ import { useNpcsContext } from '../../../hooks/useNpcsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 
+import Editor from '../../../components/editor/Editor'
+import DOMPurify from 'dompurify'
+
+import { FaEdit } from "react-icons/fa";
+
 const EditNPC = () => {
     const [formState, setFormState] = useState({
         description: '',
         image: '',
+        voice: '',
+        catchphrases: '',
         secrets: '',
         lastSeen: '',
         hidden: false
@@ -16,6 +23,19 @@ const EditNPC = () => {
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields ] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const [eName, setEName] = useState(false)
+    const [eDescription, setEDescription] = useState(false)
+    const [eImage, setEImage] = useState(false)
+    const [eVoice, setEVoice] = useState(false)
+    const [eCatchphrases, setECatchphrases] = useState(false)
+    const [eSecrets, setESecrets] = useState(false)
+    const [eLastSeen, setELastSeen] = useState(false)
+
+    const [description, setDescription] = useState('')
+    const [secrets, setSecrets] = useState('')
+    const [voice, setVoice] = useState('')
+    const [catchphrases, setCatchphrases] = useState('')
 
     const { campaigns } = useCampaignsContext()
     const { npcs, dispatch } = useNpcsContext()
@@ -25,6 +45,11 @@ const EditNPC = () => {
     const location = useLocation()
     const path = location.pathname.split("/")[3]
 
+    useEffect(() => {
+        console.log(formState)
+    }
+    ,[formState])
+
     const handleChange = (event) => {
         const isCheckbox = event.target.type === 'checkbox';
         setFormState({
@@ -32,6 +57,33 @@ const EditNPC = () => {
             [event.target.id]: isCheckbox ? event.target.checked : event.target.value
         });
     }
+
+    useEffect(() => {
+        if (description) {
+            setFormState({
+                ...formState,
+                description: description
+            })
+        }
+        if (voice) {
+            setFormState({
+                ...formState,
+                voice: voice
+            })
+        }
+        if (catchphrases) {
+            setFormState({
+                ...formState,
+                catchphrases: catchphrases
+            })
+        }
+        if (secrets) {
+            setFormState({
+                ...formState,
+                secrets: secrets
+            })
+        }
+    }, [description, voice, catchphrases, secrets])
 
 
     useEffect(() => {
@@ -51,6 +103,8 @@ const EditNPC = () => {
                 setFormState({
                     description: '',
                     image: '',
+                    voice: '',
+                    catchphrases: '',
                     secrets: '',
                     lastSeen: '',
                     hidden: npcInfo.hidden
@@ -103,64 +157,100 @@ const EditNPC = () => {
     return (
         <form className='editCharacter__form glass'>
            <h2>Edit NPC</h2>
-            <label>Name</label>
-            <div>
-                <input 
-                    className="edit-input" 
-                    type="text" 
-                    id="name" 
-                    onChange={handleChange} 
-                    placeholder={npcs.name}>
-                </input>
-                {/* if the input with id="name" is onFocus, then show this button */}
-                {formState.name && <button onClick={submit} className="button-primary">Save</button>}
-            </div>
+            <label>Name <FaEdit onClick={() => setEName(!eName)}/></label>
+            <p>{npcs.name}</p>
+            
+            {eName &&
+                <div>
+                    <input 
+                        className="edit-input" 
+                        type="text" 
+                        id="name" 
+                        onChange={handleChange} >
+                    </input>
+                    {formState.name && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+            }
 
-            <label>Description</label>
-            <input 
-                className="edit-input"  
-                type="text" 
-                id="description" 
-                onChange={handleChange}
-                placeholder={npcs.description}>
-            </input>
-            {formState.description && <button onClick={submit} className="button-primary">Save</button>}
+            <label>Description <FaEdit onClick={() => setEDescription(!eDescription)}/></label>
+            <p dangerouslySetInnerHTML={{__html: npcs.description}}></p>
+            {eDescription &&
+                <div>
+                    <Editor 
+                        value={description}
+                        onChange={setDescription}
+                    />
+                    {description && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+                }
 
-            <label>Image</label>
+            <label>Image <FaEdit onClick={() => setEImage(!eImage)}/></label>
             <img src={npcs.image} alt={npcs.name}/>
-            <input 
-                className="edit-input"  
-                type="text" 
-                id="image" 
-                onChange={handleChange}
-                placeholder={npcs.image}></input>
-                {formState.image && <button onClick={submit} className="button-primary">Save</button>}
+            {eImage &&
+                <div>
+                    <input 
+                        className="edit-input"  
+                        type="text" 
+                        id="image" 
+                        onChange={handleChange}></input>
+                        {formState.image && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+            }
 
-            <label>Secrets</label>
-            <input 
-                className="edit-input" 
-                type="text" 
-                id="secrets" 
-                onChange={handleChange}
-                placeholder={npcs.secrets}></input>
-            {formState.secrets && <button onClick={submit} className="button-primary">Save</button>}
+            <label>Voice <FaEdit onClick={() => setEVoice(!eVoice)}/></label>
+            <p dangerouslySetInnerHTML={{__html: npcs.voice}}></p>
+            {eVoice &&
+                <div>
+                    <Editor 
+                        value={voice}
+                        onChange={setVoice}
+                    />
+                    {voice && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+                }
 
-            <label>Last Seen</label>
-            <input 
-                className="edit-input" 
-                type="text" 
-                id="lastSeen" 
-                onChange={handleChange}
-                placeholder={npcs.lastSeen}></input>
-                {formState.lastSeen && <button onClick={submit} className="button-primary">Save</button>}
+            <label>Catchphrases <FaEdit onClick={() => setECatchphrases(!eCatchphrases)}/></label>
+            <p dangerouslySetInnerHTML={{__html: npcs.catchphrases}}></p>
+            {eCatchphrases &&
+                <div>
+                    <Editor 
+                        value={catchphrases}
+                        onChange={setCatchphrases}
+                    />
+                    {catchphrases && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+                }
 
+            <label>Secrets <FaEdit onClick={() => setESecrets(!eSecrets)}/></label>
+            <p dangerouslySetInnerHTML={{__html: npcs.secrets}}></p>
+            {eSecrets &&
+                <div>
+                    <Editor 
+                        value={secrets}
+                        onChange={setSecrets}
+                    />
+                    {secrets && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+                }
+
+            <label>Last Seen <FaEdit onClick={() => setELastSeen(!eLastSeen)}/></label>
+            <p dangerouslySetInnerHTML={{__html: npcs.lastSeen}}></p>
+            {eLastSeen &&
+                <div>
+                    <input 
+                        type="text"
+                        id="lastSeen"
+                        onChange={handleChange}
+                    />
+                    {formState.lastSeen && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+                }
             <label>Hide Character</label>
-            <input 
-                type="checkbox" 
-                id="hidden" 
-                onChange={handleChange}
-                checked={formState.hidden}></input>
-                {formState.hidden !== npcs.hidden && <button onClick={submit} className="button-primary">Save</button>}
+            <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
+                <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
+                <span className="slider-round"></span>
+            </label>
+            {formState.hidden !== npcs.hidden && <button onClick={submit} className="button-primary">Save</button>}
 
             
         </form>
