@@ -13,6 +13,7 @@
     color: var(--primary-200);
     text-align: center;
     background: #4d4d4d;
+    margin-bottom: 0;
 }
 .characterRow__container p {
     color: var(--primary-200);
@@ -38,4 +39,5 @@
     justify-content: center;
     gap: 10px;
     padding: 10px;
+    min-width: 140px;
 }
