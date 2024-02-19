@@ -38,6 +38,11 @@ const AddNPC = () => {
     }
 
     useEffect(() => {
+        console.log(formState)
+    }
+    ,[formState])
+    
+    useEffect(() => {
         setFormState({
             ...formState,
             description: description,

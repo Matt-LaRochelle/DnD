@@ -42,7 +42,7 @@ const getNpc = async (req, res) => {
 
 // DM creates a new npc
 const createNpc = async (req, res) => {
-    const {name, description, image, secrets, lastSeen, hidden, campaignID} = req.body
+    const {name, description, image, voice, catchphrases, secrets, lastSeen, hidden, campaignID} = req.body
     
     // Check that user filled out all information
     let emptyFields = []
@@ -67,7 +67,7 @@ const createNpc = async (req, res) => {
 
     // Add doc to db
     try {
-        const npc = await Npc.create({name, description, image, secrets, lastSeen, hidden, campaignID})
+        const npc = await Npc.create({name, description, image, voice, catchphrases, secrets, lastSeen, hidden, campaignID})
         res.status(200).json(npc);
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -7,11 +7,16 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 
 import Loading from '../../../components/loading/Loading'
 
-import DOMpurify from 'dompurify'
+import DOMPurify from 'dompurify'
 
 const Npc = () => {
     const [loading, setLoading] = useState(true)
     const [npc, setNpc] = useState(null)
+
+    const [npcDescription, setNpcDescription] = useState('')
+    const [npcVoice, setNpcVoice] = useState('')
+    const [npcCatchphrases, setNpcCatchphrases] = useState('')
+    const [npcSecrets, setNpcSecrets] = useState('')
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
@@ -46,6 +51,32 @@ const Npc = () => {
     }
 
 
+    // For handling inner HTML
+    useEffect(()=> {
+        const cleanHtml = () => {
+            if (npc.description) {
+                let cleanNpcDescription = DOMPurify.sanitize(npc.description)
+                setNpcDescription(cleanNpcDescription)
+            }
+            if (npc.voice) {
+                let cleanNpcVoice = DOMPurify.sanitize(npc.voice)
+                setNpcVoice(cleanNpcVoice)
+            }
+            if (npc.catchphrases) {
+                let cleanNpcCatchphrases = DOMPurify.sanitize(npc.catchphrases)
+                setNpcCatchphrases(cleanNpcCatchphrases)
+            }
+            if (npc.secrets) {
+                let cleanNpcSecrets = DOMPurify.sanitize(npc.secrets)
+                setNpcSecrets(cleanNpcSecrets)
+            }
+        }
+        if (npc) {
+            cleanHtml()
+        }
+    }, [npc])
+
+
     return (
         <div>
             {loading
@@ -56,14 +87,18 @@ const Npc = () => {
                     <h1>{npc.name}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
-                    <img src={npc.image} alt={npc.name} />
+                        <img src={npc.image} alt={npc.name} />
                         <div>
                             <p><strong>Description</strong></p>
-                            <p>{npc.description}</p>
+                            <p dangerouslySetInnerHTML={{__html: npcDescription}}></p>
                             {campaigns.dmID === user.id && 
                             <div>
+                                <p><strong>Voice</strong></p>
+                                <p dangerouslySetInnerHTML={{__html: npcVoice}}></p>
+                                <p><strong>Catchphrases</strong></p>
+                                <p dangerouslySetInnerHTML={{__html: npcCatchphrases}}></p>
                                 <p><strong>Secrets</strong></p>
-                                <p>{npc.secrets}</p>
+                                <p dangerouslySetInnerHTML={{__html: npcSecrets}}></p>
                             </div>
                             }
                             <p><strong>Last Seen</strong></p>
