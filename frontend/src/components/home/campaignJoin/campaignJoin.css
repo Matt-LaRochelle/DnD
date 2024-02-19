@@ -11,3 +11,14 @@
     padding: 20px;
     color: var(--white);
 }
+
+.campaignJoin__container form {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: red;
+    z-index: 20;
+    padding: 60px;
+    border-radius: 20px;
+}

@@ -58,7 +58,7 @@ const CampaignJoin = () => {
                         value={campaignID}
                         className={error ? 'error' : ''}
                     />
-                    <button>Join</button>
+                    <button className="button-primary">Join</button>
                     {error && <div className='error'>{error}</div>}
                 </form>
             }
