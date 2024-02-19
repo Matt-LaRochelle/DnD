@@ -7,12 +7,18 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 
 import Loading from '../../../components/loading/Loading'
 
+import DOMPurify from 'dompurify'
+
 const Creature = () => {
     const [loading, setLoading] = useState(true)
     const [creature, setCreature] = useState(null)
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
+
+    const [description, setDescription] = useState('')
+    const [secrets, setSecrets] = useState('')
+
     const location = useLocation()
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
@@ -43,6 +49,11 @@ const Creature = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
 
+    useEffect(() => {
+        setDescription(DOMPurify.sanitize(creature?.description))
+        setSecrets(DOMPurify.sanitize(creature?.secrets))
+    }
+    , [creature])
 
     return (
         <div>
@@ -57,13 +68,13 @@ const Creature = () => {
                     <img src={creature.image} alt={creature.name} />
                         <div>
                             <p><strong>Description</strong></p>
-                            <p>{creature.description}</p>
+                            <p dangerouslySetInnerHTML={{__html: description}}></p>
                             <p><strong>Alignment</strong></p>
                             <p>{creature.alignment}</p>
                             {campaigns.dmID === user.id && 
                             <div>
                                 <p><strong>Secrets</strong></p>
-                                <p>{creature.secrets}</p>
+                                <p dangerouslySetInnerHTML={{__html: secrets}}></p>
                             </div>
                             }
                             <p><strong>Native to</strong></p>
