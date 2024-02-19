@@ -5,6 +5,11 @@ import { useMapsContext } from '../../../hooks/useMapsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 
+import Editor from '../../../components/editor/Editor'
+import DOMPurify from 'dompurify'
+
+import { FaEdit } from "react-icons/fa";
+
 const EditMap = () => {
     const [formState, setFormState] = useState({
         name: '',
@@ -16,6 +21,14 @@ const EditMap = () => {
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields ] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const [eName, setEName] = useState(false)
+    const [eDescription, setEDescription] = useState(false)
+    const [eImage, setEImage] = useState(false)
+    const [eSecrets, setESecrets] = useState(false)
+
+    const [description, setDescription] = useState('')
+    const [secrets, setSecrets] = useState('')
 
     const { campaigns } = useCampaignsContext()
     const { maps, dispatch } = useMapsContext()
@@ -64,6 +77,14 @@ const EditMap = () => {
         }
     }, [user])
 
+    useEffect(() => {
+        setFormState(prevState => ({
+            ...prevState,
+            secrets: secrets,
+            description: description
+        }));
+    }, [description, secrets]);
+
 
     const submit = async (e) => {
         e.preventDefault();
@@ -104,47 +125,59 @@ const EditMap = () => {
     return (
         <form className='editCharacter__form glass'>
            <h2>Edit Map</h2>
-            <label>Name</label>
+            <label>Name <FaEdit onClick={() => setEName(!eName)}/></label>
+            <p>{maps.name}</p>
+            {eName &&
             <div>
                 <input 
                     className="edit-input" 
                     type="text" 
                     id="name" 
-                    onChange={handleChange} 
-                    placeholder={maps.name}>
+                    onChange={handleChange}>
                 </input>
                 {/* if the input with id="name" is onFocus, then show this button */}
                 {formState.name && <button onClick={submit} className="button-primary">Save</button>}
             </div>
+            }
 
-            <label>Description</label>
-            <input 
-                className="edit-input"  
-                type="text" 
-                id="description" 
-                onChange={handleChange}
-                placeholder={maps.description}>
-            </input>
-            {formState.description && <button onClick={submit} className="button-primary">Save</button>}
+            <label>Description <FaEdit onClick={() => setEDescription(!eDescription)}/></label>
+            <p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(maps.description)}}></p>
+            {eDescription &&
+            <div>
+                <Editor 
+                    id="description" 
+                    onChange={setDescription} 
+                    value={description}
+                />
+                {description && <button onClick={submit} className="button-primary">Save</button>}
+            </div>
+            }
 
-            <label>Image</label>
+            <label>Image <FaEdit onClick={() => setEImage(!eImage)}/></label>
             <img src={maps.image} alt={maps.name}/>
-            <input 
-                className="edit-input"  
-                type="text" 
-                id="image" 
-                onChange={handleChange}
-                placeholder={maps.image}></input>
+            {eImage &&
+            <div>
+                <input 
+                    className="edit-input"  
+                    type="text" 
+                    id="image" 
+                    onChange={handleChange}>
+                </input>
                 {formState.image && <button onClick={submit} className="button-primary">Save</button>}
+            </div>
+            }
 
-            <label>Secrets</label>
-            <input 
-                className="edit-input" 
-                type="text" 
-                id="secrets" 
-                onChange={handleChange}
-                placeholder={maps.secrets}></input>
-            {formState.secrets && <button onClick={submit} className="button-primary">Save</button>}
+            <label>Secrets <FaEdit onClick={() => setESecrets(!eSecrets)}/></label>
+            <p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(maps.secrets)}}></p>
+            {eSecrets &&
+            <div>
+                <Editor 
+                    value={secrets}
+                    onChange={setSecrets}
+                    />
+                {secrets && <button onClick={submit} className="button-primary">Save</button>}
+            </div>
+            }
             <label>Hide Map</label>
             <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
                 <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
