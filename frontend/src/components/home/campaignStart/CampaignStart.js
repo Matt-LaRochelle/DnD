@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import './campaignStart.css'
-import Toggle from '../../toggle/Toggle'
+
+import { IoCloseOutline } from "react-icons/io5";
 
 const CampaignStart = () => {
     const { dispatch } = useCampaignsContext()
@@ -11,16 +12,11 @@ const CampaignStart = () => {
     const [showForm, setShowForm] = useState(false)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [hidden, setHidden] = useState(false);
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
 
     const handleClick = () => {
         setShowForm(showForm => !showForm);
-    }
-
-    const handleHidden = () => {
-        setHidden(hidden => !hidden);
     }
 
 
@@ -32,7 +28,7 @@ const CampaignStart = () => {
             return
         }
 
-        const campaign = {title, description, hidden, "dmID": user.id, "dmUsername": user.username}
+        const campaign = {title, description, "dmID": user.id, "dmUsername": user.username}
 
         const response = await fetch('/api/campaign', {
             method: 'POST',
@@ -77,11 +73,9 @@ const CampaignStart = () => {
                         value={description}
                         className={emptyFields.includes('description') ? 'error' : ''}
                     />
-                    <label>Hidden: {hidden ? "true" : "false"}</label>
-                    <Toggle onClick={handleHidden} />
-                    <button>Start</button>
+                    <button className="button-primary">Start</button>
                     {error && <div className='error'>{error}</div>}
-                    <button className="button-secondary close" onClick={() => setShowForm(false)}>Close</button>
+                    <button className="button-secondary close" onClick={() => setShowForm(false)}><IoCloseOutline /></button>
                 </form>
             }
         </div>

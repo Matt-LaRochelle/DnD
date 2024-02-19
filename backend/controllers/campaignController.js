@@ -36,7 +36,7 @@ const getCampaign = async (req, res) => {
 
 // DM creates a new campaign
 const createCampaign = async (req, res) => {
-    const {dmID, dmUsername, title, description, hidden} = req.body
+    const {dmID, dmUsername, title, description} = req.body
     
     // Check that user filled out all information
     let emptyFields = []
@@ -63,7 +63,6 @@ const createCampaign = async (req, res) => {
             dmID, 
             dmUsername, 
             description, 
-            hidden,
             playerSettings: [{
                 id: dmID,
                 username: dmUsername,

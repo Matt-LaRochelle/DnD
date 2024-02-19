@@ -26,14 +26,7 @@ const campaignSchema = new Schema({
     playerUsernames: [String],
     playerSettings: {
         type: Array
-    },
-    pcs: [String],
-    npcs: [String],
-    maps: [String],
-    quests: [String],
-    lore: [String],
-    news: [String],
-    diary: [String]
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Campaign', campaignSchema)

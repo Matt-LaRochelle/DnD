@@ -27,6 +27,10 @@
 
 .campaignJoin__container .close {
     position: absolute;
-    right: 20px;
-    top: 0px;
+    right: 12px;
+    top: -8px;
+    font-size: 2rem;
+    display: flex;
+    place-items: center;
+    padding: 0px;
 }

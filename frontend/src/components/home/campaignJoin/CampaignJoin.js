@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 
+import { IoCloseOutline } from "react-icons/io5";
+
 const CampaignJoin = () => {
     // const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
@@ -60,7 +62,7 @@ const CampaignJoin = () => {
                     />
                     <button className="button-primary">Join</button>
                     {error && <div className='error'>{error}</div>}
-                    <button className="button-secondary close" onClick={() => setShowForm(false)}>Close</button>
+                    <button className="button-secondary close" onClick={() => setShowForm(false)}><IoCloseOutline /></button>
                 </form>
             }
         </div>
