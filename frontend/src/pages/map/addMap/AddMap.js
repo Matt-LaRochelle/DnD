@@ -34,19 +34,12 @@ const AddMap = () => {
     }
 
     useEffect(() => {
-        if (secrets) {
-            setFormState({
-                ...formState,
-                secrets: secrets
-            })
-        }
-        if (description) {
-            setFormState({
-                ...formState,
-                description: description
-            })
-        }
-    }, [description, secrets])
+        setFormState(prevState => ({
+            ...prevState,
+            secrets: secrets,
+            description: description
+        }));
+    }, [description, secrets]);
 
     const submit = async (e) => {
         e.preventDefault();
@@ -113,7 +106,7 @@ const AddMap = () => {
                 <span className="slider-round"></span>
             </label>
 
-            <button type="submit">Add Map</button>
+            <button type="submit" className="button-primary">Add Map</button>
             {error && <div className="error" >{error}</div>}
         </form>
     )

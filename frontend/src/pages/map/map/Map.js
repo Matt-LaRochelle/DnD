@@ -23,6 +23,7 @@ import { IoIosMove } from "react-icons/io";
 
 // 3rd Party
 import Draggable from 'react-draggable';
+import DOMPurify from 'dompurify';
 
 const Map = () => {
     const [loading, setLoading] = useState(true)
@@ -33,6 +34,9 @@ const Map = () => {
     const [mapCoordinates, setMapCoordinates] = useState({ x: 0, y: 0})
     const [currentAvatarCoordinates, setCurrentAvatarCoordinates] = useState({ x: 0, y: 0})
     const [trackedAvatarCoordinates, setTrackedAvatarCoordinates] = useState({ x: 0, y: 0 });
+
+    const [description, setDescription] = useState('')
+    const [secrets, setSecrets] = useState('')
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
@@ -307,6 +311,26 @@ console.log("pcs-context:", pcs)
         console.log("done")
     }
 
+
+
+
+    // For handling inner HTML
+    useEffect(()=> {
+        const cleanHtml = () => {
+            if (maps.description) {
+                let cleanDescription = DOMPurify.sanitize(maps.description)
+                setDescription(cleanDescription)
+            }
+            if (maps.secrets) {
+                let cleanSecrets = DOMPurify.sanitize(maps.secrets)
+                setSecrets(cleanSecrets)
+            }
+        }
+        if (maps) {
+            cleanHtml()
+        }
+    }, [maps])
+
     return (
         <div>
             {loading
@@ -377,11 +401,11 @@ console.log("pcs-context:", pcs)
                     </div>
                     <div>
                         <p><strong>Description</strong></p>
-                        <p>{maps.description}</p>
+                        <p dangerouslySetInnerHTML={{__html: description}}></p>
                         {campaigns.dmID === user.id && 
                             <div>
                                 <p><strong>Secrets</strong></p>
-                                <p>{maps.secrets}</p>
+                                <p dangerouslySetInnerHTML={{__html: secrets}}></p>
                             </div>
                         }
                         {campaigns.dmID === user.id && 
