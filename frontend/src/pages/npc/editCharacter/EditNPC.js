@@ -59,31 +59,14 @@ const EditNPC = () => {
     }
 
     useEffect(() => {
-        if (description) {
-            setFormState({
-                ...formState,
-                description: description
-            })
-        }
-        if (voice) {
-            setFormState({
-                ...formState,
-                voice: voice
-            })
-        }
-        if (catchphrases) {
-            setFormState({
-                ...formState,
-                catchphrases: catchphrases
-            })
-        }
-        if (secrets) {
-            setFormState({
-                ...formState,
-                secrets: secrets
-            })
-        }
-    }, [description, voice, catchphrases, secrets])
+        setFormState(prevState => ({
+            ...prevState,
+            secrets: secrets,
+            description: description,
+            voice: voice,
+            catchphrases: catchphrases
+        }));
+    }, [description, secrets, voice, catchphrases]);
 
 
     useEffect(() => {
