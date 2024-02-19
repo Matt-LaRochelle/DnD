@@ -25,6 +25,11 @@ const AddPC = () => {
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
+    useEffect(() => {
+        console.log(formState)
+    }
+    ,[formState])
+
     const handleChange = (event) => {
         const isCheckbox = event.target.type === 'checkbox';
         setFormState({
@@ -34,19 +39,12 @@ const AddPC = () => {
     }
 
     useEffect(() => {
-        if (secrets) {
-            setFormState({
-                ...formState,
-                secrets: secrets
-            })
-        }
-        if (description) {
-            setFormState({
-                ...formState,
-                description: description
-            })
-        }
-    }, [description, secrets])
+        setFormState(prevState => ({
+            ...prevState,
+            secrets: secrets,
+            description: description
+        }));
+    }, [description, secrets]);
 
 
     const submit = async (e) => {

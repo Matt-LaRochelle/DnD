@@ -35,20 +35,12 @@ const AddCreature = () => {
     }
 
     useEffect(() => {
-        if (secrets) {
-            setFormState({
-                ...formState,
-                secrets: secrets
-            })
-        }
-        if (description) {
-            setFormState({
-                ...formState,
-                description: description
-            })
-        }
-    
-    }, [description, secrets])
+        setFormState(prevState => ({
+            ...prevState,
+            secrets: secrets,
+            description: description
+        }));
+    }, [description, secrets]);
 
 
     const submit = async (e) => {

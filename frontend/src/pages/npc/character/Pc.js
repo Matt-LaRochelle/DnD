@@ -7,9 +7,14 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 
 import Loading from '../../../components/loading/Loading'
 
+import DOMPurify from 'dompurify'
+
 const Pc = () => {
     const [loading, setLoading] = useState(true)
     const [pc, setPc] = useState(null)
+
+    const [pcDescription, setPcDescription] = useState('')
+    const [pcSecrets, setPcSecrets] = useState('')
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
@@ -44,6 +49,25 @@ const Pc = () => {
     }
 
 
+ // For handling inner HTML
+ useEffect(()=> {
+    const cleanHtml = () => {
+        if (pc.description) {
+            let cleanPcDescription = DOMPurify.sanitize(pc.description)
+            setPcDescription(cleanPcDescription)
+        }
+
+        if (pc.secrets) {
+            let cleanPcSecrets = DOMPurify.sanitize(pc.secrets)
+            setPcSecrets(cleanPcSecrets)
+        }
+    }
+    if (pc) {
+        cleanHtml()
+    }
+}, [pc])
+
+
     return (
         <div>
             {loading
@@ -57,11 +81,11 @@ const Pc = () => {
                     <img src={pc.image} alt={pc.name} />
                         <div>
                             <p><strong>Description</strong></p>
-                            <p>{pc.description}</p>
+                            <p dangerouslySetInnerHTML={{__html: pcDescription}}></p>
                             {pc.userID === user.id && 
                             <div>
                                 <p><strong>Secrets</strong></p>
-                                <p>{pc.secrets}</p>
+                                <p dangerouslySetInnerHTML={{__html: pcSecrets}}></p>
                             </div>
                             }
                             <p><strong>Last Seen</strong></p>

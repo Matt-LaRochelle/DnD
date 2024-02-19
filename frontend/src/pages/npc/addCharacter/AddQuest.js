@@ -34,13 +34,11 @@ const AddQuest = () => {
     }
 
     useEffect(() => {
-        if (description) {
-            setFormState({
-                ...formState,
-                description: description
-            })
-        }
-    }, [description])
+        setFormState(prevState => ({
+            ...prevState,
+            description: description
+        }));
+    }, [description]);
 
 
     const submit = async (e) => {

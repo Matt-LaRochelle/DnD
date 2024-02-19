@@ -43,14 +43,14 @@ const AddNPC = () => {
     ,[formState])
     
     useEffect(() => {
-        setFormState({
-            ...formState,
-            description: description,
+        setFormState(prevState => ({
+            ...prevState,
             secrets: secrets,
             voice: voice,
-            catchphrases: catchphrases
-        })
-    }, [description, secrets, voice, catchphrases])
+            catchphrases: catchphrases,
+            description: description
+        }));
+    }, [description, secrets, voice, catchphrases]);
 
 
     const submit = async (e) => {
