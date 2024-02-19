@@ -4,15 +4,24 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate } from 'react-router-dom'
 
+import Editor from '../../../components/editor/Editor'
+
 const AddNPC = () => {
     const [formState, setFormState] = useState({
         name: '',
         description: '',
         image: '',
+        voice: '',
+        catchphrases: '',
         secrets: '',
         lastSeen: '',
         hidden: false
     });
+    const [description, setDescription] = useState('')
+    const [secrets, setSecrets] = useState('')
+    const [voice, setVoice] = useState('')
+    const [catchphrases, setCatchphrases] = useState('')
+
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields ] = useState([])
 
@@ -27,6 +36,16 @@ const AddNPC = () => {
             [event.target.id]: isCheckbox ? event.target.checked : event.target.value
         });
     }
+
+    useEffect(() => {
+        setFormState({
+            ...formState,
+            description: description,
+            secrets: secrets,
+            voice: voice,
+            catchphrases: catchphrases
+        })
+    }, [description, secrets, voice, catchphrases])
 
 
     const submit = async (e) => {
@@ -59,6 +78,8 @@ const AddNPC = () => {
                 name: '',
                 description: '',
                 image: '',
+                voice: '',
+                catchphrases: '',
                 secrets: '',
                 lastSeen: '',
                 hidden: false
@@ -81,13 +102,19 @@ const AddNPC = () => {
             <input className={emptyFields.includes("name") && "error"} type="text" id="name" onChange={handleChange}></input>
 
             <label>Description</label>
-            <input type="text" id="description" onChange={handleChange}></input>
+            <Editor value={description} onChange={setDescription}/>
 
             <label>Image</label>
             <input type="text" id="image" onChange={handleChange}></input>
 
-            <label>Secretsssss</label>
-            <input type="text" id="secrets" onChange={handleChange}></input>
+            <label>Voice</label>
+            <Editor value={voice} onChange={setVoice} />
+
+            <label>Catchphrases</label>
+            <Editor value={catchphrases} onChange={setCatchphrases} />
+
+            <label>Secrets</label>
+            <Editor value={secrets} onChange={setSecrets}/>
 
             <label>Last Seen</label>
             <input type="text" id="lastSeen" onChange={handleChange}></input>

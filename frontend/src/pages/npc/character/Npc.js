@@ -7,6 +7,8 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 
 import Loading from '../../../components/loading/Loading'
 
+import DOMpurify from 'dompurify'
+
 const Npc = () => {
     const [loading, setLoading] = useState(true)
     const [npc, setNpc] = useState(null)

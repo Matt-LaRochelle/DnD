@@ -13,6 +13,12 @@ const npcSchema = new Schema({
     image: {
         type: String,
     },
+    voice: {
+        type: String,
+    },
+    catchphrases: {
+        type: String,
+    },
     lastSeen: {
         type: String,
     },
