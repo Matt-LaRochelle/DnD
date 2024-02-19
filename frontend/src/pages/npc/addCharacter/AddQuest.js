@@ -25,6 +25,11 @@ const AddQuest = () => {
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
+    useEffect(() => {
+        console.log(formState)
+
+    }, [formState])
+
     const handleChange = (event) => {
         const isCheckbox = event.target.type === 'checkbox';
         setFormState({
@@ -101,6 +106,7 @@ const AddQuest = () => {
 
             <label>Type</label>
                 <select id="type" onChange={handleChange}>
+                    <option value="" disabled>Select a type</option>
                     <option value="Main">Main Quest</option>
                     <option value="Side">Side Quest</option>
                     <option value="Neutral">Personal Quest</option>

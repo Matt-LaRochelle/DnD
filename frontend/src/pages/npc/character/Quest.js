@@ -6,6 +6,7 @@ import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 
 import Loading from '../../../components/loading/Loading'
+import DOMPurify from 'dompurify'
 
 const Quest = () => {
     const [loading, setLoading] = useState(true)
@@ -13,6 +14,8 @@ const Quest = () => {
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
+
+    const [description, setDescription] = useState('')
     const location = useLocation()
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
@@ -31,6 +34,7 @@ const Quest = () => {
             if (response.ok) {
                 setQuest(questInfo)
                 setLoading(false)
+                console.log(quest)
             }
         }
 
@@ -43,6 +47,18 @@ const Quest = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
 
+        // For handling inner HTML
+        useEffect(()=> {
+            const cleanHtml = () => {
+                if (quest.description) {
+                    let cleanDescription = DOMPurify.sanitize(quest.description)
+                    setDescription(cleanDescription)
+                }
+            }
+            if (quest) {
+                cleanHtml()
+            }
+        }, [quest])
 
     return (
         <div>
@@ -57,7 +73,7 @@ const Quest = () => {
                     <img src={quest.image} alt={quest.title} />
                         <div>
                             <p><strong>Description</strong></p>
-                            <p>{quest.description}</p>
+                            <p dangerouslySetInnerHTML={{__html: description}}></p>
                             <p><strong>Type</strong></p>
                             <p>{quest.type}</p>
                             {campaigns.dmID === user.id && 
