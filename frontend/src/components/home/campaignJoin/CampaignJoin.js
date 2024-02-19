@@ -60,6 +60,7 @@ const CampaignJoin = () => {
                     />
                     <button className="button-primary">Join</button>
                     {error && <div className='error'>{error}</div>}
+                    <button className="button-secondary close" onClick={() => setShowForm(false)}>Close</button>
                 </form>
             }
         </div>

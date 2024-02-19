@@ -81,6 +81,7 @@ const CampaignStart = () => {
                     <Toggle onClick={handleHidden} />
                     <button>Start</button>
                     {error && <div className='error'>{error}</div>}
+                    <button className="button-secondary close" onClick={() => setShowForm(false)}>Close</button>
                 </form>
             }
         </div>

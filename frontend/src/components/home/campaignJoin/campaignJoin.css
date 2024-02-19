@@ -22,4 +22,11 @@
     z-index: 20;
     padding: 60px;
     border-radius: 20px;
+    box-shadow: var(--clear);
+}
+
+.campaignJoin__container .close {
+    position: absolute;
+    right: 20px;
+    top: 0px;
 }

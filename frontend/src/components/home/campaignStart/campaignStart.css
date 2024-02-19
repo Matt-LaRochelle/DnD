@@ -29,7 +29,26 @@
     resize: none;
 }
 
+.campaignStart__container form {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid blue;
+    background: radial-gradient(ellipse at 160px 140px, #0a0183 0%, #020022 100%);
+    z-index: 20;
+    padding: 60px;
+    border-radius: 20px;
+    box-shadow: var(--clear);
+}
+
 .campaignForm__container button {
     margin-top: 30px;
+}
+
+.campaignStart__container .close {
+    position: absolute;
+    right: 20px;
+    top: 0px;
 }
 
