@@ -3,6 +3,8 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import './campaignStart.css'
 
+import Editor from '../../editor/Editor'
+
 import { IoCloseOutline } from "react-icons/io5";
 
 const CampaignStart = () => {
@@ -58,25 +60,34 @@ const CampaignStart = () => {
             <h3>DM for a campaign</h3>
             <p className="add" onClick={handleClick}>{showForm ? "-" : "+"}</p>
             {showForm &&
-                <form>
-                    <label>Campaign Title:</label>
-                    <input 
-                        type="text"
-                        onChange={(e) => setTitle(e.target.value)}
-                        value={title}
-                        className={emptyFields.includes('title') ? 'error' : ''}
-                    />
-                    <label>Description:</label>
-                    <textarea 
-                        type="text"
-                        onChange={(e) => setDescription(e.target.value)}
-                        value={description}
-                        className={emptyFields.includes('description') ? 'error' : ''}
-                    />
-                    <button className="button-primary">Start</button>
-                    {error && <div className='error'>{error}</div>}
-                    <button className="button-secondary close" onClick={() => setShowForm(false)}><IoCloseOutline /></button>
-                </form>
+                <div className="fullpage-popup">
+                    <form>
+                        <label>Campaign Title:</label>
+                        <input 
+                            type="text"
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title}
+                            className={emptyFields.includes('title') ? 'error' : ''}
+                        />
+                        <label>Description:</label>
+                        <div className="campaignDescription">
+
+                        {/* <textarea 
+                            type="text"
+                            onChange={(e) => setDescription(e.target.value)}
+                            value={description}
+                            className={emptyFields.includes('description') ? 'error' : ''}
+                        /> */}
+                        <Editor 
+                            value={description} 
+                            onChange={setDescription}
+                            className={emptyFields.includes('description') ? 'error campaignDescription' : 'campaignDescription'}  />
+                        </div>
+                        <button className="button-primary">Start</button>
+                        {error && <div className='error'>{error}</div>}
+                        <button className="button-secondary close" onClick={() => setShowForm(false)}><IoCloseOutline /></button>
+                    </form>
+                </div>
             }
         </div>
     )

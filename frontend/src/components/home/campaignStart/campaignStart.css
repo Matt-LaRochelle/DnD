@@ -12,34 +12,18 @@
     color: var(--white);
 }
 
-.campaignStart__container textarea {
-    position: relative;
-    width: 100%;
-    height: 150px;
-    padding: 20px 10px 10px;
-    /* background: transparent; */
-    outline: none;
-    border: none;
-    box-shadow: none;
-    color: var(--primary-800);
-    font-size: 1em;
-    letter-spacing: 0.05em;
-    /* transition: 0.5s;
-    z-index: 10; */
-    resize: none;
-}
-
 .campaignStart__container form {
     position: absolute;
-    top: 10px;
+    /* top: 10px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%); */
     border: 2px solid blue;
     background: radial-gradient(ellipse at 160px 140px, #0a0183 0%, #020022 100%);
     z-index: 20;
     padding: 60px;
     border-radius: 20px;
     box-shadow: var(--clear);
+    /* width: min(80vw, 700px); */
 }
 
 .campaignForm__container button {
@@ -54,5 +38,13 @@
     display: flex;
     place-items: center;
     padding: 0px;
+}
+
+.campaignStart__container .campaignDescription {
+    width: 100%;
+    background: var(--white);
+    color: var(--black);
+    padding: 2px;
+    border-radius: 4px;
 }
 

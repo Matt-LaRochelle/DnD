@@ -52,18 +52,20 @@ const CampaignJoin = () => {
             <h3>Join campaign as a player</h3>
             <p className="add" onClick={handleClick}>{showForm ? "-" : "+"}</p>
             {showForm &&
-                <form>
-                    <label>Campaign room number:</label>
-                    <input 
-                        type="text"
-                        onChange={(e) => setCampaignID(e.target.value)}
-                        value={campaignID}
-                        className={error ? 'error' : ''}
-                    />
-                    <button className="button-primary">Join</button>
-                    {error && <div className='error'>{error}</div>}
-                    <button className="button-secondary close" onClick={() => setShowForm(false)}><IoCloseOutline /></button>
-                </form>
+                <div className="fullpage-popup">
+                    <form>
+                        <label>Campaign room number:</label>
+                        <input 
+                            type="text"
+                            onChange={(e) => setCampaignID(e.target.value)}
+                            value={campaignID}
+                            className={error ? 'error' : ''}
+                        />
+                        <button className="button-primary">Join</button>
+                        {error && <div className='error'>{error}</div>}
+                        <button className="button-secondary close" onClick={() => setShowForm(false)}><IoCloseOutline /></button>
+                    </form>
+                </div>
             }
         </div>
     )
