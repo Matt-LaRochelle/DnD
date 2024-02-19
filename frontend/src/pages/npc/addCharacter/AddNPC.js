@@ -125,7 +125,10 @@ const AddNPC = () => {
             <input type="text" id="lastSeen" onChange={handleChange}></input>
 
             <label>Hide Character</label>
-            <input type="checkbox" id="hidden" onChange={handleChange}></input>
+            <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
+                <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
+                <span className="slider-round"></span>
+            </label>
 
             <button className="button-primary" type="submit">Add NPC</button>
             {error && <div className="error" >{error}</div>}

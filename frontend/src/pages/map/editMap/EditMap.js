@@ -146,12 +146,11 @@ const EditMap = () => {
                 placeholder={maps.secrets}></input>
             {formState.secrets && <button onClick={submit} className="button-primary">Save</button>}
             <label>Hide Map</label>
-            <input 
-                type="checkbox" 
-                id="hidden" 
-                onChange={handleChange}
-                checked={formState.hidden}></input>
-                {formState.hidden !== maps.hidden && <button onClick={submit} className="button-primary">Save</button>}
+            <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
+                <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
+                <span className="slider-round"></span>
+            </label>
+            {formState.hidden !== maps.hidden && <button onClick={submit} className="button-primary">Save</button>}
 
             
         </form>

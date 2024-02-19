@@ -4,6 +4,8 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate } from 'react-router-dom'
 
+import Editor from '../../../components/editor/Editor'
+
 const AddQuest = () => {
     const [formState, setFormState] = useState({
         title: '',
@@ -17,6 +19,8 @@ const AddQuest = () => {
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields ] = useState([])
 
+    const [description, setDescription] = useState('')
+
     const { campaigns } = useCampaignsContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
@@ -28,6 +32,15 @@ const AddQuest = () => {
             [event.target.id]: isCheckbox ? event.target.checked : event.target.value
         });
     }
+
+    useEffect(() => {
+        if (description) {
+            setFormState({
+                ...formState,
+                description: description
+            })
+        }
+    }, [description])
 
 
     const submit = async (e) => {
@@ -83,7 +96,7 @@ const AddQuest = () => {
             <input className={emptyFields.includes("title") && "error"} type="text" id="title" onChange={handleChange}></input>
 
             <label>Description</label>
-            <input type="text" id="description" onChange={handleChange}></input>
+            <Editor value={description} onChange={setDescription}/>
 
             <label>Image</label>
             <input type="text" id="image" onChange={handleChange}></input>
@@ -102,7 +115,10 @@ const AddQuest = () => {
             <input type="text" id="returnTo" onChange={handleChange}></input>
 
             <label>Hide Quest</label>
-            <input type="checkbox" id="hidden" onChange={handleChange}></input>
+            <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
+                <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
+                <span className="slider-round"></span>
+            </label>
 
             <button className="button-primary" type="submit">Add Quest</button>
             {error && <div className="error" >{error}</div>}

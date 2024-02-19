@@ -4,6 +4,8 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate } from 'react-router-dom'
 
+import Editor from '../../../components/editor/Editor'
+
 const AddPC = () => {
     const [formState, setFormState] = useState({
         name: '',
@@ -16,6 +18,9 @@ const AddPC = () => {
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields ] = useState([])
 
+    const [description, setDescription] = useState('')
+    const [secrets, setSecrets] = useState('')
+
     const { campaigns } = useCampaignsContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
@@ -27,6 +32,21 @@ const AddPC = () => {
             [event.target.id]: isCheckbox ? event.target.checked : event.target.value
         });
     }
+
+    useEffect(() => {
+        if (secrets) {
+            setFormState({
+                ...formState,
+                secrets: secrets
+            })
+        }
+        if (description) {
+            setFormState({
+                ...formState,
+                description: description
+            })
+        }
+    }, [description, secrets])
 
 
     const submit = async (e) => {
@@ -86,19 +106,22 @@ const AddPC = () => {
             <input className={emptyFields.includes("name") && "error"} type="text" id="name" onChange={handleChange}></input>
 
             <label>Description</label>
-            <input type="text" id="description" onChange={handleChange}></input>
+            <Editor value={description} onChange={setDescription} />
 
             <label>Image</label>
             <input type="text" id="image" onChange={handleChange}></input>
 
             <label>Secrets</label>
-            <input type="text" id="secrets" onChange={handleChange}></input>
+            <Editor value={secrets} onChange={setSecrets} />
 
             <label>Last Seen</label>
             <input type="text" id="lastSeen" onChange={handleChange}></input>
 
             <label>Hide Character</label>
-            <input type="checkbox" id="hidden" onChange={handleChange}></input>
+            <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
+                <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
+                <span className="slider-round"></span>
+            </label>
 
             <button className="button-primary" type="submit">Add PC</button>
             {error && <div className="error" >{error}</div>}

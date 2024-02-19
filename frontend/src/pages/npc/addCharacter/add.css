@@ -1,6 +1,6 @@
 .Add__form {
     border: 2px solid blue;
-    width: 200px;
+    width: min(90vw, 700px);
     height: max-content;
     border-radius: 20px;
     text-align: center;
@@ -9,4 +9,17 @@
     justify-content: space-between;
     padding: 20px;
     margin: 10px;
+}
+
+.Add__form label {
+    margin-top: 40px;
+}
+
+.Add__form input {
+    width: 200px;
+    margin: auto;
+}
+
+.Add__form .slider {
+    margin: auto;
 }
