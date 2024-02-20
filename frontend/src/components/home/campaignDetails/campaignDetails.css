@@ -3,7 +3,7 @@
     border: 2px solid #ddd;
     border-radius: 14px;
     margin: 20px auto;
-    padding: 20px 20px 100px;
+    padding: 20px 20px 140px;
     position: relative;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
     color: var(--white);
@@ -63,23 +63,39 @@
   } */
 
   .campaignDetails__container .campaignDetails__enter {
-    position: absolute;
+    /* position: absolute;
     left: 20px;
-    bottom: 0px;
+    bottom: 0px; */
   }
 
   .campaignDetails__id-checker {
-    position: absolute;
+    /* position: absolute;
     bottom: 20px;
-    right: 20px;
+    right: 20px; */
     font-weight: 500;
     color: var(--primary-800);
+    white-space: wrap;
   }
-  .campaign-details__id {
-    position: absolute;
+  .campaignDetails__container .campaign-details__id {
+    /* position: absolute;
     bottom: 70px;
-    right: 20px;
+    right: 20px; */
+    margin-top: 50px !important;
     border: 2px solid #ddd;
     padding: 8px;
     background: radial-gradient(ellipse at 30px 50px, #440202bb, #741a01b6);
+  }
+
+  @media screen and (max-width: 600px) {
+    .campaignDetails__container {
+
+      padding: 20px 20px 200px;
+    }
+    .campaign-details__id {
+      font-size: .7rem;
+    }
+    .campaignDetails__id-checker {
+      white-space: wrap;
+      max-width: 200px;
+    }
   }
