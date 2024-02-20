@@ -42,6 +42,8 @@ const Map = () => {
     const { campaigns } = useCampaignsContext()
     const { maps, dispatch } = useMapsContext()
     const { pcs } = usePcsContext()
+    const { npcs } = useNpcsContext()
+    const { creatures } = useCreaturesContext()
 
     const location = useLocation()
     const path = location.pathname.split("/")[2]
@@ -81,6 +83,7 @@ const Map = () => {
                 const buildingCharacterList = json.characterList.map(character => {
                     return {
                         _id: character._id,
+                        type: character.type,
                         currentX: character.x + mapCoordinates.x,
                         currentY: character.y + mapCoordinates.y,
                         trackedX: character.x,
@@ -103,7 +106,7 @@ console.log("pcs-context:", pcs)
     }
 
     // Add a character to the map
-    const addCharacter = async (id) => {
+    const addCharacter = async (id, type) => {
         if (!user) {
             alert("You must be logged in.")
             return
@@ -111,6 +114,7 @@ console.log("pcs-context:", pcs)
         let dbCharacterList = maps.characterList
         const newCharacter = {
             _id: id,
+            type,
             x: 0,
             y: 0
         }
@@ -133,6 +137,7 @@ console.log("pcs-context:", pcs)
                 if (character._id === id) {
                 return {
                     _id: character._id,
+                    type: character.type,
                     currentX: character.x,
                     currentY: character.y,
                     trackedX: character.x,
@@ -141,6 +146,7 @@ console.log("pcs-context:", pcs)
             } else {
                 return {
                     _id: character._id,
+                    type: character.type,
                     currentX: character.x + mapCoordinates.x,
                     currentY: character.y + mapCoordinates.y,
                     trackedX: character.x,
@@ -182,6 +188,7 @@ console.log("pcs-context:", pcs)
             const updatedCharacterList = json.characterList.map(character => {
                 return {
                     _id: character._id,
+                    type: character.type,
                     currentX: character.x + mapCoordinates.x,
                     currentY: character.y + mapCoordinates.y,
                     trackedX: character.x,
@@ -213,6 +220,7 @@ console.log("pcs-context:", pcs)
             if (character._id === characterID) {
                 return {
                     _id: characterID,
+                    type: character.type,
                     currentX: data.x,
                     currentY: data.y,
                     trackedX: data.x - mapCoordinates.x,
@@ -240,6 +248,7 @@ console.log("pcs-context:", pcs)
         let clientFormatCharacter = clientCharacterList.find(character => character._id === characterID)
         let updatedDBCharacter = {
             _id: clientFormatCharacter._id,
+            type: clientFormatCharacter.type,
             x: clientFormatCharacter.trackedX,
             y: clientFormatCharacter.trackedY
         }
@@ -286,6 +295,7 @@ console.log("pcs-context:", pcs)
         const newCharacterList = clientCharacterList.map(character => {
             return {
                 _id: character._id,
+                type: character.type,
                 currentX: character.currentX + data.deltaX,
                 currentY: character.currentY + data.deltaY,
                 trackedX: character.currentX,
@@ -301,6 +311,7 @@ console.log("pcs-context:", pcs)
         const newCharacterList = maps.characterList.map(character => {
             return {
                 _id: character._id,
+                type: character.type,
                 currentX: character.x + mapCoordinates.x,
                 currentY: character.y + mapCoordinates.y,
                 trackedX: character.x,
@@ -353,12 +364,30 @@ console.log("pcs-context:", pcs)
                                         >
                                     <div className="movable-avatar" ariaLabel={character._id} style={character._id === highlightedAvatar ? { border: '4px solid lime' } : {}}>
                                         <div onClick={() => showAvatarMenu(index)} >
+                                            {character.type === "pc" &&
                                             <Avatar 
                                                 key={index} 
                                                 image={pcs.find(pc => pc._id === character._id).image} 
                                                 name={pcs.find(pc => pc._id === character._id).name} 
                                                 hideName={true} 
                                                 />
+                                            }
+                                            {character.type === "npc" &&
+                                            <Avatar 
+                                                key={index} 
+                                                image={npcs.find(npc => npc._id === character._id).image} 
+                                                name={npcs.find(npc => npc._id === character._id).name} 
+                                                hideName={true} 
+                                                />
+                                            }
+                                            {character.type === "creature" &&
+                                            <Avatar 
+                                                key={index} 
+                                                image={creatures.find(creature => creature._id === character._id).image} 
+                                                name={creatures.find(creature => creature._id === character._id).name} 
+                                                hideName={true} 
+                                                />
+                                            }
                                         </div>
                                         {avatarMenu === index && 
                                             <div className="avatar-menu">
@@ -366,7 +395,9 @@ console.log("pcs-context:", pcs)
                                                 <p className="button-secondary avatar-remove" onClick={() => removeCharacter(index, character._id)}><MdDeleteOutline /></p>
                                                 <p className="button-primary avatar-move"><strong><IoIosMove id={character._id}/></strong></p>
                                                 <div className="debugging-avatar-div glass">
-                                                    <p>{pcs.find(pc => pc._id === character._id).name}</p>
+                                                    {character.type === "pc" && <p>{pcs.find(pc => pc._id === character._id).name}</p>}
+                                                    {character.type === "npc" && <p>{npcs.find(npc => npc._id === character._id).name}</p>}
+                                                    {character.type === "creature" && <p>{creatures.find(creature => creature._id === character._id).name}</p>}
                                                     <p>{character.currentX}, {character.currentY}</p>
                                                     <p>{character.trackedX}, {character.trackedY}</p>
                                                 </div>
@@ -394,7 +425,29 @@ console.log("pcs-context:", pcs)
                             {pcs.map(pc => (
                                 <li key={pc._id}>
                                     <Avatar image={pc.image} name={pc.name} hideName={true} />
-                                    <p className="add" onClick={() => addCharacter(pc._id)}>+</p>
+                                    <p className="add" onClick={() => addCharacter(pc._id, "pc")}>+</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <h2>Non Player Characters</h2>
+                        <ul className="map-pc-row">
+                            {npcs.map(npc => (
+                                <li key={npc._id}>
+                                    <Avatar image={npc.image} name={npc.name} hideName={true} />
+                                    <p className="add" onClick={() => addCharacter(npc._id, "npc")}>+</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div>
+                        <h2>Creatures</h2>
+                        <ul className="map-pc-row">
+                            {creatures.map(creature => (
+                                <li key={creature._id}>
+                                    <Avatar image={creature.image} name={creature.name} hideName={true} />
+                                    <p className="add" onClick={() => addCharacter(creature._id, "creature")}>+</p>
                                 </li>
                             ))}
                         </ul>
