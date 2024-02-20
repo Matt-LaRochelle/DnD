@@ -67,17 +67,17 @@ const Creature = () => {
                     <div className='character__grid'>
                     <img src={creature.image} alt={creature.name} />
                         <div>
-                            <p><strong>Description</strong></p>
+                            <label>Description</label>
                             <p dangerouslySetInnerHTML={{__html: description}}></p>
-                            <p><strong>Alignment</strong></p>
+                            <label>Alignment</label>
                             <p>{creature.alignment}</p>
                             {campaigns.dmID === user.id && 
                             <div>
-                                <p><strong>Secrets</strong></p>
+                                <label>Secrets</label>
                                 <p dangerouslySetInnerHTML={{__html: secrets}}></p>
                             </div>
                             }
-                            <p><strong>Native to</strong></p>
+                            <label>Native to</label>
                             <p>{creature.nativeTo}</p>
                             {campaigns.dmID === user.id && 
                         <button className="button-primary" onClick={() => navigate(`/creature/edit/${creature._id}`)}>Edit</button>

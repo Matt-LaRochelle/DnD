@@ -80,17 +80,18 @@ const Pc = () => {
                     <div className='character__grid'>
                     <img src={pc.image} alt={pc.name} />
                         <div>
-                            <p><strong>Description</strong></p>
+                            <label>Description</label>
                             <p dangerouslySetInnerHTML={{__html: pcDescription}}></p>
                             {pc.userID === user.id && 
                             <div>
-                                <p><strong>Secrets</strong></p>
+                                <label>Secrets</label>
                                 <p dangerouslySetInnerHTML={{__html: pcSecrets}}></p>
                             </div>
                             }
-                            <p><strong>Last Seen</strong></p>
+                            <label>Last Seen</label>
                             <p>{pc.lastSeen}</p>
-                            <p><strong>Played by: </strong>{pc.username}</p>
+                            <label>Played by</label>
+                            <p>{pc.playedBy}</p>
                             {pc.userID === user.id && 
                         <button className="button-primary" onClick={() => navigate(`/pc/edit/${pc._id}`)}>Edit</button>
                             }

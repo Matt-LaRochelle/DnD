@@ -72,15 +72,15 @@ const Quest = () => {
                     <div className='character__grid'>
                     <img src={quest.image} alt={quest.title} />
                         <div>
-                            <p><strong>Description</strong></p>
+                            <label>Description</label>
                             <p dangerouslySetInnerHTML={{__html: description}}></p>
-                            <p><strong>Type</strong></p>
+                            <label>Type</label>
                             <p>{quest.type}</p>
                             {campaigns.dmID === user.id && 
                             <div>
-                                <p><strong>Given by</strong></p>
+                                <label>Given by</label>
                                 <p>{quest.givenBy}</p>
-                                <p><strong>Return to</strong></p>
+                                <label>Return to</label>
                                 <p>{quest.returnTo}</p>
                             </div>
                             }

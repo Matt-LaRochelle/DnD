@@ -5,8 +5,14 @@ import { usePcsContext } from '../../../hooks/usePcsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 
+import DOMPurify from 'dompurify'
+import Editor from '../../../components/editor/Editor'
+
+import { FaEdit } from "react-icons/fa";
+
 const EditPC = () => {
     const [formState, setFormState] = useState({
+        name: '',
         description: '',
         image: '',
         secrets: '',
@@ -16,6 +22,17 @@ const EditPC = () => {
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields ] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const [eName, setEName] = useState(false)
+    const [eDescription, setEDescription] = useState(false)
+    const [eImage, setEImage] = useState(false)
+    const [eSecrets, setESecrets] = useState(false)
+    const [eLastSeen, setELastSeen] = useState(false)
+
+    const [description, setDescription] = useState('')
+    const [dbDescription, setDbDescription] = useState('')
+    const [secrets, setSecrets] = useState('')
+    const [dbSecrets, setDbSecrets] = useState('')
 
     const { campaigns } = useCampaignsContext()
     const { pcs, dispatch } = usePcsContext()
@@ -50,6 +67,7 @@ const EditPC = () => {
                 dispatch({ type: 'SET_PC', payload: pcInfo })
                 setLoading(false)
                 setFormState({
+                    name: '',
                     description: '',
                     image: '',
                     secrets: '',
@@ -101,67 +119,108 @@ const EditPC = () => {
 
     }
 
+    // For handling inner HTML
+    useEffect(()=> {
+        const cleanHtml = () => {
+            if (pcs.description) {
+                let cleanDescription = DOMPurify.sanitize(pcs.description)
+                setDbDescription(cleanDescription)
+            }
+            if (pcs.secrets) {
+                let cleanSecrets = DOMPurify.sanitize(pcs.secrets)
+                setDbSecrets(cleanSecrets)
+            }
+        }
+        if (pcs) {
+            cleanHtml()
+        }
+    }, [pcs])
+
+    useEffect(() => {
+        setFormState(prevState => ({
+            ...prevState,
+            description: description,
+            secrets: secrets
+        }));
+    }, [description, secrets]);
+
+
 
     return (
         <form className='editCharacter__form glass'>
            <h2>Edit PC</h2>
-            <label>Name</label>
+            <label>Name <FaEdit onClick={() => setEName(!eName)}/></label>
+            <p>{pcs.name}</p>
+            {eName &&
+                <div>
+                    <input 
+                        className="edit-input" 
+                        type="text" 
+                        id="name" 
+                        onChange={handleChange} 
+                        placeholder={pcs.name}>
+                    </input>
+                    {/* if the input with id="name" is onFocus, then show this button */}
+                    {formState.name && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+            }
+
+            <label>Description <FaEdit onClick={() => setEDescription(!eDescription)}/></label>
+            <p dangerouslySetInnerHTML={{__html: dbDescription}}></p>
+            {eDescription &&
+            <div>
+                <Editor 
+                    value={description}
+                    onChange={setDescription}
+                />
+                {formState.description && <button onClick={submit} className="button-primary">Save</button>}
+            </div>
+            }
+
+            <label>Image <FaEdit onClick={() => setEImage(!eImage)}/></label>
+            <img src={pcs.image} alt={pcs.name}/>
+            {eImage &&
             <div>
                 <input 
-                    className="edit-input" 
+                    className="edit-input"  
                     type="text" 
-                    id="name" 
-                    onChange={handleChange} 
-                    placeholder={pcs.name}>
-                </input>
-                {/* if the input with id="name" is onFocus, then show this button */}
-                {formState.name && <button onClick={submit} className="button-primary">Save</button>}
-            </div>
-
-            <label>Description</label>
-            <input 
-                className="edit-input"  
-                type="text" 
-                id="description" 
-                onChange={handleChange}
-                placeholder={pcs.description}>
-            </input>
-            {formState.description && <button onClick={submit} className="button-primary">Save</button>}
-
-            <label>Image</label>
-            <img src={pcs.image} alt={pcs.name}/>
-            <input 
-                className="edit-input"  
-                type="text" 
-                id="image" 
-                onChange={handleChange}
-                placeholder={pcs.image}></input>
+                    id="image" 
+                    onChange={handleChange}></input>
                 {formState.image && <button onClick={submit} className="button-primary">Save</button>}
+            </div>
+            }
+            
+            <label>Secrets <FaEdit onClick={() => setESecrets(!eSecrets)}/></label>
+            <p dangerouslySetInnerHTML={{__html: dbSecrets}}></p>
+            {eSecrets &&
+                <div>
+                    <Editor 
+                        id="secrets" 
+                        onChange={setSecrets} 
+                        value={secrets} 
+                        submit={submit}
+                    />
+                    {secrets && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+            }
 
-            <label>Secrets</label>
-            <input 
-                className="edit-input" 
-                type="text" 
-                id="secrets" 
-                onChange={handleChange}
-                placeholder={pcs.secrets}></input>
-            {formState.secrets && <button onClick={submit} className="button-primary">Save</button>}
-
-            <label>Last Seen</label>
-            <input 
-                className="edit-input" 
-                type="text" 
-                id="lastSeen" 
-                onChange={handleChange}
-                placeholder={pcs.lastSeen}></input>
-                {formState.lastSeen && <button onClick={submit} className="button-primary">Save</button>}
-
+            <label>Last Seen <FaEdit onClick={() => setELastSeen(!eLastSeen)}/></label>
+            <p dangerouslySetInnerHTML={{__html: pcs.lastSeen}}></p>
+            {eLastSeen &&
+                <div>
+                    <input 
+                        type="text"
+                        id="lastSeen"
+                        onChange={handleChange}
+                    />
+                    {formState.lastSeen && <button onClick={submit} className="button-primary">Save</button>}
+                </div>
+                }
             <label>Hide Character</label>
-            <input 
-                type="checkbox" 
-                id="hidden" 
-                onChange={handleChange}
-                checked={formState.hidden}></input>
+            <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
+                <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
+                <span className="slider-round"></span>
+            </label>
                 {formState.hidden !== pcs.hidden && <button onClick={submit} className="button-primary">Save</button>}
 
             

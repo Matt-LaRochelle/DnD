@@ -89,19 +89,19 @@ const Npc = () => {
                     <div className='character__grid'>
                         <img src={npc.image} alt={npc.name} />
                         <div>
-                            <p><strong>Description</strong></p>
+                            <label>Description</label>
                             <p dangerouslySetInnerHTML={{__html: npcDescription}}></p>
                             {campaigns.dmID === user.id && 
                             <div>
-                                <p><strong>Voice</strong></p>
+                                <label>Voice</label>
                                 <p dangerouslySetInnerHTML={{__html: npcVoice}}></p>
-                                <p><strong>Catchphrases</strong></p>
+                                <label>Catchphrases</label>
                                 <p dangerouslySetInnerHTML={{__html: npcCatchphrases}}></p>
-                                <p><strong>Secrets</strong></p>
+                                <label>Secrets</label>
                                 <p dangerouslySetInnerHTML={{__html: npcSecrets}}></p>
                             </div>
                             }
-                            <p><strong>Last Seen</strong></p>
+                            <label>Last Seen</label>
                             <p>{npc.lastSeen}</p>
                             {campaigns.dmID === user.id && 
                         <button className="button-primary" onClick={() => navigate(`/npc/edit/${npc._id}`)}>Edit</button>

@@ -163,8 +163,8 @@ const EditQuest = () => {
             {eDescription &&
             <div>
                 <Editor 
-                    description={description}
-                    setDescription={setDescription}
+                    value={description}
+                    onChange={setDescription}
                 />
                 {formState.description && <button onClick={submit} className="button-primary">Save</button>}
             </div>

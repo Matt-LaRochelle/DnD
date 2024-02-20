@@ -11,6 +11,9 @@
     margin: 0 auto;
 }
 
+.character__container label {
+    margin-top: 40px;
+}
 .character__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
