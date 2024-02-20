@@ -17,7 +17,7 @@ const Quests = () => {
     useEffect(() => {
         const fetchQuests = async () => {
             setLoading(true);
-            const response = await fetch(`/api/quest/${campaigns._id}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/quest/${campaigns._id}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -41,7 +41,7 @@ const Quests = () => {
             return
         }
         setLoading(true);
-        const response = await fetch(`/api/quest/${id}`, {
+        const response = await fetch(`https://dnd-kukm.onrender.com/api/quest/${id}`, {
             method: 'DELETE', // Specify the method here
             headers: {
                 'Authorization': `Bearer ${user.token}`

@@ -32,7 +32,7 @@ const CampaignStart = () => {
 
         const campaign = {title, description, "dmID": user.id, "dmUsername": user.username}
 
-        const response = await fetch('/api/campaign', {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/campaign', {
             method: 'POST',
             body: JSON.stringify(campaign),
             headers: {

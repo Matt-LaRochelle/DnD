@@ -17,7 +17,7 @@ const Creatures = () => {
     useEffect(() => {
         const fetchCreatures = async () => {
             setLoading(true);
-            const response = await fetch(`/api/creature/${campaigns._id}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/creature/${campaigns._id}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -41,7 +41,7 @@ const Creatures = () => {
             return
         }
         setLoading(true);
-        const response = await fetch(`/api/creature/${id}`, {
+        const response = await fetch(`https://dnd-kukm.onrender.com/api/creature/${id}`, {
             method: 'DELETE', // Specify the method here
             headers: {
                 'Authorization': `Bearer ${user.token}`

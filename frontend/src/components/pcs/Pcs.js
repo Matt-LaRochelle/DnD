@@ -24,7 +24,7 @@ const Pcs = () => {
     useEffect(() => {
         const fetchPcs = async () => {
             setLoading(true);
-            const response = await fetch(`/api/pc/${path}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/pc/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -48,7 +48,7 @@ const Pcs = () => {
             return
         }
         setLoading(true);
-        const response = await fetch(`/api/pc/${id}`, {
+        const response = await fetch(`https://dnd-kukm.onrender.com/api/pc/${id}`, {
             method: 'DELETE', // Specify the method here
             headers: {
                 'Authorization': `Bearer ${user.token}`

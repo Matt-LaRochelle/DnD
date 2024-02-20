@@ -72,7 +72,7 @@ const Campaign = () => {
     useEffect(() => {
         const fetchCampaign = async () => {
             setLoading(true);
-            const response = await fetch(`/api/campaign/${path}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/campaign/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -96,7 +96,7 @@ const Campaign = () => {
         // Get all users and dm info for the campaign
         useEffect(() => {
             const fetchUsers = async () => {
-                const response = await fetch('/api/user/campaign/' + campaigns._id, {
+                const response = await fetch('https://dnd-kukm.onrender.com/api/user/campaign/' + campaigns._id, {
                     headers: {
                         'Authorization': `Bearer ${user.token}`
                     }
@@ -118,7 +118,7 @@ const Campaign = () => {
     // Get all npcs for the campaign
     useEffect(() => {
         const fetchNpcs = async () => {
-            const response = await fetch('/api/npc/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/npc/' + campaigns._id, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -139,7 +139,7 @@ const Campaign = () => {
     // Get all pcs for the campaign
     useEffect(() => {
         const fetchPcs = async () => {
-            const response = await fetch('/api/pc/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/pc/' + campaigns._id, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -160,7 +160,7 @@ const Campaign = () => {
     // Get all creatures for the campaign
     useEffect(() => {
         const fetchCreatures = async () => {
-            const response = await fetch('/api/creature/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/creature/' + campaigns._id, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -181,7 +181,7 @@ const Campaign = () => {
     // Get all maps info for the campaign
     useEffect(() => {
         const fetchMaps = async () => {
-            const response = await fetch('/api/map/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/map/' + campaigns._id, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -202,7 +202,7 @@ const Campaign = () => {
     // Get all quests info for the campaign
     useEffect(() => {
         const fetchQuests = async () => {
-            const response = await fetch('/api/quest/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/quest/' + campaigns._id, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

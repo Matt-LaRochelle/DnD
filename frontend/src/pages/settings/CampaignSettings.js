@@ -49,7 +49,7 @@ const CampaignSettings = () => {
         }
         console.log("data", data);
 
-        const response = await fetch('/api/campaign/settings', {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/campaign/settings', {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

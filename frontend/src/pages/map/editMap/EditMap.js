@@ -52,7 +52,7 @@ const EditMap = () => {
         // Fetch a map's information
         const fetchMapinfo = async () => {
             setLoading(true);
-            const response = await fetch(`/api/map/${campaigns._id}/${path}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/map/${campaigns._id}/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -103,7 +103,7 @@ const EditMap = () => {
             }
         }
 
-        const response = await fetch('/api/map/' + maps._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/map/' + maps._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

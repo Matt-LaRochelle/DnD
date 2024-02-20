@@ -61,7 +61,7 @@ const AddPC = () => {
             "username": user.username
         }
 
-        const response = await fetch('/api/pc/', {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/pc/', {
             method: 'POST',
             body: JSON.stringify(pc),
             headers: {

@@ -62,7 +62,7 @@ const AddNPC = () => {
 
         const npc = {...formState, "campaignID": campaigns._id}
 
-        const response = await fetch('/api/npc/', {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/npc/', {
             method: 'POST',
             body: JSON.stringify(npc),
             headers: {

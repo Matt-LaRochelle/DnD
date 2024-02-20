@@ -35,7 +35,7 @@ export const AuthContextProvider = ({ children }) => {
         const validateUser = async () => {
             if (user) {
                 // Check if the token is valid or invalid
-                const response = await fetch('/api/user/check/', {
+                const response = await fetch('https://dnd-kukm.onrender.com/api/user/check/', {
                         headers: {
                             'Authorization': `Bearer ${user.token}`
                         }

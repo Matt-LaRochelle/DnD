@@ -50,7 +50,7 @@ const AddMap = () => {
 
         const map = {...formState, "campaignID": campaigns._id}
 
-        const response = await fetch('/api/map/', {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/map/', {
             method: 'POST',
             body: JSON.stringify(map),
             headers: {

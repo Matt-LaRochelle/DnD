@@ -52,7 +52,7 @@ const AddCreature = () => {
 
         const creature = {...formState, "campaignID": campaigns._id}
 
-        const response = await fetch('/api/creature/', {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/creature/', {
             method: 'POST',
             body: JSON.stringify(creature),
             headers: {

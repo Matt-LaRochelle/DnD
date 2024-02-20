@@ -21,7 +21,7 @@ const Start = () => {
         // Fetch the campaigns which this user is a DM or Player for
         const fetchUserCampaignList = async () => {
             setLoading(true);
-            const response = await fetch('/api/campaign/', {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/campaign/', {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

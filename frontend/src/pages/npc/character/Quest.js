@@ -24,7 +24,7 @@ const Quest = () => {
         // Fetch a Quest's information
         const fetchQuestInfo = async () => {
             setLoading(true);
-            const response = await fetch(`/api/quest/${campaigns._id}/${path}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/quest/${campaigns._id}/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

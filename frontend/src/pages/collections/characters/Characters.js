@@ -19,7 +19,7 @@ const Characters = () => {
     useEffect(() => {
         const fetchPcs = async () => {
             setLoading(true);
-            const response = await fetch(`/api/pc/${campaigns._id}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/pc/${campaigns._id}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -43,7 +43,7 @@ const Characters = () => {
             return
         }
         setLoading(true);
-        const response = await fetch(`/api/pc/${id}`, {
+        const response = await fetch(`https://dnd-kukm.onrender.com/api/pc/${id}`, {
             method: 'DELETE', // Specify the method here
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -73,7 +73,7 @@ const Characters = () => {
     useEffect(() => {
         const fetchNpcs = async () => {
             setLoading(true);
-            const response = await fetch(`/api/npc/${campaigns._id}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/npc/${campaigns._id}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -97,7 +97,7 @@ const Characters = () => {
             return
         }
         setLoading(true);
-        const response = await fetch(`/api/npc/${id}`, {
+        const response = await fetch(`https://dnd-kukm.onrender.com/api/npc/${id}`, {
             method: 'DELETE', // Specify the method here
             headers: {
                 'Authorization': `Bearer ${user.token}`

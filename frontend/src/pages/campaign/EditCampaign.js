@@ -90,7 +90,7 @@ const EditCampaign = () => {
             updatedData['description'] = description
         }
 
-        const response = await fetch('/api/campaign/' + campaigns._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/campaign/' + campaigns._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

@@ -55,7 +55,7 @@ const AddQuest = () => {
 
         const quest = {...formState, "campaignID": campaigns._id}
 
-        const response = await fetch('/api/quest/', {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/quest/', {
             method: 'POST',
             body: JSON.stringify(quest),
             headers: {

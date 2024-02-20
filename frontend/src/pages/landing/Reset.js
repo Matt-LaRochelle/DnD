@@ -17,7 +17,7 @@ function ResetPassword() {
     const checkToken = async () => {
       // Check token with backend
       if (token) {
-        const response = await fetch('/api/user/verify', {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/user/verify', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({token: token})
@@ -43,7 +43,7 @@ function ResetPassword() {
     setIsLoading(true)
 
     if (password === confirmPassword) {
-      const response = await fetch('/api/user/reset', {
+      const response = await fetch('https://dnd-kukm.onrender.com/api/user/reset', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ token, password })

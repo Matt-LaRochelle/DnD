@@ -67,7 +67,7 @@ const Map = () => {
         // Fetch an Map's information
         const fetchMapInfo = async () => {
             setLoading(true);
-            const response = await fetch(`/api/map/${campaigns._id}/${path}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/map/${campaigns._id}/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -119,7 +119,7 @@ console.log("pcs-context:", pcs)
             y: 0
         }
         dbCharacterList.push(newCharacter)
-        const response = await fetch('/api/map/' + maps._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/map/' + maps._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ console.log("pcs-context:", pcs)
         });
         console.log("new character list", newCharacterList)
 
-            const response = await fetch('/api/map/' + maps._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/map/' + maps._id, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -262,7 +262,7 @@ console.log("pcs-context:", pcs)
         })
         
         // Update the database with the new characterList
-        const response = await fetch('/api/map/' + maps._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/map/' + maps._id, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

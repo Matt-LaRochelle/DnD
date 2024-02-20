@@ -29,7 +29,7 @@ const CampaignDetails = ({ campaign }) => {
     // Get all users and dm info for the campaign
     useEffect(() => {
         const fetchUsers = async () => {
-            const response = await fetch('/api/user/campaign/' + campaign._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/user/campaign/' + campaign._id, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -50,7 +50,7 @@ const CampaignDetails = ({ campaign }) => {
         if (!user) {
             return
         }
-        const response = await fetch('/api/campaign/' + campaign._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/campaign/' + campaign._id, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -72,7 +72,7 @@ const CampaignDetails = ({ campaign }) => {
             playerSettings: campaign.playerSettings.find(setting => setting.id === user.id)
         }
 
-        const response = await fetch("/api/campaign/leave", {
+        const response = await fetch("https://dnd-kukm.onrender.com/api/campaign/leave", {
             method: 'PATCH',
             body: JSON.stringify(leavingPlayer),
             headers: {

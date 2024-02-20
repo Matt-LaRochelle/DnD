@@ -58,7 +58,7 @@ const EditCreature = () => {
         // Fetch a Creature's information
         const fetchCreatureInfo = async () => {
             setLoading(true);
-            const response = await fetch(`/api/creature/${campaigns._id}/${path}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/creature/${campaigns._id}/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -104,7 +104,7 @@ const EditCreature = () => {
             }
         }
 
-        const response = await fetch('/api/creature/' + creatures._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/creature/' + creatures._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

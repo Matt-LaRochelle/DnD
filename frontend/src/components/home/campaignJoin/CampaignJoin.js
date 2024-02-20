@@ -27,7 +27,7 @@ const CampaignJoin = () => {
 
         const campaign = {campaignID, playerID: user.id, playerUsername: user.username}
 
-        const response = await fetch("/api/campaign/join", {
+        const response = await fetch("https://dnd-kukm.onrender.com/api/campaign/join", {
             method: 'PATCH',
             body: JSON.stringify(campaign),
             headers: {

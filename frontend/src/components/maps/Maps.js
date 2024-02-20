@@ -24,7 +24,7 @@ const Maps = () => {
     useEffect(() => {
         const fetchMaps = async () => {
             setLoading(true);
-            const response = await fetch(`/api/map/${path}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/map/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -48,7 +48,7 @@ const Maps = () => {
             return
         }
         setLoading(true);
-        const response = await fetch(`/api/map/${id}`, {
+        const response = await fetch(`https://dnd-kukm.onrender.com/api/map/${id}`, {
             method: 'DELETE', // Specify the method here
             headers: {
                 'Authorization': `Bearer ${user.token}`

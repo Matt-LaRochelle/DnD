@@ -70,7 +70,7 @@ const Settings = () => {
             updatedData.backgroundImage = formState.backgroundImage;
         }
 
-        const response = await fetch('/api/user/' + user.id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/user/' + user.id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

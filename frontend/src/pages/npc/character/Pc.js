@@ -26,7 +26,7 @@ const Pc = () => {
         // Fetch an NPC's information
         const fetchPCinfo = async () => {
             setLoading(true);
-            const response = await fetch(`/api/pc/${campaigns._id}/${path}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/pc/${campaigns._id}/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

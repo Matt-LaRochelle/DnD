@@ -73,7 +73,7 @@ const EditNPC = () => {
         // Fetch an NPC's information
         const fetchNPCinfo = async () => {
             setLoading(true);
-            const response = await fetch(`/api/npc/${campaigns._id}/${path}`, {
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/npc/${campaigns._id}/${path}`, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -119,7 +119,7 @@ const EditNPC = () => {
             }
         }
 
-        const response = await fetch('/api/npc/' + npcs._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/npc/' + npcs._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
