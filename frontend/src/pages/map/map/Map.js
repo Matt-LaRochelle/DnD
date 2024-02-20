@@ -457,7 +457,7 @@ console.log("pcs-context:", pcs)
                     </div>
                     }
                     <div>
-                        <p><strong>Description</strong></p>
+                        <h2>Description</h2>
                         <p dangerouslySetInnerHTML={{__html: description}}></p>
                         {campaigns.dmID === user.id && 
                             <div>

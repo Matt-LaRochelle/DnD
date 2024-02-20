@@ -76,14 +76,12 @@ const Quest = () => {
                             <p dangerouslySetInnerHTML={{__html: description}}></p>
                             <label>Type</label>
                             <p>{quest.type}</p>
-                            {campaigns.dmID === user.id && 
                             <div>
                                 <label>Given by</label>
                                 <p>{quest.givenBy}</p>
                                 <label>Return to</label>
                                 <p>{quest.returnTo}</p>
                             </div>
-                            }
                             {campaigns.dmID === user.id && 
                         <button className="button-primary" onClick={() => navigate(`/quest/edit/${quest._id}`)}>Edit</button>
                             }

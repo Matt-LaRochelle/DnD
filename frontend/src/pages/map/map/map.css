@@ -7,6 +7,11 @@
     text-align: center;
     margin-bottom: 20px;
 }
+.map__container h2 {
+    text-align: center;
+    margin-top: 40px;
+
+}
 
 
 /* This is the actual map box */
