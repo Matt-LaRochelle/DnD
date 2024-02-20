@@ -13,6 +13,7 @@
 
 .character__container label {
     margin-top: 40px;
+    font-weight: 700;
 }
 .character__grid {
     display: grid;
