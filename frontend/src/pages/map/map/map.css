@@ -115,6 +115,7 @@
     overflow: hidden;
     overflow-x: scroll;
     padding: 20px;
+    color: var(--white);
     border: 2px solid rgb(102, 1, 1);
     border-radius: 20px 20px 0 0;
     background: radial-gradient(ellipse at 30px 50px, rgb(82, 29, 29), rgb(4, 42, 4));

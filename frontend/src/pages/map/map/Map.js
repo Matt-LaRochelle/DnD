@@ -430,6 +430,7 @@ console.log("pcs-context:", pcs)
                             ))}
                         </ul>
                     </div>
+                    {campaigns.dmID === user.id && 
                     <div>
                         <h2>Non Player Characters</h2>
                         <ul className="map-pc-row">
@@ -441,6 +442,8 @@ console.log("pcs-context:", pcs)
                             ))}
                         </ul>
                     </div>
+                    }
+                    {campaigns.dmID === user.id && 
                     <div>
                         <h2>Creatures</h2>
                         <ul className="map-pc-row">
@@ -452,6 +455,7 @@ console.log("pcs-context:", pcs)
                             ))}
                         </ul>
                     </div>
+                    }
                     <div>
                         <p><strong>Description</strong></p>
                         <p dangerouslySetInnerHTML={{__html: description}}></p>
