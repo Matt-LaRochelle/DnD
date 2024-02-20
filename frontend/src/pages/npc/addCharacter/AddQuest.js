@@ -11,7 +11,7 @@ const AddQuest = () => {
         title: '',
         description: '',
         image: '',
-        type: '',
+        type: 'Main',
         givenBy: '',
         returnTo: '',
         hidden: false
