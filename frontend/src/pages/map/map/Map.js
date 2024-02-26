@@ -20,6 +20,8 @@ import { MdOutlineContactPage } from "react-icons/md";
 import { MdOutlineAdd } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 import { IoIosMove } from "react-icons/io";
+import { MdFullscreen } from "react-icons/md";
+import { MdFullscreenExit } from "react-icons/md";
 
 // 3rd Party
 import Draggable from 'react-draggable';
@@ -50,6 +52,7 @@ const Map = () => {
     const navigate = useNavigate()
 
     const [highlightedAvatar, setHighlightedAvatar] = useState(null);
+    const [fullScreen, setFullScreen] = useState(false)
 
 
     // Create a ref for each avatar in your render method
@@ -351,7 +354,29 @@ console.log("pcs-context:", pcs)
                 <div className='map__container glass'>
                     <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
-                    <div className="map__box">
+                    <div 
+                        className={fullScreen ? "map__image full-screen" : "map__image"}    
+    //                     style={{
+    //                     position: fullScreen ? "fixed" : "relative",
+    //                     top: fullScreen ? "0" : "initial",
+    //                     left: fullScreen ? "0" : "initial",
+    //                     right: fullScreen ? "0" : "initial",
+    //                     bottom: fullScreen ? "0" : "initial",
+    //                     width: fullScreen ? "100vw" : "100%",
+    //                     height: fullScreen ? "100vh" : "min(900px, 80vh)",
+    //                     zIndex: fullScreen ? "10" : "1",
+    // }}
+    >
+                        {fullScreen 
+                        ? 
+                            <MdFullscreenExit 
+                                className="full-screen-icon" 
+                                onClick={() => setFullScreen(!fullScreen)} />
+                        :   
+                            <MdFullscreen 
+                                    className="full-screen-icon" 
+                                    onClick={() => setFullScreen(!fullScreen)} /> 
+                        }
                         <div className="movable-characters glass">
                             {clientCharacterList.map((character, index) => (
                                 <Draggable

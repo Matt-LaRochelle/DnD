@@ -1,6 +1,6 @@
 /* Full page component */
 .map__container {
-
+    position: static;
 }
 
 .map__container h1 {
@@ -18,11 +18,12 @@
 .map__box {
     width: 100%;
     height: min(900px, 80vh);
-    border: 1px solid var(--primary-200);
+    border: 1px solid var(--white);
     box-shadow: var(--clear);
     overflow: hidden;
     position: relative;
     z-index: 1;
+    transition: "all 0.5s ease"
 }
 .movable-characters {
     /* display: flex;
@@ -113,7 +114,21 @@
     cursor:all-scroll;
 }
 
+.full-screen-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    height: 40px;
+    width: 40px;
+    /* font-size: 2rem; */
+    color: var(--white);
+    background: var(--primary-800);
+    border-radius: 50%;
+    padding: 4px;
+    cursor: pointer;
 
+}
 .map-pc-row {
     display: flex;
     list-style-type: none;
