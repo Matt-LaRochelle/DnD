@@ -1,8 +1,7 @@
 /* Full page component */
 .map__container {
-    position: static;
-    border: 2px solid red;
-    overflow: auto;
+    /* position: static;
+    overflow: auto; */
 }
 
 .map__container h1 {
@@ -20,7 +19,7 @@
 .map__box {
     width: 100%;
     height: min(900px, 80vh);
-    border: 1px solid lime;
+    border: 1px solid var(--primary-200);
     box-shadow: var(--clear);
     overflow: hidden;
     position: relative;
