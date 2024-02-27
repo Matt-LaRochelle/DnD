@@ -1,7 +1,5 @@
 import './map.css'
 
-import React, { useEffect, useState } from 'react'
-
 // Context
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
@@ -13,7 +11,7 @@ import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
 // Components
 import Avatar from '../../../components/avatar/Avatar'
 
-const ControlPanel = (props) => {
+const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordinates }) => {
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
     const { maps, dispatch } = useMapsContext()

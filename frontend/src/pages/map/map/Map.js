@@ -14,6 +14,8 @@ import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
 // Components
 import Avatar from '../../../components/avatar/Avatar'
 import Loading from '../../../components/loading/Loading'
+import ControlPanel from './ControlPanel'
+import MapDescription from './MapDescription'
 
 // Icons
 import { MdOutlineContactPage } from "react-icons/md";
@@ -25,7 +27,7 @@ import { MdFullscreenExit } from "react-icons/md";
 
 // 3rd Party
 import Draggable from 'react-draggable';
-import DOMPurify from 'dompurify';
+
 
 const Map = () => {
     const [loading, setLoading] = useState(true)
@@ -34,11 +36,6 @@ const Map = () => {
     const [avatarMenu, setAvatarMenu] = useState(null)
 
     const [mapCoordinates, setMapCoordinates] = useState({ x: 0, y: 0})
-    const [currentAvatarCoordinates, setCurrentAvatarCoordinates] = useState({ x: 0, y: 0})
-    const [trackedAvatarCoordinates, setTrackedAvatarCoordinates] = useState({ x: 0, y: 0 });
-
-    const [description, setDescription] = useState('')
-    const [secrets, setSecrets] = useState('')
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
@@ -54,17 +51,6 @@ const Map = () => {
     const [highlightedAvatar, setHighlightedAvatar] = useState(null);
     const [fullScreen, setFullScreen] = useState(false)
 
-
-    // Create a ref for each avatar in your render method
-    // const avatarRefs = clientCharacterList.reduce((acc, character) => {
-    //     acc[character._id] = React.createRef();
-    //     return acc;
-    // }, {});
-
-
-    // useEffect(() => {
-    //     console.log("client character list", clientCharacterList)
-    // }, [clientCharacterList])
 
     useEffect(() => {
         // Fetch an Map's information
@@ -103,64 +89,10 @@ const Map = () => {
         }
     }, [user])
 
-console.log("pcs-context:", pcs)
     const goBack = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
 
-    // Add a character to the map
-    const addCharacter = async (id, type) => {
-        if (!user) {
-            alert("You must be logged in.")
-            return
-        }
-        let dbCharacterList = maps.characterList
-        const newCharacter = {
-            _id: id,
-            type,
-            x: 0,
-            y: 0
-        }
-        dbCharacterList.push(newCharacter)
-        const response = await fetch('https://dnd-kukm.onrender.com/api/map/' + maps._id, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.token}`
-            },
-            body: JSON.stringify({characterList: dbCharacterList})
-        })
-        const json = await response.json()
-
-        if (response.ok) {
-            dispatch({ type: 'SET_MAP', payload: json })
-            // This is what needs to be tracked on the client side
-            // Take all DB characters and format them for client side.
-            const returnedCharacterList = json.characterList.map(character => {
-                if (character._id === id) {
-                return {
-                    _id: character._id,
-                    type: character.type,
-                    currentX: character.x,
-                    currentY: character.y,
-                    trackedX: character.x,
-                    trackedY: character.y
-                }
-            } else {
-                return {
-                    _id: character._id,
-                    type: character.type,
-                    currentX: character.x + mapCoordinates.x,
-                    currentY: character.y + mapCoordinates.y,
-                    trackedX: character.x,
-                    trackedY: character.y
-                
-                }
-            }
-            })
-            setClientCharacterList(returnedCharacterList)
-        }
-    }
 
     // Remove a character from the map
     const removeCharacter = async (index, id) => {
@@ -173,7 +105,6 @@ console.log("pcs-context:", pcs)
         const newCharacterList = maps.characterList.filter((character) => {
             return character._id !== id;
         });
-        console.log("new character list", newCharacterList)
 
             const response = await fetch('https://dnd-kukm.onrender.com/api/map/' + maps._id, {
             method: 'PATCH',
@@ -244,7 +175,6 @@ console.log("pcs-context:", pcs)
     const handleStop = async (e, data) => {
         // Update the database character x and y coordinates to match the trackedX and trackedY of this specific avatar
         let characterID = e.target.id;
-        console.log("characterID:", characterID)
         if (!characterID) {
             return
         }
@@ -328,23 +258,6 @@ console.log("pcs-context:", pcs)
 
 
 
-    // For handling inner HTML
-    useEffect(()=> {
-        const cleanHtml = () => {
-            if (maps.description) {
-                let cleanDescription = DOMPurify.sanitize(maps.description)
-                setDescription(cleanDescription)
-            }
-            if (maps.secrets) {
-                let cleanSecrets = DOMPurify.sanitize(maps.secrets)
-                setSecrets(cleanSecrets)
-            }
-        }
-        if (maps) {
-            cleanHtml()
-        }
-    }, [maps])
-
     return (
         <div>
             {loading
@@ -355,7 +268,7 @@ console.log("pcs-context:", pcs)
                     <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div 
-                        className={fullScreen ? "map__box fullpage-popup" : "map__box"}    
+                        className={fullScreen ? "fullpage-popup" : "map__box"}    
     //                     style={{
     //                     position: fullScreen ? "fixed" : "relative",
     //                     top: fullScreen ? "0" : "initial",
@@ -444,57 +357,12 @@ console.log("pcs-context:", pcs)
                             </div>
                         </Draggable>
                     </div>
-                    <div>
-                        <h2>Characters</h2>
-                        <ul className="map-pc-row">
-                            {pcs.map(pc => (
-                                <li key={pc._id}>
-                                    <Avatar image={pc.image} name={pc.name} hideName={true} />
-                                    <p className="add" onClick={() => addCharacter(pc._id, "pc")}>+</p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    {campaigns.dmID === user.id && 
-                    <div>
-                        <h2>Non Player Characters</h2>
-                        <ul className="map-pc-row">
-                            {npcs.map(npc => (
-                                <li key={npc._id}>
-                                    <Avatar image={npc.image} name={npc.name} hideName={true} />
-                                    <p className="add" onClick={() => addCharacter(npc._id, "npc")}>+</p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    }
-                    {campaigns.dmID === user.id && 
-                    <div>
-                        <h2>Creatures</h2>
-                        <ul className="map-pc-row">
-                            {creatures.map(creature => (
-                                <li key={creature._id}>
-                                    <Avatar image={creature.image} name={creature.name} hideName={true} />
-                                    <p className="add" onClick={() => addCharacter(creature._id, "creature")}>+</p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    }
-                    <div>
-                        <h2>Description</h2>
-                        <p dangerouslySetInnerHTML={{__html: description}}></p>
-                        {campaigns.dmID === user.id && 
-                            <div>
-                                <p><strong>Secrets</strong></p>
-                                <p dangerouslySetInnerHTML={{__html: secrets}}></p>
-                            </div>
-                        }
-                        {campaigns.dmID === user.id && 
-                            <button className="button-primary" onClick={() => navigate(`/map/edit/${maps._id}`)}>Edit</button>
-                        }
-                    </div>
-                    
+                    <ControlPanel 
+                        clientCharacterList={clientCharacterList} 
+                        setClientCharacterList={setClientCharacterList}
+                        mapCoordinates={mapCoordinates} />
+                   
+                    <MapDescription />      
                 </div>
             }
         </div>
