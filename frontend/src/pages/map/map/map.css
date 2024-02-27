@@ -2,6 +2,7 @@
 .map__container {
     position: static;
     border: 2px solid red;
+    overflow: auto;
 }
 
 .map__container h1 {
@@ -27,21 +28,19 @@
     transition: all 0.5s ease;
 }
 .map-full-screen {
-    position: fixed;
+    position: absolute;
     width: calc(100vw - 20px);
     height: 100vh;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    top: 0;
+    left: 0;
 
     z-index: 100;
-    border: 2px solid aqua;
+    /* border: 2px solid aqua; */
     overflow: hidden;
     transition: all 0.5s ease;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 

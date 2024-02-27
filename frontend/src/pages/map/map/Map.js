@@ -264,57 +264,56 @@ const Map = () => {
                 ?
                 <Loading />
                 :
-                <div className='map__container glass'>
+                <div className={!fullScreen && 'map__container glass'}>
                     <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
-                    <div 
-                        className={ fullScreen ? "map-full-screen" : "map__box"} 
-    >
-                        {fullScreen 
-                        ? 
-                            <MdFullscreenExit 
-                                className="full-screen-icon" 
-                                onClick={() => setFullScreen(!fullScreen)} />
-                        :   
-                            <MdFullscreen 
+                    <div className={fullScreen && "map-full-screen"}>
+                        <div className={!fullScreen && "map__box"}>
+
+                            {fullScreen 
+                            ? 
+                                <MdFullscreenExit 
                                     className="full-screen-icon" 
-                                    onClick={() => setFullScreen(!fullScreen)} /> 
-                        }
-                        <div className="movable-characters glass">
+                                    onClick={() => setFullScreen(!fullScreen)} />
+                            :   
+                                <MdFullscreen 
+                                        className="full-screen-icon" 
+                                        onClick={() => setFullScreen(!fullScreen)} /> 
+                            }
                             {clientCharacterList.map((character, index) => (
                                 <Draggable
-                                        defaultPosition={{x: 0, y: 0}}
-                                        position={{x: character.currentX, y: character.currentY}}
-                                        scale={1}
-                                        handle="strong"
-                                        onDrag={handleDrag}
-                                        onStop={handleStop}
-                                        >
+                                    defaultPosition={{x: 0, y: 0}}
+                                    position={{x: character.currentX, y: character.currentY}}
+                                    scale={1}
+                                    handle="strong"
+                                    onDrag={handleDrag}
+                                    onStop={handleStop}
+                                    >
                                     <div className="movable-avatar" ariaLabel={character._id} style={character._id === highlightedAvatar ? { border: '4px solid lime' } : {}}>
                                         <div onClick={() => showAvatarMenu(index)} >
                                             {character.type === "pc" &&
-                                            <Avatar 
-                                                key={index} 
-                                                image={pcs.find(pc => pc._id === character._id).image} 
-                                                name={pcs.find(pc => pc._id === character._id).name} 
-                                                hideName={true} 
-                                                />
+                                                <Avatar 
+                                                    key={index} 
+                                                    image={pcs.find(pc => pc._id === character._id).image} 
+                                                    name={pcs.find(pc => pc._id === character._id).name} 
+                                                    hideName={true} 
+                                                    />
                                             }
                                             {character.type === "npc" &&
-                                            <Avatar 
-                                                key={index} 
-                                                image={npcs.find(npc => npc._id === character._id).image} 
-                                                name={npcs.find(npc => npc._id === character._id).name} 
-                                                hideName={true} 
-                                                />
+                                                <Avatar 
+                                                    key={index} 
+                                                    image={npcs.find(npc => npc._id === character._id).image} 
+                                                    name={npcs.find(npc => npc._id === character._id).name} 
+                                                    hideName={true} 
+                                                    />
                                             }
                                             {character.type === "creature" &&
-                                            <Avatar 
-                                                key={index} 
-                                                image={creatures.find(creature => creature._id === character._id).image} 
-                                                name={creatures.find(creature => creature._id === character._id).name} 
-                                                hideName={true} 
-                                                />
+                                                <Avatar 
+                                                    key={index} 
+                                                    image={creatures.find(creature => creature._id === character._id).image} 
+                                                    name={creatures.find(creature => creature._id === character._id).name} 
+                                                    hideName={true} 
+                                                    />
                                             }
                                         </div>
                                         {avatarMenu === index && 
@@ -329,30 +328,34 @@ const Map = () => {
                                                     <p>CurrentX: {character.currentX}, currentY: {character.currentY}</p>
                                                     <p>TrackedX: {character.trackedX}, trackedY: {character.trackedY}</p>
                                                 </div>
-                                            </div>}
+                                            </div>
+                                        }
                                     </div>
                                 </Draggable>
                             ))}
+
+                            <Draggable 
+                                onDrag={handleMapDrag}
+                                onStop={handleMapDragStop}
+                                bounds={{ left: 100, top: 100, right: 100, bottom: 100 }}>
+                                <div className='map__image' style={{    
+                                    backgroundImage: `url(${maps.image})`,
+                                    backgroundRepeat: 'no-repeat'
+                                    }}>
+                                </div>
+                            </Draggable>
                         </div>
-
-                        <Draggable 
-                            onDrag={handleMapDrag}
-                            onStop={handleMapDragStop}>
-                            <div className='map__image' style={{    
-                                backgroundImage: `url(${maps.image})`,
-                                backgroundRepeat: 'no-repeat'
-                            }}>
-
-
-                            </div>
-                        </Draggable>
                     </div>
-                    <ControlPanel 
-                        clientCharacterList={clientCharacterList} 
-                        setClientCharacterList={setClientCharacterList}
-                        mapCoordinates={mapCoordinates} />
-                   
-                    <MapDescription />      
+                    {!fullScreen &&
+                    <div>
+                        <ControlPanel 
+                            clientCharacterList={clientCharacterList} 
+                            setClientCharacterList={setClientCharacterList}
+                            mapCoordinates={mapCoordinates} />
+                    
+                        <MapDescription />      
+                    </div>
+                    }
                 </div>
             }
         </div>
