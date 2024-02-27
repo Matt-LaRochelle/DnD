@@ -288,6 +288,7 @@ const Map = () => {
                                     handle="strong"
                                     onDrag={handleDrag}
                                     onStop={handleStop}
+                                    bounds={{left: 0, top: 0}}
                                     >
                                     <div className="movable-avatar" ariaLabel={character._id} style={character._id === highlightedAvatar ? { border: '4px solid lime' } : {}}>
                                         <div onClick={() => showAvatarMenu(index)} >
@@ -337,7 +338,7 @@ const Map = () => {
                             <Draggable 
                                 onDrag={handleMapDrag}
                                 onStop={handleMapDragStop}
-                                bounds={{ left: 100, top: 100, right: 100, bottom: 100 }}>
+                                bounds={{ right: 0, bottom: 0, top: -9900, left: -9900}}>
                                 <div className='map__image' style={{    
                                     backgroundImage: `url(${maps.image})`,
                                     backgroundRepeat: 'no-repeat'
