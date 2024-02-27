@@ -268,17 +268,7 @@ const Map = () => {
                     <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div 
-                        className={fullScreen ? "fullpage-popup" : "map__box"}    
-    //                     style={{
-    //                     position: fullScreen ? "fixed" : "relative",
-    //                     top: fullScreen ? "0" : "initial",
-    //                     left: fullScreen ? "0" : "initial",
-    //                     right: fullScreen ? "0" : "initial",
-    //                     bottom: fullScreen ? "0" : "initial",
-    //                     width: fullScreen ? "100vw" : "100%",
-    //                     height: fullScreen ? "100vh" : "min(900px, 80vh)",
-    //                     zIndex: fullScreen ? "10" : "1",
-    // }}
+                        className={ fullScreen ? "map-full-screen" : "map__box"} 
     >
                         {fullScreen 
                         ? 
@@ -336,8 +326,8 @@ const Map = () => {
                                                     {character.type === "pc" && <p>{pcs.find(pc => pc._id === character._id).name}</p>}
                                                     {character.type === "npc" && <p>{npcs.find(npc => npc._id === character._id).name}</p>}
                                                     {character.type === "creature" && <p>{creatures.find(creature => creature._id === character._id).name}</p>}
-                                                    <p>{character.currentX}, {character.currentY}</p>
-                                                    <p>{character.trackedX}, {character.trackedY}</p>
+                                                    <p>CurrentX: {character.currentX}, currentY: {character.currentY}</p>
+                                                    <p>TrackedX: {character.trackedX}, trackedY: {character.trackedY}</p>
                                                 </div>
                                             </div>}
                                     </div>

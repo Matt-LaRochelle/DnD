@@ -45,7 +45,7 @@ body {
   padding: 20px;
   margin: 0 auto;
   color: #e8e8e8;
-  position: relative;
+  /* position: relative; */
   border: 4px solid pink;
 }
 

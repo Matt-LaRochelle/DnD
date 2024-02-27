@@ -1,6 +1,7 @@
 /* Full page component */
 .map__container {
     position: static;
+    border: 2px solid red;
 }
 
 .map__container h1 {
@@ -18,13 +19,32 @@
 .map__box {
     width: 100%;
     height: min(900px, 80vh);
-    border: 1px solid var(--white);
+    border: 1px solid lime;
     box-shadow: var(--clear);
     overflow: hidden;
     position: relative;
     z-index: 1;
-    transition: "all 0.5s ease"
+    transition: all 0.5s ease;
 }
+.map-full-screen {
+    position: fixed;
+    width: calc(100vw - 20px);
+    height: 100vh;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+
+    z-index: 100;
+    border: 2px solid aqua;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .movable-characters {
     /* display: flex;
     width: min(500px, 90%); */
