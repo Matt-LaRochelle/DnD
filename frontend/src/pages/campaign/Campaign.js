@@ -23,22 +23,22 @@ import CharacterRow from '../../components/characterRow/CharacterRow';
 const Campaign = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
+
     const [loading, setLoading] = useState(true)
+
+    // This sets once we receive all campaign info, then we can
+    // fetch the user and dm info from inside the campaign.
+    const [stepOne, setStepOne] = useState(false)
+    const [loadData, setLoadData] = useState([])
 
 
     const [playerInfo, setPlayerInfo] = useState([]);
     const [dmInfo, setDmInfo] = useState({});
-
     const [settings, setSettings] = useState(null)
 
     // This variable says whether the current client is DM of this campaign
     const [dm, setDm] = useState(false)
 
-    // const [campaign, setCampaign] = useState({})
-    // This sets once we receive all campaign info, then we can
-    // fetch the user and dm info from inside the campaign.
-    const [stepOne, setStepOne] = useState(false)
-    const [loadData, setLoadData] = useState([])
     const [campaignDescription, setCampaignDescription] = useState("")
 
     const {campaigns, dispatch} = useCampaignsContext() 
@@ -58,7 +58,8 @@ const Campaign = () => {
     }, [user, campaigns])
 
     useEffect(() => {
-        if (loadData.length === 7) {
+        console.log("loadData", loadData)
+        if (loadData.length >= 7) {
             setLoading(false)
         }
     }, [loadData])
@@ -83,7 +84,6 @@ const Campaign = () => {
                 setLoadData(prevLoadData => [...prevLoadData, "campaign"])
                 setStepOne(true);
                 setSettings(json.playerSettings.find(setting => setting.id === user.id).settings);
-                console.log("settings", settings)
             }
         }
 
@@ -113,7 +113,7 @@ const Campaign = () => {
                 fetchUsers()
             }
         
-        }, [user, stepOne])
+        }, [stepOne])
 
     // Get all npcs for the campaign
     useEffect(() => {
@@ -134,7 +134,7 @@ const Campaign = () => {
             fetchNpcs()
         }
     
-    }, [user, stepOne])
+    }, [stepOne])
 
     // Get all pcs for the campaign
     useEffect(() => {
@@ -155,7 +155,7 @@ const Campaign = () => {
             fetchPcs()
         }
     
-    }, [user, stepOne])
+    }, [stepOne])
 
     // Get all creatures for the campaign
     useEffect(() => {
@@ -176,7 +176,7 @@ const Campaign = () => {
             fetchCreatures()
         }
     
-    }, [user, stepOne])
+    }, [stepOne])
 
     // Get all maps info for the campaign
     useEffect(() => {
@@ -197,7 +197,7 @@ const Campaign = () => {
             fetchMaps()
         }
     
-    }, [user, stepOne])
+    }, [stepOne])
 
     // Get all quests info for the campaign
     useEffect(() => {
@@ -218,7 +218,7 @@ const Campaign = () => {
             fetchQuests()
         }
     
-    }, [user, stepOne])
+    }, [stepOne])
 
 
 
@@ -231,10 +231,9 @@ const Campaign = () => {
 
 
     const campaignDetails = () => {
-        console.log("Step end: campaign:", campaigns)
-        console.log("playerUsernames", campaigns.playerUsernames)
+        // console.log("Step end: campaign:", campaigns)
+        // console.log("playerUsernames", campaigns.playerUsernames)
     }
-    console.log("dm", dm)
 
     const editCampaign = () => {
         navigate(`/campaign/edit/${campaigns._id}`)
@@ -249,7 +248,6 @@ const Campaign = () => {
     // For handling inner HTML
     useEffect(()=> {
         const cleanHtml = () => {
-            console.log(campaigns.description)
             if (campaigns.description) {
                 let cleanCampaignDescription = DOMPurify.sanitize(campaigns.description)
                 setCampaignDescription(cleanCampaignDescription)

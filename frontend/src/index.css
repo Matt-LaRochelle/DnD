@@ -35,7 +35,7 @@ body {
   
   margin: 0;
   font-family: "Poppins";
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   padding-bottom: 50px;
 }
