@@ -355,7 +355,7 @@ console.log("pcs-context:", pcs)
                     <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div 
-                        className={fullScreen ? "map__image full-screen" : "map__image"}    
+                        className={fullScreen ? "map__box fullpage-popup" : "map__box"}    
     //                     style={{
     //                     position: fullScreen ? "fixed" : "relative",
     //                     top: fullScreen ? "0" : "initial",
