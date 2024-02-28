@@ -1,4 +1,5 @@
-import './campaign.css'
+import './bento.css'
+
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
@@ -18,10 +19,9 @@ import Creatures from '../../components/creatures/Creatures';
 import Quests from '../../components/quests/Quests';
 import Loading from '../../components/loading/Loading';
 import CharacterRow from '../../components/characterRow/CharacterRow';
-import Bento from './Bento';
 
 
-const Campaign = () => {
+const Bento = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
 
@@ -256,81 +256,22 @@ const Campaign = () => {
 
 
     return (
-        <div className="campaign__Container">
-            {loading 
-            ?   
-                <Loading />             
-            :   
-                <div className='loaded'>
-                    <Bento />
-                    <h1>{campaigns.title}</h1>
-                    <div className="campaign__Description">
-                        {settings.description && <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>}
-                        {settings.image && campaigns.image && <img src={campaigns.image} alt={campaigns.title} />}
-                    </div>
-                    <div className='campaign__users'>
-                        {dm && <button className="button-primary" onClick={editCampaign}>Edit this Campaign</button>}
-                        {settings.players && 
-                            <div className="campaign__players">
-                                <CharacterRow 
-                                    dmInfo={dmInfo}
-                                    playerInfo={playerInfo}
-                                />
-                            </div>
-                        }
-                    </div>
-                    <div style={
-                        (dm  && settings.maps) ? {display: "block"} :
-                        (maps.length === 0 ||
-                        !settings.maps || 
-                        maps.every(map => map.hidden)) ? 
-                        {display: "none"} : {}
-                    }>
-                        <h2 className="campaign__heading">Maps</h2>
-                        <Maps dm={campaigns.dmID} />
-                    </div>
-
-                    <div style={settings.playerCharacters ? {} : {display: "none"}}>
-                        <h2 className="campaign__heading">PCs</h2>
-                        <Pcs dm={campaigns.dmID} />
-                    </div>
-
-                    <div style={
-                        (dm  && settings.nonPlayerCharacters) ? {display: "block"} :
-                        (npcs.length === 0 ||
-                        !settings.nonPlayerCharacters || 
-                        npcs.every(npc => npc.hidden)) ? 
-                        {display: "none"} : {}
-                    }>
-                        <h2 className="campaign__heading">NPCs</h2>
-                        <Npcs dm={campaigns.dmID} />                    
-                    </div>
-
-                    <div style={
-                        (dm  && settings.creatures) ? {display: "block"} :
-                        (creatures.length === 0 ||
-                        !settings.creatures || 
-                        creatures.every(creature => creature.hidden)) ? 
-                        {display: "none"} : {}
-                    }>
-                        <h2 className="campaign__heading">Creatures</h2>
-                        <Creatures dm={campaigns.dmID} />                    
-                    </div>
-
-                    <div style={
-                        (dm  && settings.quests) ? {display: "block"} :
-                        (quests.length === 0 ||
-                        !settings.quests || 
-                        quests.every(quest => quest.hidden)) ? 
-                        {display: "none"} : {}
-                    }>
-                        <h2 className="campaign__heading">Quests</h2>
-                        <Quests dm={campaigns.dmID} />                    
-                    </div>
-                </div>  
-            }
+        <div className="bento-wrapper">
+            <div className="bento-item1">
+                Title and Description
+            </div>
+            <div className="bento-item2">
+                Image
+            </div>
+            <div className="bento-item3">Player Characters</div>
+            <div className="bento-item4">Non Player Characters</div>
+            <div className="bento-item5">Creatures</div>
+            <div className="bento-item6">Maps</div>
+            <div className="bento-item7">Quests</div>
+            <div className="bento-item8">User Row</div>
+            <div className="bento-item9">Settings</div>
         </div>
     )
 }
 
-export default Campaign
+export default Bento
