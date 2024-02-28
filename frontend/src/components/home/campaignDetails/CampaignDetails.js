@@ -128,7 +128,7 @@ const CampaignDetails = ({ campaign }) => {
                 ?   <div>
                         <span className="material-symbols-outlined button-secondary trash" onClick={handleClick}>delete</span>
                         <p className="button-primary campaignDetails__id-checker" onClick={giveID}>Check Campaign Room Number</p>
-                        <p className="campaign-details__id" style={{display: showID ? "inline" : "none"}}>{campaign._id}</p>
+                        <p className="campaign-details__id" style={{display: showID ? "block" : "none"}}>{campaign._id}</p>
                     </div>
                 :   <span className="button-secondary" onClick={leaveCampaign}>Leave Campaign</span>
                 }

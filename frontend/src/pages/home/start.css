@@ -17,3 +17,13 @@
 .start-title {
     margin-top: 80px;
 }
+
+@media screen and (max-width: 600px) {
+    .start__add {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 40px;
+        margin: 20px 0 20px;
+    }
+}

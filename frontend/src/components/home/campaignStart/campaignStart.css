@@ -1,6 +1,6 @@
 .campaignStart__container {
-    border: 2px solid blue;
-    background: radial-gradient(ellipse at 160px 140px, #0a0183 0%, #020022 100%);
+    border: 2px solid var(--white);
+    background: linear-gradient(#332828, rgb(48, 48, 68)) ;
     width: 200px;
     height: max-content;
     border-radius: 20px;
@@ -17,8 +17,8 @@
     /* top: 10px;
     left: 50%;
     transform: translateX(-50%); */
-    border: 2px solid blue;
-    background: radial-gradient(ellipse at 160px 140px, #0a0183 0%, #020022 100%);
+    border: 2px solid var(--white);
+    background: linear-gradient(#332828, rgb(48, 48, 68)) ;
     z-index: 20;
     padding: 60px;
     border-radius: 20px;
