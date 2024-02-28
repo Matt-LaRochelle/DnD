@@ -1,0 +1,39 @@
+.map__control-panel button,
+.map__control-panel label,
+.map__control-panel select {
+    margin: 10px auto;
+    display: block;
+}
+.map__control-panel label {
+    text-align: center;
+}
+
+.map-pc-row {
+    display: flex;
+    list-style-type: none;
+    overflow: hidden;
+    overflow-x: scroll;
+    padding: 20px;
+    color: var(--white);
+    border: 2px solid var(--primary-200);
+    border-radius: 10px 10px 10px 10px;
+    background: radial-gradient(ellipse at 30px 50px, transparent, rgba(82, 90, 82, 0.162));
+}
+
+.map-pc-row::-webkit-scrollbar {
+    width: 10px; /* Adjust scrollbar width */
+}
+
+.map-pc-row::-webkit-scrollbar-track {
+    background: transparent; /* Make the track (background) transparent */
+}
+
+.map-pc-row::-webkit-scrollbar-thumb {
+    background: var(--primary-200);
+    border-radius: 50px;
+}
+
+.map-pc-row::-webkit-scrollbar-thumb:hover {
+    background: rgba(191, 68, 68, 0.7); /* Make the thumb darker when hovering over it */
+
+}

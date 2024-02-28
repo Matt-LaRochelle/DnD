@@ -1,4 +1,7 @@
 import './map.css'
+import './controlPanel.css'
+
+import { useState } from 'react'
 
 // Context
 import { useAuthContext } from '../../../hooks/useAuthContext'
@@ -19,6 +22,13 @@ const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordina
     const { npcs } = useNpcsContext()
     const { creatures } = useCreaturesContext()
 
+    const [add, setAdd] = useState(false)
+    const [selectedType, setSelectedType] = useState('pc');
+
+
+    const handleAdd = () => {
+        setAdd(!add)
+    }
 
     // Add a character to the map
     const addCharacter = async (id, type) => {
@@ -76,8 +86,25 @@ const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordina
 
     return (
         <div className="map__control-panel">
+            <h2>Add</h2>
+            <button className="add" onClick={handleAdd}>{add ? "-" : "+"}</button>
+            {add &&
+            <div>
+                {campaigns.dmID === user.id &&
+                <div>
+                    <label>Type:</label>
+                    <select onChange={(e) => setSelectedType(e.target.value)}>
+                        <option value="pc">Player Character</option>
+                        <option value="npc">Non Player Character</option>
+                        <option value="creature">Creature</option>
+                    </select>
+                </div>
+                }
+            
+            {selectedType === "pc" &&
             <div>
                 <h2>Characters</h2>
+                {campaigns.dmID === user.id ?
                 <ul className="map-pc-row">
                     {pcs.map(pc => (
                         <li key={pc._id}>
@@ -86,8 +113,20 @@ const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordina
                         </li>
                     ))}
                 </ul>
+                :
+                <ul className="map-pc-row">
+                    {pcs.filter(pc => pc.userID === user.id).map(pc => (
+                        <li key={pc._id}>
+                            <Avatar image={pc.image} name={pc.name} hideName={true} />
+                            <p className="add" onClick={() => addCharacter(pc._id, "pc")}>+</p>
+                        </li>
+                    ))}
+                </ul>
+                }
             </div>
-            {campaigns.dmID === user.id && 
+            }
+            
+            {selectedType === "npc" && 
             <div>
                 <h2>Non Player Characters</h2>
                 <ul className="map-pc-row">
@@ -100,7 +139,7 @@ const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordina
                 </ul>
             </div>
             }
-            {campaigns.dmID === user.id && 
+            {selectedType === "creature" && 
             <div>
                 <h2>Creatures</h2>
                 <ul className="map-pc-row">
@@ -111,6 +150,8 @@ const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordina
                         </li>
                     ))}
                 </ul>
+            </div>
+            }
             </div>
             }
         </div>
