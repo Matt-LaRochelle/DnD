@@ -256,17 +256,21 @@ const Bento = () => {
 
 
     return (
-        <div className="bento-wrapper">
+        <div className="bento-wrapper" style={{backgroundImage: `url(${campaigns.image})`}}>
             <div className="bento-item1">
-                Title and Description
+                <h2>{campaigns.title}</h2>
+                <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
             </div>
-            <div className="bento-item2">
-                Image
+            <div className="bento-item2" style={{backgroundImage: `url(${campaigns.image})`}}>
+                <h2></h2>
             </div>
             <div className="bento-item3">Player Characters</div>
             <div className="bento-item4">Non Player Characters</div>
             <div className="bento-item5">Creatures</div>
-            <div className="bento-item6">Maps</div>
+            <div className="bento-item6">
+                <h2>Maps</h2>
+                <Maps dm={campaigns.dmID} />
+            </div>
             <div className="bento-item7">Quests</div>
             <div className="bento-item8">User Row</div>
             <div className="bento-item9">Settings</div>
