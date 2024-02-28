@@ -263,7 +263,7 @@ const Campaign = () => {
             :   
                 <div className='loaded'>
                     <Bento />
-                    <h1>{campaigns.title}</h1>
+                    {/* <h1>{campaigns.title}</h1>
                     <div className="campaign__Description">
                         {settings.description && <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>}
                         {settings.image && campaigns.image && <img src={campaigns.image} alt={campaigns.title} />}
@@ -326,7 +326,7 @@ const Campaign = () => {
                     }>
                         <h2 className="campaign__heading">Quests</h2>
                         <Quests dm={campaigns.dmID} />                    
-                    </div>
+                    </div> */}
                 </div>  
             }
         </div>

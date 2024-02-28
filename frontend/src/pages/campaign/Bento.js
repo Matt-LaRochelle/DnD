@@ -20,6 +20,19 @@ import Quests from '../../components/quests/Quests';
 import Loading from '../../components/loading/Loading';
 import CharacterRow from '../../components/characterRow/CharacterRow';
 
+import { FaRegUserCircle } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
+import { TbWorld } from "react-icons/tb";
+import { IoIosSettings } from "react-icons/io";
+import { FaPeopleGroup } from "react-icons/fa6";
+import { LiaMapSolid } from "react-icons/lia";
+import { GiOpenTreasureChest } from "react-icons/gi";
+import { FaRobot } from "react-icons/fa6";
+import { IoIosImages } from "react-icons/io";
+import { FaBookAtlas } from "react-icons/fa6";
+import { GiNewspaper } from "react-icons/gi";
+import { GiSeaCreature } from "react-icons/gi";
+
 
 const Bento = () => {
     const location = useLocation();
@@ -261,19 +274,36 @@ const Bento = () => {
                 <h2>{campaigns.title}</h2>
                 <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
             </div>
-            <div className="bento-item2" style={{backgroundImage: `url(${campaigns.image})`}}>
-                <h2></h2>
+            <div className="bento-item2">
+                <h2>Campaign Artwork</h2>
+                <IoIosImages className="bento-icon" />
             </div>
-            <div className="bento-item3">Player Characters</div>
-            <div className="bento-item4">Non Player Characters</div>
-            <div className="bento-item5">Creatures</div>
-            <div className="bento-item6">
+            <div className="bento-item3" onClick={() => navigate('/maps')}>
                 <h2>Maps</h2>
-                <Maps dm={campaigns.dmID} />
+                <LiaMapSolid className="bento-icon" />
             </div>
-            <div className="bento-item7">Quests</div>
-            <div className="bento-item8">User Row</div>
-            <div className="bento-item9">Settings</div>
+            <div className="bento-item4" onClick={() => navigate('/quests')}>
+            <h2>Quests</h2>
+                <GiOpenTreasureChest className="bento-icon" />
+            </div>
+            <div className="bento-item5" onClick={() => navigate('/creatures')}>
+                <h2>Creatures</h2>
+                <GiSeaCreature className="bento-icon" />
+            </div>
+            <div className="bento-item6" onClick={() => navigate('/characters')}>
+                <h2>Player Characters</h2>
+                <FaPeopleGroup className="bento-icon" />
+            </div>
+            <div className="bento-item7">
+                <h2>Non Player Characters</h2>
+                <FaRobot className="bento-icon" />
+            </div>
+            <div className="bento-item8">
+                <CharacterRow 
+                    dmInfo={dmInfo}
+                    playerInfo={playerInfo}
+                />
+            </div>
         </div>
     )
 }

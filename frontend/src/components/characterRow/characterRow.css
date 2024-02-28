@@ -14,6 +14,7 @@
     text-align: center;
     background: #4d4d4d;
     margin-bottom: 0;
+    font-size: 1.25rem;
 }
 .characterRow__container p {
     color: var(--primary-200);

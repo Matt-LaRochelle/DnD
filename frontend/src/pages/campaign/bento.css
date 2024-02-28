@@ -12,17 +12,28 @@
     padding: 10px;
 }
 
-.bento-wrapper div {
+.bento-wrapper .bento-item1:not(h2),
+.bento-wrapper .bento-item2:not(h2),
+.bento-wrapper .bento-item3:not(h2),
+.bento-wrapper .bento-item4:not(h2),
+.bento-wrapper .bento-item5:not(h2),
+.bento-wrapper .bento-item6:not(h2),
+.bento-wrapper .bento-item7:not(h2),
+.bento-wrapper .bento-item8:not(h2),
+.bento-wrapper .bento-item9:not(h2)
+ {
     border: 2px solid var(--white);
     border-radius: 10px;
     overflow: hidden;
     padding: 8px;
-    background: transparent;
+    background: var(--dark-gradient);
+    transition: 2s;
+    opacity: .7;
     
 }
 
 .bento-wrapper div:hover {
-    background: var(--dark-gradient);
+    opacity: 1;
     cursor: pointer;
     transition: .5s;
 }
@@ -33,10 +44,12 @@
     overflow: hidden;
     height: 100%;
     text-overflow: ellipsis;
+    border: 2px solid red;
 }
 .bento-item2 {
     grid-column: 2 / 4;
     grid-row: 1 / 4;
+    border: 0px solid transparent;
 }
 .bento-item3 {
     grid-column: 4 / 4;
@@ -59,10 +72,10 @@
     grid-row: 4 / 7;
 }
 .bento-item8 {
-    grid-column: 1 / 4;
-    grid-row: 7 / 10;
+    grid-column: 1 / 5;
+    grid-row: 7 / 11;
 }
-.bento-item9 {
-    grid-column: 4 / 5;
-    grid-row: 7 / 10;
+
+.bento-icon {
+    font-size: 3.5rem;
 }
