@@ -15,7 +15,7 @@ form.signup, form.login {
   form.signup a,
   form.login a {
     text-decoration: none;
-    color: var(--primary-800);
+    color: var(--primary-600);
   }
 
   form.signup a:hover,

@@ -56,7 +56,7 @@ const forgotUser = async (req, res) => {
             to: user.email,
             from: 'mattsdevprojects@gmail.com',
             subject: 'Password reset link',
-            html: `<p>Click <a href="https://dnd-kukm.onrender.com/reset-password/${user.resetPasswordToken}">here</a> to reset your password.</p>`,
+            html: `<p>Click <a href="https://classy-kulfi-77ddfa.netlify.app/reset-password/${user.resetPasswordToken}">here</a> to reset your password.</p>`,
           };
 
         // send the email

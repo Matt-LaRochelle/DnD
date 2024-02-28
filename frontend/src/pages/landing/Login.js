@@ -32,7 +32,7 @@ const Login = () => {
                 value={password}
             />
             <p>Forgot your password? <Link to="/forgot">Reset it here</Link></p>
-            <button disabled={isLoading}>Log in</button>
+            <button disabled={isLoading} className="button-primary">Log in</button>
             {error && <div className='error'>{error}</div>}
             {isLoading && 
                     <div className="loading">

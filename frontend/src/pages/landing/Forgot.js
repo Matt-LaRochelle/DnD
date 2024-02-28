@@ -41,7 +41,7 @@ const Forgot = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                 />
-                <button className="form-button" disabled={isLoading}>Send Link</button>
+                <button className="button-primary" disabled={isLoading}>Send Link</button>
                 
                 {error && <div className="error">{error}</div>}
                 {isLoading && 
