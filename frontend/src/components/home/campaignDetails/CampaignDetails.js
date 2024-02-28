@@ -112,7 +112,7 @@ const CampaignDetails = ({ campaign }) => {
 
     return (
         <div key={campaign._id} className="campaignDetails__container">
-            <h2>{campaign.title}</h2>
+            <h2 className="campaignDetails__main-title">{campaign.title}</h2>
             <h3>Description:</h3> 
             <p className="campaingDetails__description" dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
             <div className="campaignDetails__list">
@@ -127,8 +127,8 @@ const CampaignDetails = ({ campaign }) => {
             {dmRole 
                 ?   <div>
                         <span className="material-symbols-outlined button-secondary trash" onClick={handleClick}>delete</span>
-                        <p className="button-primary campaignDetails__id-checker" onClick={giveID}>Check Campaign Room Number</p>
-                        <p className="campaign-details__id" style={{display: showID ? "block" : "none"}}>{campaign._id}</p>
+                        <p id="campaignDetails__id-checker" className="button-primary" onClick={giveID}>Check Campaign Room Number</p>
+                        <p className="campaign-details__id" style={{display: showID ? "inline-block" : "none"}}>{campaign._id}</p>
                     </div>
                 :   <span className="button-secondary" onClick={leaveCampaign}>Leave Campaign</span>
                 }

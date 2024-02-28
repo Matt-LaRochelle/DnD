@@ -1,5 +1,5 @@
 .campaignDetails__container {
-    background: linear-gradient(#332828, rgb(48, 48, 68)) ;
+    background: var(--dark-gradient);
     border: 2px solid #ddd;
     border-radius: 14px;
     margin: 20px auto;
@@ -12,6 +12,8 @@
     margin: 0 0 10px 0;
     font-size: 1.2em;
     color: var(--primary-500);
+  }
+  .campaignDetails__container .campaignDetails__main-title {
     max-width: 80%;
   }
   .campaignDetails__container p {
@@ -69,13 +71,13 @@
     bottom: 0px; */
   }
 
-  .campaignDetails__id-checker {
+  #campaignDetails__id-checker {
     /* position: absolute;
     bottom: 20px;
     right: 20px; */
     font-weight: 500;
     color: var(--primary-800);
-    white-space: wrap;
+    white-space: normal !important;
   }
   .campaignDetails__container .campaign-details__id {
     /* position: absolute;
@@ -96,7 +98,7 @@
       font-size: .7rem;
     }
     .campaignDetails__id-checker {
-      white-space: wrap;
-      max-width: 200px;
+      /* white-space: wrap;
+      max-width: 200px; */
     }
   }

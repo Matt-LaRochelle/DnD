@@ -1,6 +1,6 @@
 .campaignStart__container {
     border: 2px solid var(--white);
-    background: linear-gradient(#332828, rgb(48, 48, 68)) ;
+    background: var(--dark-gradient);
     width: 200px;
     height: max-content;
     border-radius: 20px;
@@ -18,7 +18,7 @@
     left: 50%;
     transform: translateX(-50%); */
     border: 2px solid var(--white);
-    background: linear-gradient(#332828, rgb(48, 48, 68)) ;
+    background: var(--dark-gradient);
     z-index: 20;
     padding: 60px;
     border-radius: 20px;

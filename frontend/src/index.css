@@ -28,6 +28,7 @@
   --error-800: #9c0f3a;
   --black: #222;
   --white: #eee;
+  --dark-gradient: linear-gradient(#332828, rgb(48, 48, 68)) ;
   --clear: 4px 4px 10px 0 rgba(0, 0, 0, 0.74);
 }
 body {
@@ -111,14 +112,14 @@ input.error {
 
 
 .button-primary {
-  display: block;
+  display: inline-block;
   text-decoration: none;
   color: var(--primary-800);
   border: 2px solid var(--primary-800);
   border-top: 2px solid var(--primary-600);
   border-left: 2px solid var(--primary-600);
   padding: 8px 20px;
-  width: max-content;
+  /* width: max-content; */
   font-weight: 900;
   background: linear-gradient(to right, #dffaf0, #d5f8f3);
   margin: 20px 0;
