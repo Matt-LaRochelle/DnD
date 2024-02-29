@@ -26,6 +26,8 @@ const AddQuest = () => {
     const { user } = useAuthContext()
     const navigate = useNavigate()
     const location = useLocation()
+    const path = location.pathname;
+    const slashCount = (path.match(/\//g) || []).length;
 
 
     console.log(location)
@@ -34,12 +36,12 @@ const AddQuest = () => {
     // for main: location.pathname = "quest/add-main"
 
     useEffect(() => {
-        if (location.pathname === "/quest/add-main") {
+        if (path === "/quest/add-main") {
             setFormState(prevState => ({
                 ...prevState,
                 type: 'Main'
             }))
-        } else if (location.pathname === "/quest/add-side") {
+        } else if (path === "/quest/add-side") {
             setFormState(prevState => ({
                 ...prevState,
                 type: 'Side'
@@ -147,11 +149,13 @@ const AddQuest = () => {
             <label>Return To</label>
             <input type="text" id="returnTo" onChange={handleChange}></input>
 
-            <label>Hide Quest</label>
+            {slashCount < 3 && <label>Hide Quest</label>}
+            {slashCount < 3 && 
             <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
                 <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
                 <span className="slider-round"></span>
             </label>
+            }
 
             <button className="button-primary" type="submit">Add Quest</button>
             {error && <div className="error" >{error}</div>}

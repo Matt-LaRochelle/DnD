@@ -28,6 +28,7 @@
   --error-800: #9c0f3a;
   --black: #222;
   --white: #eee;
+  --gray: #bbb;
   --dark-gradient: linear-gradient(#332828, rgb(48, 48, 68)) ;
   --clear: 4px 4px 10px 0 rgba(0, 0, 0, 0.74);
 }
@@ -42,7 +43,7 @@ body {
 }
 
 .pages{
-  max-width: 1000px;
+  max-width: 1600px;
   padding: 20px;
   margin: 0 auto;
   color: #e8e8e8;

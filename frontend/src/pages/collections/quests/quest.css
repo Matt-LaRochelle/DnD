@@ -1,9 +1,9 @@
 .quest-grid {
     display: grid;
     grid-template-columns: 80px 1fr 1fr;
-    gap: 1rem;
+    gap: 3rem;
     margin-top: 1rem;
-    max-width: 960px;
+    max-width: 1260px;
     background: var(--dark-gradient);
     height: 500px;
     border-radius: 12px;
@@ -59,3 +59,78 @@
 .quest img {
     height: 80px;
 }
+
+.quest-hidden {
+    border: 2px solid purple;
+    background: rgba(77, 12, 77, 0.216);
+    position: relative;
+}
+.quest-hidden::after {
+    content: "Hidden";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: var(--white);
+    background: black;
+    border: 2px solid var(--white);
+    padding: 4px 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.quest-column3 {
+    height: 100%;
+    /* background: green; */
+    overflow-y: scroll;
+}
+.individual-quest {
+
+    /* background: rgba(128, 0, 128, 0.785); */
+    min-height: 100%;
+}
+.individual-quest img {
+    height: 240px;
+    width: 100%;
+    object-fit: cover;
+    box-shadow: inset 5px 0 15px 5px rgba(0, 0, 0, 0.753);
+}
+.quest-content {
+    padding: 10px;
+}
+.individual-quest h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.given-return {
+    display: flex;
+    justify-content: space-between;
+    color: var(--gray);
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+.given-return span {
+    color: var(--primary-500);
+}
+.given-return hr {
+    width: 500px; /* This will make the hr take the full width of its container */
+    height: 1px; /* This will make the hr very thin, like a line */
+    border: none; /* This will remove the default border */
+    background-color: var(--gray); /* This will make the hr black */
+    margin-top: 12px;
+}
+.returnTo {
+    text-align: right;
+}
+.quest-complete {
+    color: gold;
+    font-size: 4rem;
+    text-align: center;
+}
+/* .given-return p,
+.given-return hr {
+    display: block;
+} */
