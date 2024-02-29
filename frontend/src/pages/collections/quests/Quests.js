@@ -67,8 +67,14 @@ const Quests = () => {
         navigate(`/quest/${id}`);
     }
 
-    const handleClick = () => {
-        navigate(`/quest/add`);
+    const handleClickMain = () => {
+        navigate(`/quest/add-main`);
+    }
+    const handleClickSide = () => {
+        navigate(`/quest/add-side`);
+    }
+    const handleClickPersonal = () => {
+        navigate(`/quest/add/${user.id}`);
     }
 
     return (
@@ -91,7 +97,7 @@ const Quests = () => {
                         </div>
                     ))}
                     {campaigns.dmID === user.id && 
-                    <div className="quest" onClick={handleClick}>
+                    <div className="quest" onClick={handleClickMain}>
                         <h3>Add Main Quest</h3>
                     </div>}
                     <h2><GoGoal className="quest-icon" /> Side Quests</h2>
@@ -102,7 +108,7 @@ const Quests = () => {
                         </div>
                     ))}
                     {campaigns.dmID === user.id && 
-                    <div className="quest" onClick={handleClick}>
+                    <div className="quest" onClick={handleClickSide}>
                         <h3>Add Side Quest</h3>
                     </div>}
                     <h2><GiAchievement className="quest-icon" /> Personal Quests</h2>
@@ -113,7 +119,7 @@ const Quests = () => {
                         </div>
                     ))}
                     {campaigns.dmID !== user.id && 
-                    <div className="quest" onClick={handleClick}>
+                    <div className="quest" onClick={handleClickPersonal}>
                         <h3>Add Personal Quest</h3>
                     </div>}
                 </div>

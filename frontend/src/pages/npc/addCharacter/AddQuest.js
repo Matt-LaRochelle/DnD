@@ -2,7 +2,7 @@ import './add.css'
 import { useEffect, useState } from 'react'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import Editor from '../../../components/editor/Editor'
 
@@ -12,6 +12,7 @@ const AddQuest = () => {
         description: '',
         image: '',
         type: 'Main',
+        user: '',
         givenBy: '',
         returnTo: '',
         hidden: false
@@ -24,6 +25,33 @@ const AddQuest = () => {
     const { campaigns } = useCampaignsContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
+    const location = useLocation()
+
+
+    console.log(location)
+    // for personal: location.pathname = "/quest/add/651d9c4be4bd437164752a68"
+    // for side: location.pathname = "quest/add-side"
+    // for main: location.pathname = "quest/add-main"
+
+    useEffect(() => {
+        if (location.pathname === "/quest/add-main") {
+            setFormState(prevState => ({
+                ...prevState,
+                type: 'Main'
+            }))
+        } else if (location.pathname === "/quest/add-side") {
+            setFormState(prevState => ({
+                ...prevState,
+                type: 'Side'
+            }))
+        } else {
+            setFormState(prevState => ({
+                ...prevState,
+                type: 'Personal',
+                user: user.id
+            }))
+        }
+    }, [])
 
     useEffect(() => {
         console.log(formState)
@@ -77,6 +105,7 @@ const AddQuest = () => {
                 description: '',
                 image: '',
                 type: '',
+                user: '',
                 givenBy: '',
                 returnTo: '',
                 hidden: false
@@ -104,13 +133,13 @@ const AddQuest = () => {
             <label>Image</label>
             <input type="text" id="image" onChange={handleChange}></input>
 
-            <label>Type</label>
+            {/* <label>Type</label>
                 <select id="type" onChange={handleChange}>
                     <option value="" disabled>Select a type</option>
                     <option value="Main">Main Quest</option>
                     <option value="Side">Side Quest</option>
                     <option value="Personal">Personal Quest</option>
-                </select>
+                </select> */}
 
             <label>Given By</label>
             <input type="text" id="givenBy" onChange={handleChange}></input>

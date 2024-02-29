@@ -130,7 +130,15 @@ function App() {
               element={user ? <EditCreature /> : <Navigate to="/login" />}
             />
             <Route 
-              path="/quest/add"
+              path="/quest/add-main"
+              element={user ? <AddQuest /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/quest/add-side"
+              element={user ? <AddQuest /> : <Navigate to="/login" />}
+            />
+            <Route 
+              path="/quest/add/:id"
               element={user ? <AddQuest /> : <Navigate to="/login" />}
             />
             <Route 

@@ -16,6 +16,9 @@ const questSchema = new Schema({
     type: {
         type: String,
     },
+    user: {
+        type: String,
+    },
     givenBy: {
         type: String,
     },
