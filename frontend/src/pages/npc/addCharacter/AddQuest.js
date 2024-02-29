@@ -109,7 +109,7 @@ const AddQuest = () => {
                     <option value="" disabled>Select a type</option>
                     <option value="Main">Main Quest</option>
                     <option value="Side">Side Quest</option>
-                    <option value="Neutral">Personal Quest</option>
+                    <option value="Personal">Personal Quest</option>
                 </select>
 
             <label>Given By</label>
