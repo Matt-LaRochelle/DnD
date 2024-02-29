@@ -18,7 +18,8 @@ const EditQuest = () => {
         type: '',
         givenBy: '',
         returnTo: '',
-        hidden: false
+        hidden: false,
+        complete: false
     });
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields ] = useState([])
@@ -73,6 +74,7 @@ const EditQuest = () => {
                     type: '',
                     givenBy: '',
                     returnTo: '',
+                    complete: questInfo.complete,
                     hidden: questInfo.hidden
                 })
             }
@@ -221,6 +223,13 @@ const EditQuest = () => {
                 {formState.returnTo && <button onClick={submit} className="button-primary">Save</button>}
             </div>
             }
+            <label>Complete</label>
+            <label className="slider" style={{backgroundColor: formState.complete ? "var(--primary-800)" : "#ccc"}}>
+                <input type="checkbox" id="complete" checked={formState.complete} onChange={handleChange} className="slider-checkbox" />
+                <span className="slider-round"></span>
+            </label>
+                {formState.complete !== quests.complete && <button onClick={submit} className="button-primary">Save</button>}
+                 
             <label>Hide Quest</label>
             <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
                 <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />

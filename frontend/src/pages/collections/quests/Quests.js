@@ -174,7 +174,7 @@ const Quests = () => {
                             {quest.type === "Personal" && <h2><GiAchievement className="quest-icon" /> {quest.title}</h2>}
                             <div className="given-return"><p>Given by <span>{quest.givenBy}</span></p><hr></hr><p className="returnTo">Return to <span>{quest.returnTo}</span></p></div>
                             <p dangerouslySetInnerHTML={{__html: questDescription}}></p>
-                            <h3 className="quest-complete">Complete</h3>
+                            {quest.complete && <h3 className="quest-complete">Complete</h3>}
                             {dmAccessQuest && 
                                 <button className="button-primary" onClick={() => navigate(`/quest/edit/${quest._id}`)}>Edit</button>
                             }

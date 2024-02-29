@@ -28,6 +28,9 @@ const questSchema = new Schema({
     hidden: {
         type: Boolean,
     },
+    complete: {
+        type: Boolean,
+    },
     campaignID: {
         type: String,
         required: true

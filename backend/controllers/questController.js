@@ -86,6 +86,7 @@ const createQuest = async (req, res) => {
             givenBy, 
             returnTo, 
             hidden, 
+            complete: false,
             campaignID
         })
         res.status(200).json(quest);
