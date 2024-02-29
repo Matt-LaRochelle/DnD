@@ -1,0 +1,61 @@
+.quest-grid {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+    max-width: 960px;
+    background: var(--dark-gradient);
+    height: 500px;
+    border-radius: 12px;
+    color: var(--white);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.quest-column1 {
+    height: 100%;
+    background: rgba(133, 133, 133, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.quest-column1 .quest-icon {
+    font-size: 3rem;
+    border: 2px solid var(--white);
+    border-radius: 12px;
+    padding: 5px;
+}
+.quest-column2 {
+    overflow-y: scroll;
+    padding: 12px;
+}
+.quest {
+    border: 2px solid var(--primary-300);
+    margin-bottom: 20px;
+    padding: 8px 20px;
+    border-radius: 6px;
+    transition: .4s;
+    display: flex;
+}
+
+
+.quest:hover {
+    background: rgba(106, 106, 106, 0.966);
+    cursor: pointer;
+}
+.quest h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+.quest span {
+    display: inline;
+}
+.quest img {
+    height: 80px;
+}

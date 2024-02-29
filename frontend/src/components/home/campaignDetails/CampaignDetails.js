@@ -113,8 +113,8 @@ const CampaignDetails = ({ campaign }) => {
     return (
         <div key={campaign._id} className="campaignDetails__container">
             <h2 className="campaignDetails__main-title">{campaign.title}</h2>
-            <h3>Description:</h3> 
-            <p className="campaingDetails__description" dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
+            {/* <h3>Description:</h3> 
+            <p className="campaingDetails__description" dangerouslySetInnerHTML={{__html: campaignDescription}}></p> */}
             <div className="campaignDetails__list">
                 <CharacterRow 
                     playerInfo={playerInfo}
