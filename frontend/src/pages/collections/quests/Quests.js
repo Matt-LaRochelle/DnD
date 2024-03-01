@@ -23,7 +23,7 @@ const Quests = () => {
 
     const [loading, setLoading] = useState(true)
 
-    const [quest, setQuest] = useState({})
+    const [quest, setQuest] = useState("")
     const [questDescription, setQuestDescription] = useState("")
 
     const [dmAccessQuest, setDmAccessQuest] = useState(false)
@@ -126,7 +126,7 @@ const Quests = () => {
                 </div>
                 <div className="quest-column2">
                     
-                    <h2><GiStairsGoal className="quest-icon" /> Main Quests</h2>
+                    <h2><GiStairsGoal className="quest-icon" /> Main Quests <hr></hr></h2>
                     {quests.filter(quest => quest.type === "Main").map((quest) => (
                         <div className={quest.hidden ? "quest quest-hidden" : "quest"} onClick={() => moreInfo(quest._id)} key={quest._id} style={{ display: quest.hidden && user.id !== campaigns.dmID && "none"}}>
                             <h3>
@@ -140,7 +140,7 @@ const Quests = () => {
                         <h3>Add Main Quest</h3>
                     </div>}
                    
-                    <h2><GoGoal className="quest-icon" /> Side Quests</h2>
+                    <h2><GoGoal className="quest-icon" /> Side Quests <hr></hr></h2>
                     {quests.filter(quest => quest.type === "Side").map((quest) => (
                         <div className={quest.hidden ? "quest quest-hidden" : "quest"} onClick={() => moreInfo(quest._id)} key={quest._id} style={{ display: quest.hidden && user.id !== campaigns.dmID && "none"}}>
                             <h3>{quest.title}</h3>
@@ -152,7 +152,7 @@ const Quests = () => {
                         <h3>Add Side Quest</h3>
                     </div>}
                     
-                    <h2><GiAchievement className="quest-icon" /> Personal Quests</h2>
+                    <h2><GiAchievement className="quest-icon" /> Personal Quests <hr></hr></h2>
                     {quests.filter(quest => quest.type === "Personal").map((quest) => (
                         <div className={quest.hidden ? "quest quest-hidden" : "quest"} onClick={() => moreInfo(quest._id)} key={quest._id} style={{ display: quest.hidden && user.id !== campaigns.dmID && "none"}}>
                             <h3>{quest.title}</h3>
@@ -165,7 +165,7 @@ const Quests = () => {
                     </div>}
                 </div>
                 <div className="quest-column3">
-                    {quest && 
+                    {quest ? 
                     <div className="individual-quest">
                         <img src={quest.image} alt={quest.title} />
                         <div className="quest-content">
@@ -180,6 +180,7 @@ const Quests = () => {
                             }
                         </div>
                     </div>
+                    : <h2>Select a quest to view more information</h2>
                     }
                 </div>
             </div>}

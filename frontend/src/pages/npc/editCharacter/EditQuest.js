@@ -15,7 +15,6 @@ const EditQuest = () => {
         title: '',
         description: '',
         image: '',
-        type: '',
         givenBy: '',
         returnTo: '',
         hidden: false,
@@ -28,7 +27,6 @@ const EditQuest = () => {
     const [eTitle, setETitle] = useState(false)
     const [eDescription, setEDescription] = useState(false)
     const [eImage, setEImage] = useState(false)
-    const [eType, setEType] = useState(false)
     const [eGivenBy, setEGivenBy] = useState(false)
     const [eReturnTo, setEReturnTo] = useState(false)
 
@@ -71,7 +69,7 @@ const EditQuest = () => {
                     title: '',
                     description: '',
                     image: '',
-                    type: '',
+                    type: questInfo.type,
                     givenBy: '',
                     returnTo: '',
                     complete: questInfo.complete,
@@ -185,7 +183,7 @@ const EditQuest = () => {
             </div>
             }
 
-            <label>Type <FaEdit onClick={() => setEType(!eType)}/></label>
+            {/* <label>Type <FaEdit onClick={() => setEType(!eType)}/></label>
             <p>{quests.type}</p>
             {eType &&
             <div>
@@ -196,7 +194,7 @@ const EditQuest = () => {
                 </select>
                 {formState.type && <button onClick={submit} className="button-primary">Save</button>}
             </div>
-            }
+            } */}
             
             <label>Given by <FaEdit onClick={() => setEGivenBy(!eGivenBy)}/></label>
             <p>{quests.givenBy}</p>

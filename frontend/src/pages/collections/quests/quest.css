@@ -32,6 +32,24 @@
     overflow-y: scroll;
     padding: 12px;
 }
+
+.quest-column2 h2 {
+    display: flex;
+    align-items: center;
+    color: var(--gray);
+    white-space: nowrap;
+}
+.quest-column2 .quest-icon {
+    font-size: 3rem;
+    margin-right: 10px;
+}
+.quest-column2 hr {
+    width: 100%; /* This will make the hr take the full width of its container */
+    height: 1px; /* This will make the hr very thin, like a line */
+    border: none; /* This will remove the default border */
+    background-color: var(--gray); /* This will make the hr black */
+    margin-left: 10px;
+}
 .quest {
     border: 2px solid var(--primary-300);
     margin-bottom: 20px;
@@ -52,6 +70,7 @@
     align-items: center;
     gap: 12px;
     width: 100%;
+    color: var(--primary-500);
 }
 .quest span {
     display: inline;
@@ -96,10 +115,11 @@
     height: 240px;
     width: 100%;
     object-fit: cover;
-    box-shadow: inset 5px 0 15px 5px rgba(0, 0, 0, 0.753);
+    border: 1px solid var(--white);
 }
 .quest-content {
     padding: 10px;
+    border-left: 1px dotted var(--white);
 }
 .individual-quest h2 {
     font-size: 1.5rem;
