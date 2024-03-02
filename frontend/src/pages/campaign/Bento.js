@@ -290,11 +290,11 @@ const Bento = () => {
                 <h2>Creatures</h2>
                 <GiSeaCreature className="bento-icon" />
             </div>
-            <div className="bento-item6" onClick={() => navigate('/characters')}>
+            <div className="bento-item6" onClick={() => navigate('/player-characters')}>
                 <h2>Player Characters</h2>
                 <FaPeopleGroup className="bento-icon" />
             </div>
-            <div className="bento-item7">
+            <div className="bento-item7" onClick={() => navigate('/non-player-characters')}>
                 <h2>Non Player Characters</h2>
                 <FaRobot className="bento-icon" />
             </div>

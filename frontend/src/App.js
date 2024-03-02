@@ -29,7 +29,8 @@ import EditCreature from './pages/npc/editCharacter/EditCreature'
 import EditNPC from './pages/npc/editCharacter/EditNPC'
 import EditPC from './pages/npc/editCharacter/EditPC'
 import Background from './components/background/Background';
-import Characters from './pages/collections/characters/Characters';
+import PlayerCharacters from './pages/collections/characters/PlayerCharacters';
+import NonPlayerCharacters from './pages/collections/characters/NonPlayerCharacters';
 import Creatures from './pages/collections/creatures/Creatures';
 import Maps from './pages/collections/maps/Maps';
 import Quests from './pages/collections/quests/Quests';
@@ -66,8 +67,12 @@ function App() {
               element={user ? <EditCampaign /> : <Navigate to="/login" />}
             />
             <Route
-              path="/characters"
-              element={user ? <Characters /> : <Navigate to="/login" />}
+              path="/player-characters"
+              element={user ? <PlayerCharacters /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/non-player-characters"
+              element={user ? <NonPlayerCharacters /> : <Navigate to="/login" />}
             />
             <Route
               path="/creatures"

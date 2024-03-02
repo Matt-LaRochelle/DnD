@@ -7,7 +7,7 @@ import { usePcsContext } from '../../../hooks/usePcsContext'
 import { useNpcsContext } from '../../../hooks/useNpcsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 
-const Characters = () => {
+const PlayerCharacters = () => {
     const { user } = useAuthContext()
     const {campaigns, dispatch} = useCampaignsContext()
     const { pcs, dispatch: pcsDispatch } = usePcsContext()
@@ -123,7 +123,6 @@ const Characters = () => {
 
     return (
         <div className="characters__container glass">
-            <h1>Characters</h1>
             <h2>Player Characters</h2>
             <div className="characters__flexy">
                 {!loading && pcs.filter((pc) => {
@@ -146,25 +145,8 @@ const Characters = () => {
                     <p onClick={handlePcClick} className='add'>+</p>
                 </div>
             </div>
-            <h2>Non Player Characters</h2>
-            <div className="characters__flexy">
-            {!loading && npcs.map((npc) => (
-                <div className={npc.hidden ? "npc npc-hidden" : "npc"} key={npc._id} style={{ display: npc.hidden && user.id !== campaigns.dmID && "none"}}>
-                <h3>{npc.name}</h3>
-                    <img src={npc.image} alt={npc.name} />
-                    <button className='button-primary' onClick={() => moreNpcInfo(npc._id)}>More Info</button>
-                    {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteNPC(npc._id)}>Delete</button>}
-                </div>
-                ))}
-            {campaigns.dmID === user.id && 
-            <div className="npc" >
-                <h3>Add NPC</h3>
-                <img src="https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg=" alt="Add NPC" />
-                <p onClick={handleNpcClick} className='add'>+</p>
-            </div>}
-            </div>
         </div>
     )
 }
 
-export default Characters
+export default PlayerCharacters
