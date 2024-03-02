@@ -11,7 +11,6 @@ export const useCampaigns = () => {
     const campaigns = async () => {
         if (!user) return
 
-        console.log("campaigns hook started")
         setIsLoading(true)
         setError(null)
 

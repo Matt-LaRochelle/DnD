@@ -8,7 +8,6 @@ const Background = () => {
     const [background, setBackground] = useState(null)
 
     useEffect(() => {
-        console.log('Background running')
         // Check if there is a key value pair for backgroundImage inside of the user object
         if (user && user.backgroundImage) {
             setBackground(user.backgroundImage)
