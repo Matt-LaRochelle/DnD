@@ -4,7 +4,7 @@ import { useAuthContext } from './useAuthContext'
 
 export const useCampaigns = () => {
     const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
     const { dispatch } = useCampaignsContext()
     const { user } = useAuthContext()
 
