@@ -1,4 +1,4 @@
-.start {
+.home__container {
     padding: 30px;
     background: #8ba1a172;
     backdrop-filter: blur(16px);
@@ -8,18 +8,18 @@
     border: 1px solid var(--white);
 }
 
-.start__add {
+.home__add {
     display: flex;
     justify-content: space-around;
     margin: 20px 0 60px;
 }
 
-.start-title {
+.home__title {
     margin-top: 80px;
 }
 
 @media screen and (max-width: 600px) {
-    .start__add {
+    .home__add {
         flex-direction: column;
         justify-content: space-between;
         align-items: center;

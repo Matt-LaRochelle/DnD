@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import './home.css'
+
+// Hooks
+import { useCampaigns } from '../../hooks/useCampaigns'
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
-import './start.css'
 
-import { useCampaigns } from '../../hooks/useCampaigns'
-
-// components
+// Components
 import CampaignDetails from '../../components/home/campaignDetails/CampaignDetails'
 import CampaignStart from '../../components/home/campaignStart/CampaignStart'
 import CampaignJoin from '../../components/home/campaignJoin/CampaignJoin'
@@ -21,13 +22,13 @@ const Start = () => {
 
 
     return (
-        <div className="start">
-            <div className="start__add">
+        <div className="home__container">
+            <div className="home__add">
                 <CampaignStart />
                 <CampaignJoin />
             </div>
-            <h3 className='start-title'>Campaigns you DM:</h3>
-            <div className='campaigns'>
+            <h3 className='home__title'>Campaigns you DM:</h3>
+            <div>
                 {loading 
                 ?   <p>Loading...</p>
                 // Filter the campaigns to show only the ones where the user is the DM
@@ -37,8 +38,8 @@ const Start = () => {
                 }
                 {!loading && campaigns && campaigns.filter(campaign => campaign.dmID === user.id).length === 0 && <p>You are not a DM for any campaigns</p>}
             </div>
-            <h3 className='start-title'>Campaigns you play in:</h3>
-            <div className='campaigns'>
+            <h3 className='home__title'>Campaigns you play in:</h3>
+            <div>
                 {loading 
                 ?   <p>Loading...</p>
                 // Filter the campaigns to show only the ones where the user is a player
