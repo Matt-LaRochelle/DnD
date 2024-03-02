@@ -3,40 +3,20 @@ import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import './start.css'
 
+import { useCampaigns } from '../../hooks/useCampaigns'
+
 // components
 import CampaignDetails from '../../components/home/campaignDetails/CampaignDetails'
 import CampaignStart from '../../components/home/campaignStart/CampaignStart'
 import CampaignJoin from '../../components/home/campaignJoin/CampaignJoin'
 
 const Start = () => {
-    // Can I make sure that loading is set to true when the component mounts?
-    const [loading, setLoading] = useState(true)
-    const {campaigns, dispatch} = useCampaignsContext() 
+    const { campaigns } = useCampaignsContext() 
     const { user } = useAuthContext()
-
-
-
+    const { campaigns: fetchCampaigns, loading } = useCampaigns()
 
     useEffect(() => {
-        // Fetch the campaigns which this user is a DM or Player for
-        const fetchUserCampaignList = async () => {
-            setLoading(true);
-            const response = await fetch('https://dnd-kukm.onrender.com/api/campaign/', {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const list = await response.json()
-
-            if (response.ok) {
-                dispatch({type: 'SET_CAMPAIGNS', payload: list})
-                setLoading(false)
-            }
-        }
-
-        if (user) {
-            fetchUserCampaignList()
-        }
+        fetchCampaigns()
     }, [user])
 
 
