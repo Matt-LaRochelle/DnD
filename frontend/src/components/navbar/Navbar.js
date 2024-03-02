@@ -17,6 +17,7 @@ import { IoIosSettings } from "react-icons/io";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { LiaMapSolid } from "react-icons/lia";
 import { GiOpenTreasureChest } from "react-icons/gi";
+import { FaRobot } from "react-icons/fa6";
 import { FaBookAtlas } from "react-icons/fa6";
 import { GiNewspaper } from "react-icons/gi";
 import { GiSeaCreature } from "react-icons/gi";
@@ -83,7 +84,8 @@ const Navbar = () => {
                                     <>
                                         <li onClick={() => setNav(!nav)}><Link to={`/campaign/${campaigns?._id}`}><TbWorld className="nav-icon" />Campaign</Link></li>
                                         <li onClick={() => setNav(!nav)}><Link to="/campaign-settings"><IoIosSettings className="nav-icon" />Settings</Link></li>
-                                        <li onClick={() => setNav(!nav)}><Link to='/characters'><FaPeopleGroup className="nav-icon" />Characters</Link></li>
+                                        <li onClick={() => setNav(!nav)}><Link to='/player-characters'><FaPeopleGroup className="nav-icon" />Player Characters</Link></li>
+                                        <li onClick={() => setNav(!nav)}><Link to='/non-player-characters'><FaRobot className="nav-icon" />Non Player Characters</Link></li>
                                         <li onClick={() => setNav(!nav)}><Link to='/maps'><LiaMapSolid className="nav-icon" />Maps</Link></li>
                                         <li onClick={() => setNav(!nav)}><Link to='/quests'><GiOpenTreasureChest className="nav-icon" />Quests</Link></li>
                                         <li onClick={() => setNav(!nav)}><Link to='/creatures'><GiSeaCreature className="nav-icon" />Creatures</Link></li>

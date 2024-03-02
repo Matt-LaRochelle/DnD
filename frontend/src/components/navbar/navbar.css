@@ -39,6 +39,10 @@ header {
     /* animation: spin 5s linear infinite; */
 }
 
+#small-menu-right img:hover {
+    animation: spin 7s linear infinite;
+}
+
 .navbar__title {
     display: flex;
     align-items: center;
@@ -111,13 +115,10 @@ nav button {
         display: flex;
         gap: 25px;
     }
-    #small-menu-right img {
+    #small-menu-right a img {
         width: 50px;
         height: 50px;
         margin: 0;
-    }
-    #small-menu-right img:hover {
-        animation: spin 7s linear infinite;
     }
     .menu-icon {
         display: block;
@@ -153,7 +154,7 @@ nav button {
         height: 90vh;
     }
     .nav-menu ul li {
-        width: 170px;
+        width: 250px;
     }
     .menu-icon:hover {
         background: var(--white);
