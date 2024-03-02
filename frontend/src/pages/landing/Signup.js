@@ -1,7 +1,11 @@
 import { useState } from 'react'
-import { useSignup } from '../../hooks/useSignup'
-import RingLoader from "react-spinners/RingLoader";
 import './landing.css'
+
+// Hooks
+import { useSignup } from '../../hooks/useSignup'
+
+// Components
+import LoginLoading from '../../components/loading/LoginLoading';
 
 const Signup = () => {
     const [email, setEmail] = useState('')
@@ -41,11 +45,7 @@ const Signup = () => {
             <button className="button-primary" disabled={isLoading}>Sign up</button>
             {error && <div className="error">{error}</div>}
             {isLoading && 
-                    <div className="loading">
-                        <p>Fetching data from server...</p>
-                        <p>This process tends to take 5-60 seconds</p>
-                        <RingLoader color="#1aac83" />
-                    </div>}
+                    <LoginLoading />}
         </form>
     )
 }

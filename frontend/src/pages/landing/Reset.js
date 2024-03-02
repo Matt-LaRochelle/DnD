@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import RingLoader from "react-spinners/RingLoader";
 import './landing.css'
+
+// Components
+import LoginLoading from '../../components/loading/LoginLoading';
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -81,11 +83,7 @@ const ResetPassword = () => {
           <button className="button-primary" disabled={isLoading} type="submit">Reset Password</button>
           {error && <div className="error">{error}</div>}
             {isLoading && 
-                <div className="loading">
-                    <p>Fetching data from server...</p>
-                    <p>This process tends to take 5-60 seconds</p>
-                    <RingLoader color="#36d7b7" />
-                </div>}
+                <LoginLoading />}
         </form> : <div className="good-response">Password has been reset!</div> }
       </div> }
     </div>
