@@ -8,6 +8,7 @@ import { useQuestsContext } from '../../../hooks/useQuestsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 
 import Loading from '../../../components/loading/Loading'
+import Avatar from '../../../components/avatar/Avatar'
 
 import { GiStairsGoal } from "react-icons/gi";
 import { GoGoal } from "react-icons/go";
@@ -27,6 +28,9 @@ const Quests = () => {
     const [questDescription, setQuestDescription] = useState("")
 
     const [dmAccessQuest, setDmAccessQuest] = useState(false)
+
+    const [playerInfo, setPlayerInfo] = useState([])
+    const [dmInfo, setDmInfo] = useState({})
 
 
 
@@ -115,12 +119,35 @@ const Quests = () => {
         navigate(`/quest/add/${user.id}`);
     }
 
+
+
+    // Get all users and dm info for the campaign
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/user/campaign/' + campaigns._id, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+            const json = await response.json()
+
+            if (response.ok) {
+                setPlayerInfo(json.users)
+                setDmInfo(json.dm)
+            }
+        }
+        if (user) {
+            fetchUsers()
+        }
+    
+    }, [user])
+    
     return (
         <main className="characters__container glass">
             {loading ? <Loading /> : 
             <div className="quest-grid">
                 <div className="quest-column1">
-                    <GiStairsGoal className="quest-icon" />
+                    <GiStairsGoal className="quest-icon" onClick={() => console.log(playerInfo)} />
                     <GoGoal className="quest-icon" />
                     <GiAchievement className="quest-icon" />
                 </div>
@@ -153,7 +180,7 @@ const Quests = () => {
                     </div>}
                     
                     <h2><GiAchievement className="quest-icon" /> Personal Quests <hr></hr></h2>
-                    {quests.filter(quest => quest.type === "Personal").map((quest) => (
+                    {quests.filter(quest => quest.type === "Personal" && (campaigns.dmID === user.id || user.id === quest.user)).map((quest) => (
                         <div className={quest.hidden ? "quest quest-hidden" : "quest"} onClick={() => moreInfo(quest._id)} key={quest._id} style={{ display: quest.hidden && user.id !== campaigns.dmID && "none"}}>
                             <h3>{quest.title}</h3>
                             {campaigns.dmID === user.id && <span className="material-symbols-outlined button-secondary trash" onClick={() => deleteQuest(quest._id)}>delete</span>}
@@ -177,6 +204,14 @@ const Quests = () => {
                             {quest.complete && <h3 className="quest-complete">Complete</h3>}
                             {dmAccessQuest && 
                                 <button className="button-primary" onClick={() => navigate(`/quest/edit/${quest._id}`)}>Edit</button>
+                            }
+                            {
+                                playerInfo.find(player => player.id === quest.user) &&
+                                <Avatar
+                                    image={playerInfo.find(player => player.id === quest.user).image}
+                                    name={playerInfo.find(player => player.id === quest.user).username}
+                                    hideName={false} 
+                                />
                             }
                         </div>
                     </div>

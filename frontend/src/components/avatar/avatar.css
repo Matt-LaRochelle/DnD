@@ -1,9 +1,9 @@
-.avatar__container {
+#avatar__container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .avatar__container img {
+  #avatar__container img {
     width: 100px;
     height: 100px;
     margin: 10px;
@@ -11,6 +11,6 @@
     border: 2px solid var(--primary-500);
     object-fit: cover;
   }
-  .avatar__container p {
+  #avatar__container p {
     font-weight: 700;
   }
