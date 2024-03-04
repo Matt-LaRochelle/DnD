@@ -267,8 +267,8 @@ const Bento = () => {
 
 
     return (
-        <div className="bento-wrapper" style={{backgroundImage: `url(${campaigns.image})`}}>
-            <div className="bento-item1">
+        <div className="bento-wrapper" style={{background: `url(${campaigns.image}) center / cover no-repeat`}}>
+            <div className="bento-item1" onClick={() => navigate('/campaign')}>
                 <h2>{campaigns.title}</h2>
                 <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
             </div>

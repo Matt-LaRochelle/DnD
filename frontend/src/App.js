@@ -15,6 +15,7 @@ import ResetPassword from './pages/landing/Reset'
 import Home from './pages/home/Home'
 import Settings from './pages/settings/Settings'
 import Campaign from './pages/campaign/Campaign'
+import CampaignDescription from './pages/campaign/CampaignDescription'
 import EditCampaign from './pages/campaign/EditCampaign'
 import CampaignSettings from './pages/settings/CampaignSettings';
 
@@ -57,6 +58,10 @@ function App() {
             <Route 
               path="/"
               element={user ? <Home /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/campaign"
+              element={user ? <CampaignDescription /> : <Navigate to="/login" />}
             />
             <Route 
               path="/settings"
