@@ -11,9 +11,6 @@ import { useCreaturesContext } from '../../hooks/useCreaturesContext';
 import { useQuestsContext } from '../../hooks/useQuestsContext';
 import { useMapsContext } from '../../hooks/useMapsContext';
 
-// 3rd Party
-import DOMPurify from 'dompurify'
-
 // Components
 import Maps from '../../components/maps/Maps';
 import Npcs from '../../components/npcs/Npcs';

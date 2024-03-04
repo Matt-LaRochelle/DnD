@@ -1,13 +1,13 @@
 import './character.css'
-
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+
+// Hooks
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 
+// Components
 import Loading from '../../../components/loading/Loading'
-
-import DOMPurify from 'dompurify'
 
 // Utils
 import { cleanHTML } from '../../../utils/CleanHtml'
