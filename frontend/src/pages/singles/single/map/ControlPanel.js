@@ -1,6 +1,5 @@
 import './map.css'
 import './controlPanel.css'
-
 import { useState } from 'react'
 
 // Context
