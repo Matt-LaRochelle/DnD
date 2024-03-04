@@ -9,6 +9,9 @@ import Loading from '../../../components/loading/Loading'
 
 import DOMPurify from 'dompurify'
 
+// Utils
+import { cleanHTML } from '../../../utils/CleanHtml'
+
 const Pc = () => {
     const [loading, setLoading] = useState(true)
     const [pc, setPc] = useState(null)
@@ -49,23 +52,12 @@ const Pc = () => {
     }
 
 
- // For handling inner HTML
- useEffect(()=> {
-    const cleanHtml = () => {
-        if (pc.description) {
-            let cleanPcDescription = DOMPurify.sanitize(pc.description)
-            setPcDescription(cleanPcDescription)
+    useEffect(() => {
+        if (pc) {
+            cleanHTML(pc.description, setPcDescription);
+            cleanHTML(pc.secrets, setPcSecrets);
         }
-
-        if (pc.secrets) {
-            let cleanPcSecrets = DOMPurify.sanitize(pc.secrets)
-            setPcSecrets(cleanPcSecrets)
-        }
-    }
-    if (pc) {
-        cleanHtml()
-    }
-}, [pc])
+    }, [pc]);
 
 
     return (

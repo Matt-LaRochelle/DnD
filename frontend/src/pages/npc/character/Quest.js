@@ -8,6 +8,9 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import Loading from '../../../components/loading/Loading'
 import DOMPurify from 'dompurify'
 
+// Utils
+import { cleanHTML } from '../../../utils/CleanHtml'
+
 const Quest = () => {
     const [loading, setLoading] = useState(true)
     const [quest, setQuest] = useState(null)
@@ -47,18 +50,12 @@ const Quest = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
 
-        // For handling inner HTML
-        useEffect(()=> {
-            const cleanHtml = () => {
-                if (quest.description) {
-                    let cleanDescription = DOMPurify.sanitize(quest.description)
-                    setDescription(cleanDescription)
-                }
-            }
-            if (quest) {
-                cleanHtml()
-            }
-        }, [quest])
+    // For handling inner HTML
+    useEffect(() => {
+        if (quest) {
+            cleanHTML(quest.description, setDescription);
+        }
+    }, [quest]);
 
     return (
         <div>

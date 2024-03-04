@@ -9,6 +9,9 @@ import Loading from '../../../components/loading/Loading'
 
 import DOMPurify from 'dompurify'
 
+// Utils
+import { cleanHTML } from '../../../utils/CleanHtml'
+
 const Npc = () => {
     const [loading, setLoading] = useState(true)
     const [npc, setNpc] = useState(null)
@@ -51,30 +54,14 @@ const Npc = () => {
     }
 
 
-    // For handling inner HTML
-    useEffect(()=> {
-        const cleanHtml = () => {
-            if (npc.description) {
-                let cleanNpcDescription = DOMPurify.sanitize(npc.description)
-                setNpcDescription(cleanNpcDescription)
-            }
-            if (npc.voice) {
-                let cleanNpcVoice = DOMPurify.sanitize(npc.voice)
-                setNpcVoice(cleanNpcVoice)
-            }
-            if (npc.catchphrases) {
-                let cleanNpcCatchphrases = DOMPurify.sanitize(npc.catchphrases)
-                setNpcCatchphrases(cleanNpcCatchphrases)
-            }
-            if (npc.secrets) {
-                let cleanNpcSecrets = DOMPurify.sanitize(npc.secrets)
-                setNpcSecrets(cleanNpcSecrets)
-            }
-        }
+    useEffect(() => {
         if (npc) {
-            cleanHtml()
+            cleanHTML(npc.description, setNpcDescription);
+            cleanHTML(npc.voice, setNpcVoice);
+            cleanHTML(npc.catchphrases, setNpcCatchphrases);
+            cleanHTML(npc.secrets, setNpcSecrets);
         }
-    }, [npc])
+    }, [npc]);
 
 
     return (

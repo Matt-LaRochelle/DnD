@@ -9,6 +9,9 @@ import Loading from '../../../components/loading/Loading'
 
 import DOMPurify from 'dompurify'
 
+// Utils
+import { cleanHTML } from '../../../utils/CleanHtml'
+
 const Creature = () => {
     const [loading, setLoading] = useState(true)
     const [creature, setCreature] = useState(null)
@@ -48,12 +51,12 @@ const Creature = () => {
     const goBack = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
-
     useEffect(() => {
-        setDescription(DOMPurify.sanitize(creature?.description))
-        setSecrets(DOMPurify.sanitize(creature?.secrets))
-    }
-    , [creature])
+        if (creature) {
+            cleanHTML(creature.description, setDescription);
+            cleanHTML(creature.secrets, setSecrets);
+        }
+    }, [creature]);
 
     return (
         <div>

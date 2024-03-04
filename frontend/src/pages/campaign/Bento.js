@@ -1,17 +1,20 @@
 import './bento.css'
-
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
+
+// Context
+import { useAuthContext } from '../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { usePcsContext } from '../../hooks/usePcsContext';
 import { useNpcsContext } from '../../hooks/useNpcsContext';
 import { useCreaturesContext } from '../../hooks/useCreaturesContext';
 import { useQuestsContext } from '../../hooks/useQuestsContext';
 import { useMapsContext } from '../../hooks/useMapsContext';
-import { useAuthContext } from '../../hooks/useAuthContext'
 
+// 3rd Party
 import DOMPurify from 'dompurify'
 
+// Components
 import Maps from '../../components/maps/Maps';
 import Npcs from '../../components/npcs/Npcs';
 import Pcs from '../../components/pcs/Pcs';
@@ -20,6 +23,10 @@ import Quests from '../../components/quests/Quests';
 import Loading from '../../components/loading/Loading';
 import CharacterRow from '../../components/characterRow/CharacterRow';
 
+// Utils
+import { cleanHTML } from '../../utils/CleanHtml'
+
+// Icons
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
@@ -255,17 +262,11 @@ const Bento = () => {
 
 
     // For handling inner HTML
-    useEffect(()=> {
-        const cleanHtml = () => {
-            if (campaigns.description) {
-                let cleanCampaignDescription = DOMPurify.sanitize(campaigns.description)
-                setCampaignDescription(cleanCampaignDescription)
-            }
-        }
+    useEffect(() => {
         if (campaigns && stepOne) {
-            cleanHtml()
+            cleanHTML(campaigns.description, setCampaignDescription);
         }
-    }, [campaigns, stepOne])
+    }, [campaigns, stepOne]);
 
 
     return (
