@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 // Hooks
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { useNpcsContext } from '../../../hooks/useNpcsContext'
 
 // Components
 import Loading from '../../../components/loading/Loading'
@@ -23,37 +24,29 @@ const Npc = () => {
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
+    const { npcs } = useNpcsContext()
+
     const location = useLocation()
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
 
+    // Get individual NPC's information
     useEffect(() => {
-        // Fetch an NPC's information
-        const fetchNPCinfo = async () => {
-            setLoading(true);
-            const response = await fetch(`https://dnd-kukm.onrender.com/api/npc/${campaigns._id}/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const npcInfo = await response.json()
+        setLoading(true);
+        const individualNpc = npcs.find(npc => npc._id === path);
 
-            if (response.ok) {
-                setNpc(npcInfo)
-                setLoading(false)
-            }
+        if (individualNpc) {
+            setNpc(individualNpc);
         }
 
-        if (user) {
-            fetchNPCinfo()
-        }
-    }, [user])
+        setLoading(false);
+    }, [])
 
     const goBack = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
 
-
+    // Clean HTML
     useEffect(() => {
         if (npc) {
             cleanHTML(npc.description, setNpcDescription);
@@ -91,11 +84,10 @@ const Npc = () => {
                             <label>Last Seen</label>
                             <p>{npc.lastSeen}</p>
                             {campaigns.dmID === user.id && 
-                        <button className="button-primary" onClick={() => navigate(`/npc/edit/${npc._id}`)}>Edit</button>
+                                <button className="button-primary" onClick={() => navigate(`/npc/edit/${npc._id}`)}>Edit</button>
                             }
                         </div>
                     </div>
-                    
                 </div>
             }
         </div>

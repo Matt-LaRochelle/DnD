@@ -28,8 +28,8 @@ const Pc = () => {
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
 
+    // Get individual PC's information
     useEffect(() => {
-        // Get individual PC's information
         setLoading(true);
         const individualPc = pcs.find(pc => pc._id === path);
 
@@ -44,7 +44,7 @@ const Pc = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
 
-
+    // Clean HTML
     useEffect(() => {
         if (pc) {
             cleanHTML(pc.description, setPcDescription);

@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 // Hooks
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
 
 // Components
 import Loading from '../../../components/loading/Loading'
@@ -18,6 +19,7 @@ const Creature = () => {
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
+    const { creatures } = useCreaturesContext()
 
     const [description, setDescription] = useState('')
     const [secrets, setSecrets] = useState('')
@@ -26,31 +28,24 @@ const Creature = () => {
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
 
+    // Get individual Creature's information
     useEffect(() => {
-        // Fetch a Creature's information
-        const fetchCreatureInfo = async () => {
-            setLoading(true);
-            const response = await fetch(`https://dnd-kukm.onrender.com/api/creature/${campaigns._id}/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const creatureInfo = await response.json()
+        setLoading(true);
+        const individualCreature = creatures.find(creature => creature._id === path);
 
-            if (response.ok) {
-                setCreature(creatureInfo)
-                setLoading(false)
-            }
+        if (individualCreature) {
+            setCreature(individualCreature);
         }
 
-        if (user) {
-            fetchCreatureInfo()
-        }
-    }, [user])
+        setLoading(false);
+    }, [])
+
 
     const goBack = () => {
         navigate(`/campaign/${campaigns._id}`)
     }
+
+    // Clean HTML
     useEffect(() => {
         if (creature) {
             cleanHTML(creature.description, setDescription);
@@ -83,11 +78,10 @@ const Creature = () => {
                             <label>Native to</label>
                             <p>{creature.nativeTo}</p>
                             {campaigns.dmID === user.id && 
-                        <button className="button-primary" onClick={() => navigate(`/creature/edit/${creature._id}`)}>Edit</button>
+                                <button className="button-primary" onClick={() => navigate(`/creature/edit/${creature._id}`)}>Edit</button>
                             }
                         </div>
                     </div>
-                    
                 </div>
             }
         </div>
