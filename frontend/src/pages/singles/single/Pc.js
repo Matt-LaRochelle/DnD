@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 // Hooks
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { usePcsContext } from '../../../hooks/usePcsContext'
 
 // Components
 import Loading from '../../../components/loading/Loading'
@@ -21,31 +22,23 @@ const Pc = () => {
 
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
+    const { pcs } = usePcsContext()
+
     const location = useLocation()
     const path = location.pathname.split("/")[2]
     const navigate = useNavigate()
 
     useEffect(() => {
-        // Fetch an NPC's information
-        const fetchPCinfo = async () => {
-            setLoading(true);
-            const response = await fetch(`https://dnd-kukm.onrender.com/api/pc/${campaigns._id}/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const pcInfo = await response.json()
+        // Get individual PC's information
+        setLoading(true);
+        const individualPc = pcs.find(pc => pc._id === path);
 
-            if (response.ok) {
-                setPc(pcInfo)
-                setLoading(false)
-            }
+        if (individualPc) {
+            setPc(individualPc);
         }
 
-        if (user) {
-            fetchPCinfo()
-        }
-    }, [user])
+        setLoading(false);
+    }, [])
 
     const goBack = () => {
         navigate(`/campaign/${campaigns._id}`)
@@ -63,14 +56,12 @@ const Pc = () => {
     return (
         <div>
             {loading
-                ?
-                <Loading />
-                :
-                <div className='character__container glass'>
+            ?   <Loading />
+            :   <div className='character__container glass'>
                     <h1>{pc.name}</h1>
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
-                    <img src={pc.image} alt={pc.name} />
+                        <img src={pc.image} alt={pc.name} />
                         <div>
                             <label>Description</label>
                             <p dangerouslySetInnerHTML={{__html: pcDescription}}></p>
@@ -85,11 +76,10 @@ const Pc = () => {
                             <label>Played by</label>
                             <p>{pc.playedBy}</p>
                             {pc.userID === user.id && 
-                        <button className="button-primary" onClick={() => navigate(`/pc/edit/${pc._id}`)}>Edit</button>
+                                <button className="button-primary" onClick={() => navigate(`/pc/edit/${pc._id}`)}>Edit</button>
                             }
                         </div>
                     </div>
-                    
                 </div>
             }
         </div>
