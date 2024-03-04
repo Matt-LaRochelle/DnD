@@ -1,40 +1,48 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
 
-//pages and components
+// Components
 import Navbar from './components/navbar/Navbar'
+import Background from './components/background/Background';
 
+// Landing Pages
 import Login from './pages/landing/Login';
 import Signup from './pages/landing/Signup';
 import Forgot from './pages/landing/Forgot'
 import ResetPassword from './pages/landing/Reset'
 
+// Main Pages
 import Home from './pages/home/Home'
 import Settings from './pages/settings/Settings'
 import Campaign from './pages/campaign/Campaign'
 import EditCampaign from './pages/campaign/EditCampaign'
-import Map from './pages/map/map/Map'
-import AddMap from './pages/map/addMap/AddMap'
-import EditMap from './pages/map/editMap/EditMap'
-import Npc from './pages/npc/character/Npc'
-import Pc from './pages/npc/character/Pc'
-import AddNPC from './pages/npc/addCharacter/AddNPC'
-import AddPC from './pages/npc/addCharacter/AddPC'
-import AddCreature from './pages/npc/addCharacter/AddCreature'
-import AddQuest from './pages/npc/addCharacter/AddQuest'
-import Quest from './pages/npc/character/Quest'
-import EditQuest from './pages/npc/editCharacter/EditQuest'
-import Creature from './pages/npc/character/Creature'
-import EditCreature from './pages/npc/editCharacter/EditCreature'
-import EditNPC from './pages/npc/editCharacter/EditNPC'
-import EditPC from './pages/npc/editCharacter/EditPC'
-import Background from './components/background/Background';
-import PlayerCharacters from './pages/collections/characters/PlayerCharacters';
-import NonPlayerCharacters from './pages/collections/characters/NonPlayerCharacters';
-import Creatures from './pages/collections/creatures/Creatures';
-import Maps from './pages/collections/maps/Maps';
-import Quests from './pages/collections/quests/Quests';
 import CampaignSettings from './pages/settings/CampaignSettings';
+
+import Maps from './pages/collections/maps/Maps';
+import Map from './pages/singles/single/map/Map'
+import AddMap from './pages/singles/add/AddMap'
+import EditMap from './pages/singles/edit/EditMap'
+
+import NonPlayerCharacters from './pages/collections/characters/NonPlayerCharacters';
+import Npc from './pages/singles/single/Npc'
+import AddNPC from './pages/singles/add/AddNPC'
+import EditNPC from './pages/singles/edit/EditNPC'
+
+import PlayerCharacters from './pages/collections/characters/PlayerCharacters';
+import Pc from './pages/singles/single/Pc'
+import AddPC from './pages/singles/add/AddPC'
+import EditPC from './pages/singles/edit/EditPC'
+
+import Quests from './pages/collections/quests/Quests';
+import Quest from './pages/singles/single/Quest'
+import AddQuest from './pages/singles/add/AddQuest'
+import EditQuest from './pages/singles/edit/EditQuest'
+
+import Creatures from './pages/collections/creatures/Creatures';
+import Creature from './pages/singles/single/Creature'
+import AddCreature from './pages/singles/add/AddCreature'
+import EditCreature from './pages/singles/edit/EditCreature'
+
 
 function App() {
   const { user } = useAuthContext()

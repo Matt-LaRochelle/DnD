@@ -4,15 +4,15 @@ import './controlPanel.css'
 import { useState } from 'react'
 
 // Context
-import { useAuthContext } from '../../../hooks/useAuthContext'
-import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
-import { usePcsContext } from '../../../hooks/usePcsContext'
-import { useNpcsContext } from '../../../hooks/useNpcsContext'
-import { useMapsContext } from '../../../hooks/useMapsContext'
-import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
+import { useAuthContext } from '../../../../hooks/useAuthContext'
+import { useCampaignsContext } from '../../../../hooks/useCampaignsContext'
+import { usePcsContext } from '../../../../hooks/usePcsContext'
+import { useNpcsContext } from '../../../../hooks/useNpcsContext'
+import { useMapsContext } from '../../../../hooks/useMapsContext'
+import { useCreaturesContext } from '../../../../hooks/useCreaturesContext'
 
 // Components
-import Avatar from '../../../components/avatar/Avatar'
+import Avatar from '../../../../components/avatar/Avatar'
 
 const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordinates }) => {
     const { user } = useAuthContext()

@@ -1,4 +1,4 @@
-import '../../npc/editCharacter/edit.css'
+import './edit.css'
 import { useEffect, useState } from 'react'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useMapsContext } from '../../../hooks/useMapsContext'

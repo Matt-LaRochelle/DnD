@@ -4,16 +4,16 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 
 // Context
-import { useAuthContext } from '../../../hooks/useAuthContext'
-import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
-import { usePcsContext } from '../../../hooks/usePcsContext'
-import { useNpcsContext } from '../../../hooks/useNpcsContext'
-import { useMapsContext } from '../../../hooks/useMapsContext'
-import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
+import { useAuthContext } from '../../../../hooks/useAuthContext'
+import { useCampaignsContext } from '../../../../hooks/useCampaignsContext'
+import { usePcsContext } from '../../../../hooks/usePcsContext'
+import { useNpcsContext } from '../../../../hooks/useNpcsContext'
+import { useMapsContext } from '../../../../hooks/useMapsContext'
+import { useCreaturesContext } from '../../../../hooks/useCreaturesContext'
 
 // Components
-import Avatar from '../../../components/avatar/Avatar'
-import Loading from '../../../components/loading/Loading'
+import Avatar from '../../../../components/avatar/Avatar'
+import Loading from '../../../../components/loading/Loading'
 import ControlPanel from './ControlPanel'
 import MapDescription from './MapDescription'
 

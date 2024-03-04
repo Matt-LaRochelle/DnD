@@ -1,4 +1,4 @@
-import '../../npc/addCharacter/add.css'
+import '../../singles/add/add.css'
 import { useEffect, useState } from 'react'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'

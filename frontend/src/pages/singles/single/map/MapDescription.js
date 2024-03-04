@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 // Context
-import { useAuthContext } from '../../../hooks/useAuthContext'
-import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
-import { useMapsContext } from '../../../hooks/useMapsContext'
+import { useAuthContext } from '../../../../hooks/useAuthContext'
+import { useCampaignsContext } from '../../../../hooks/useCampaignsContext'
+import { useMapsContext } from '../../../../hooks/useMapsContext'
 
 // 3rd Party
 import DOMPurify from 'dompurify';
