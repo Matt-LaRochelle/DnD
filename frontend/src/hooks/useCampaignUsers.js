@@ -20,9 +20,6 @@ export const useCampaignUsers = (campaignID) => {
                     }
                 })
                 const json = await response.json()
-                console.log(
-                    "Campaign users:", json
-                )
 
                 if (!response.ok) {   
                     setIsLoading(false)

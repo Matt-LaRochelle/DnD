@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 // Context
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 
-
 // Components
 import CharacterRow from '../../components/characterRow/CharacterRow';
 
@@ -13,17 +12,11 @@ import CharacterRow from '../../components/characterRow/CharacterRow';
 import { cleanHTML } from '../../utils/CleanHtml'
 
 // Icons
-import { FaRegUserCircle } from "react-icons/fa";
-import { FaHome } from "react-icons/fa";
-import { TbWorld } from "react-icons/tb";
-import { IoIosSettings } from "react-icons/io";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { LiaMapSolid } from "react-icons/lia";
 import { GiOpenTreasureChest } from "react-icons/gi";
 import { FaRobot } from "react-icons/fa6";
 import { IoIosImages } from "react-icons/io";
-import { FaBookAtlas } from "react-icons/fa6";
-import { GiNewspaper } from "react-icons/gi";
 import { GiSeaCreature } from "react-icons/gi";
 
 
