@@ -26,8 +26,9 @@ const Campaign = () => {
     const [loadData, setLoadData] = useState([])
 
     // Load the campaign
-    const { isLoading } = useCampaign(path)
-    const { dmInfo, playerInfo, isLoading: isLoadingUsers, error } = useCampaignUsers(path)
+    const { isLoading, error } = useCampaign(path)
+    const { dmInfo, playerInfo, isLoading: isLoadingUsers, error: errorUsers } = useCampaignUsers(path)
+    const { isLoading: isLoadingNpcs, error: errorNpcs } = useNpcs(path)
     const { campaigns } = useCampaignsContext() 
 
     useEffect(() => {

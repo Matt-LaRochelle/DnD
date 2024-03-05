@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useAuthContext } from './useAuthContext'
-import { useNpcsContext } from './useNpcsContext'
+import { usePcsContext } from './usePcsContext'
 
-export const useNpcs = (campaignID) => {
+export const usePcs = (campaignID) => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const { user } = useAuthContext()
-    const { dispatch } = useNpcsContext()
+    const { dispatch } = usePcsContext()
 
     useEffect(() => {
         setIsLoading(true)
         setError(null)
 
-        const fetchNpcs = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/npc/' + campaignID, {
+        const fetchPcs = async () => {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/pc/' + campaignID, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -25,13 +25,13 @@ export const useNpcs = (campaignID) => {
                 setError(json.error)
             }
             if (response.ok) {
-                dispatch({type: 'SET_NPCS', payload: json})
+                dispatch({type: 'SET_PCS', payload: json})
                 setIsLoading(false)
                 setError(null)
             }
         }
         if (user) {
-            fetchNpcs()
+            fetchPcs()
         }
     
     }, [user])

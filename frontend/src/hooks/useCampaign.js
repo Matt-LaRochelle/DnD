@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useCampaignsContext } from './useCampaignsContext'
 import { useAuthContext } from './useAuthContext'
 
-export const useCampaign = (camaignID) => {
+export const useCampaign = (campaignID) => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const { dispatch } = useCampaignsContext()
