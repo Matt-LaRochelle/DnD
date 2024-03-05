@@ -42,15 +42,11 @@ import { GiNewspaper } from "react-icons/gi";
 import { GiSeaCreature } from "react-icons/gi";
 
 
-const Bento = () => {
+const Bento = ({ setLoading }) => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
 
-    const [loading, setLoading] = useState(true)
-
-    // This sets once we receive all campaign info, then we can
-    // fetch the user and dm info from inside the campaign.
-    const [stepOne, setStepOne] = useState(false)
+    // Load 7 sets of data?
     const [loadData, setLoadData] = useState([])
 
 
@@ -71,8 +67,10 @@ const Bento = () => {
     const { quests, dispatch: dispatchQuests } = useQuestsContext()
     const { maps, dispatch: dispatchMaps } = useMapsContext()
 
-    const { campaign, isLoading } = useCampaign()
-    const { campaignUsers, dmInfo, playerInfo, isLoading: isLoadingUsers, error } = useCampaignUsers(path)
+    // Load the campaign
+    const { campaign, isLoading } = useCampaign(path)
+    const { dmInfo, playerInfo, isLoading: isLoadingUsers, error } = useCampaignUsers(path)
+    
 
     const navigate = useNavigate()
 
@@ -82,38 +80,17 @@ const Bento = () => {
         }
     }, [user, campaigns])
 
-    useEffect(() => {
-        console.log("loadData", loadData)
-        if (loadData.length >= 7) {
-            setLoading(false)
-        }
-    }, [loadData])
-
 
 // ------------------------Get all campaign info------------------------
 // ------------------------Get all campaign info------------------------
 // ------------------------Get all campaign info------------------------
 // ------------------------Get all campaign info------------------------
 
-    useEffect(() => {
-        if (user) {
-            campaign(path)
-            setStepOne(true)
-        }
-    }, [path, user])
-
-
-    // Get all users and dm info for the campaign
-    useEffect(() => {
-        if (user && stepOne) {
-            campaignUsers()
-        }
-    }, [stepOne])
 
     // Get all npcs for the campaign
     useEffect(() => {
         const fetchNpcs = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/npc/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/npc/' + path, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -125,16 +102,16 @@ const Bento = () => {
                 setLoadData(prevLoadData => [...prevLoadData, "npcs"])
             }
         }
-        if (user && stepOne) {
+        if (user) {
             fetchNpcs()
         }
     
-    }, [stepOne])
+    }, [user])
 
     // Get all pcs for the campaign
     useEffect(() => {
         const fetchPcs = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/pc/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/pc/' + path, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -146,16 +123,16 @@ const Bento = () => {
                 setLoadData(prevLoadData => [...prevLoadData, "pcs"])
             }
         }
-        if (user && stepOne) {
+        if (user) {
             fetchPcs()
         }
     
-    }, [stepOne])
+    }, [user])
 
     // Get all creatures for the campaign
     useEffect(() => {
         const fetchCreatures = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/creature/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/creature/' + path, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -167,16 +144,16 @@ const Bento = () => {
                 setLoadData(prevLoadData => [...prevLoadData, "creatures"])
             }
         }
-        if (user && stepOne) {
+        if (user) {
             fetchCreatures()
         }
     
-    }, [stepOne])
+    }, [user])
 
     // Get all maps info for the campaign
     useEffect(() => {
         const fetchMaps = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/map/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/map/' + path, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -188,16 +165,16 @@ const Bento = () => {
                 setLoadData(prevLoadData => [...prevLoadData, "maps"])
             }
         }
-        if (user && stepOne) {
+        if (user) {
             fetchMaps()
         }
     
-    }, [stepOne])
+    }, [user])
 
     // Get all quests info for the campaign
     useEffect(() => {
         const fetchQuests = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/quest/' + campaigns._id, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/quest/' + path, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -209,11 +186,11 @@ const Bento = () => {
                 setLoadData(prevLoadData => [...prevLoadData, "quests"])
             }
         }
-        if (user && stepOne) {
+        if (user) {
             fetchQuests()
         }
     
-    }, [stepOne])
+    }, [user])
 
 
 
@@ -226,7 +203,7 @@ const Bento = () => {
 
 
     const editCampaign = () => {
-        navigate(`/campaign/edit/${campaigns._id}`)
+        navigate(`/campaign/edit/${path}`)
     }
 
     const moreInfo = (id) => {
@@ -236,11 +213,11 @@ const Bento = () => {
 
 
     // For handling inner HTML
-    useEffect(() => {
-        if (campaigns && stepOne) {
-            cleanHTML(campaigns.description, setCampaignDescription);
-        }
-    }, [campaigns, stepOne]);
+    // useEffect(() => {
+    //     if (campaigns && stepOne) {
+    //         cleanHTML(campaigns.description, setCampaignDescription);
+    //     }
+    // }, [campaigns, stepOne]);
 
 
     return (

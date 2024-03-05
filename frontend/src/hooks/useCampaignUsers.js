@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuthContext } from './useAuthContext'
 
-export const useCampaignUsers = (path) => {
+export const useCampaignUsers = (campaignID) => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const { user } = useAuthContext()
@@ -9,32 +9,34 @@ export const useCampaignUsers = (path) => {
     const [playerInfo, setPlayerInfo] = useState(null)
     const [dmInfo, setDmInfo] = useState(null)
 
-    const campaignUsers = async () => {
-        if (!user) return
+    useEffect(() => {
+        const fetchCampaignUsers = async () => {
+            setIsLoading(true)
+            setError(null)
 
-        setIsLoading(true)
-        setError(null)
+            const response = await fetch(`https://dnd-kukm.onrender.com/api/user/campaign/${campaignID}`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                const json = await response.json()
+                console.log(
+                    "Campaign users:", json
+                )
 
-        const response = await fetch(`https://dnd-kukm.onrender.com/api/user/campaign/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
+                if (!response.ok) {   
+                    setIsLoading(false)
+                    setError(json.error)
                 }
-            })
-            const json = await response.json()
-            console.log(
-                "Campaign users:", json
-            )
-
-            if (!response.ok) {   
-                setIsLoading(false)
-                setError(json.error)
+                if (response.ok) {
+                    setPlayerInfo(json.users)
+                    setDmInfo(json.dm)
+                    setIsLoading(false)
+                }
             }
-            if (response.ok) {
-                setPlayerInfo(json.users)
-                setDmInfo(json.dm)
-                setIsLoading(false)
-            }
+        if (user) {
+            fetchCampaignUsers()
         }
-
-    return { campaignUsers, playerInfo, dmInfo, isLoading, error }
+    }, [user])
+    return { playerInfo, dmInfo, isLoading, error }
 }
