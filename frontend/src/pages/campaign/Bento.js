@@ -87,47 +87,9 @@ const Bento = ({ setLoading }) => {
 // ------------------------Get all campaign info------------------------
 
 
-    // Get all npcs for the campaign
-    useEffect(() => {
-        const fetchNpcs = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/npc/' + path, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const json = await response.json()
 
-            if (response.ok) {
-                dispatchNpcs({type: 'SET_NPCS', payload: json})
-                setLoadData(prevLoadData => [...prevLoadData, "npcs"])
-            }
-        }
-        if (user) {
-            fetchNpcs()
-        }
-    
-    }, [user])
 
-    // Get all pcs for the campaign
-    useEffect(() => {
-        const fetchPcs = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/pc/' + path, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const json = await response.json()
 
-            if (response.ok) {
-                dispatchPcs({type: 'SET_PCS', payload: json})
-                setLoadData(prevLoadData => [...prevLoadData, "pcs"])
-            }
-        }
-        if (user) {
-            fetchPcs()
-        }
-    
-    }, [user])
 
     // Get all creatures for the campaign
     useEffect(() => {

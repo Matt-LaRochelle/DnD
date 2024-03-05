@@ -11,7 +11,13 @@ import Bento from './Bento';
 // Hooks
 import { useCampaign } from '../../hooks/useCampaign'
 import { useCampaignUsers } from '../../hooks/useCampaignUsers';
+import { useNpcs } from '../../hooks/useNpcs';
+import { usePcs } from '../../hooks/usePcs';
+
+
 import { useCampaignsContext } from '../../hooks/useCampaignsContext';
+import { usePcsContext } from '../../hooks/usePcsContext';
+import { useNpcsContext } from '../../hooks/useNpcsContext';
 
 
 
@@ -29,7 +35,11 @@ const Campaign = () => {
     const { isLoading, error } = useCampaign(path)
     const { dmInfo, playerInfo, isLoading: isLoadingUsers, error: errorUsers } = useCampaignUsers(path)
     const { isLoading: isLoadingNpcs, error: errorNpcs } = useNpcs(path)
+    const { isLoading: isLoadingPcs, error: errorPcs } = usePcs(path)
+
     const { campaigns } = useCampaignsContext() 
+    const { pcs } = usePcsContext()
+    const { npcs } = useNpcsContext()
 
     useEffect(() => {
         console.log("loadData", loadData)
@@ -47,7 +57,15 @@ const Campaign = () => {
             console.log("campaign users", playerInfo)
             setLoadData(prevLoadData => [...prevLoadData, "users"])
         }
-    }, [isLoading, isLoadingUsers])
+        if (!isLoadingNpcs) {
+            console.log("npcs", npcs)
+            setLoadData(prevLoadData => [...prevLoadData, "npcs"])
+        }
+        if (!isLoadingPcs) {
+            console.log("pcs", pcs)
+            setLoadData(prevLoadData => [...prevLoadData, "pcs"])
+        }
+    }, [isLoading, isLoadingUsers, isLoadingNpcs, isLoadingPcs])
 
     return (
         <div className="campaign__Container">
