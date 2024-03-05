@@ -11,6 +11,10 @@ import { useCreaturesContext } from '../../hooks/useCreaturesContext';
 import { useQuestsContext } from '../../hooks/useQuestsContext';
 import { useMapsContext } from '../../hooks/useMapsContext';
 
+// Hooks
+import { useCampaign } from '../../hooks/useCampaign'
+import { useCampaignUsers } from '../../hooks/useCampaignUsers';
+
 // Components
 import Maps from '../../components/maps/Maps';
 import Npcs from '../../components/npcs/Npcs';
@@ -50,8 +54,8 @@ const Bento = () => {
     const [loadData, setLoadData] = useState([])
 
 
-    const [playerInfo, setPlayerInfo] = useState([]);
-    const [dmInfo, setDmInfo] = useState({});
+    // const [playerInfo, setPlayerInfo] = useState([]);
+    // const [dmInfo, setDmInfo] = useState({});
     const [settings, setSettings] = useState(null)
 
     // This variable says whether the current client is DM of this campaign
@@ -66,6 +70,9 @@ const Bento = () => {
     const { creatures, dispatch: dispatchCreatures } = useCreaturesContext()
     const { quests, dispatch: dispatchQuests } = useQuestsContext()
     const { maps, dispatch: dispatchMaps } = useMapsContext()
+
+    const { campaign, isLoading } = useCampaign()
+    const { campaignUsers, dmInfo, playerInfo, isLoading: isLoadingUsers, error } = useCampaignUsers(path)
 
     const navigate = useNavigate()
 
@@ -89,49 +96,19 @@ const Bento = () => {
 // ------------------------Get all campaign info------------------------
 
     useEffect(() => {
-        const fetchCampaign = async () => {
-            setLoading(true);
-            const response = await fetch(`https://dnd-kukm.onrender.com/api/campaign/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const json = await response.json()
-            if (response.ok) {
-                dispatch({type: 'SET_CAMPAIGN', payload: json})
-                setLoadData(prevLoadData => [...prevLoadData, "campaign"])
-                setStepOne(true);
-                setSettings(json.playerSettings.find(setting => setting.id === user.id).settings);
-            }
-        }
-
         if (user) {
-            fetchCampaign()
+            campaign(path)
+            setStepOne(true)
         }
-    }, [path, user, dispatch])
+    }, [path, user])
 
 
-        // Get all users and dm info for the campaign
-        useEffect(() => {
-            const fetchUsers = async () => {
-                const response = await fetch('https://dnd-kukm.onrender.com/api/user/campaign/' + campaigns._id, {
-                    headers: {
-                        'Authorization': `Bearer ${user.token}`
-                    }
-                })
-                const json = await response.json()
-    
-                if (response.ok) {
-                    setPlayerInfo(json.users)
-                    setDmInfo(json.dm)
-                    setLoadData(prevLoadData => [...prevLoadData, "users"])
-                }
-            }
-            if (user && stepOne) {
-                fetchUsers()
-            }
-        
-        }, [stepOne])
+    // Get all users and dm info for the campaign
+    useEffect(() => {
+        if (user && stepOne) {
+            campaignUsers()
+        }
+    }, [stepOne])
 
     // Get all npcs for the campaign
     useEffect(() => {

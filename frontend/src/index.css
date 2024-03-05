@@ -170,12 +170,15 @@ input.error {
 
 .glass {
   padding: 30px;
-  background: #8ba1a172;
+  background: #afcbcb72;
   backdrop-filter: blur(16px);
   border-radius: 4px;
   box-shadow: var(--clear);
   color: var(--black);
-  border: 1px solid var(--white);
+  border-top: 1px solid var(--white);
+  border-left: 1px solid var(--white);
+  border-right: 1px solid var(--gray);
+  border-bottom: 1px solid var(--gray);
 }
 
 .dark-background {
