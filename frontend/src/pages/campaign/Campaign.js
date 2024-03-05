@@ -13,11 +13,17 @@ import { useCampaign } from '../../hooks/useCampaign'
 import { useCampaignUsers } from '../../hooks/useCampaignUsers';
 import { useNpcs } from '../../hooks/useNpcs';
 import { usePcs } from '../../hooks/usePcs';
+import { useCreatures } from '../../hooks/useCreatures';
+import { useQuests } from '../../hooks/useQuests';
+import { useMaps } from '../../hooks/useMaps';
 
-
+// Context
 import { useCampaignsContext } from '../../hooks/useCampaignsContext';
 import { usePcsContext } from '../../hooks/usePcsContext';
 import { useNpcsContext } from '../../hooks/useNpcsContext';
+import { useCreaturesContext } from '../../hooks/useCreaturesContext';
+import { useQuestsContext } from '../../hooks/useQuestsContext';
+import { useMapsContext } from '../../hooks/useMapsContext';
 
 
 
@@ -36,40 +42,33 @@ const Campaign = () => {
     const { dmInfo, playerInfo, isLoading: isLoadingUsers, error: errorUsers } = useCampaignUsers(path)
     const { isLoading: isLoadingNpcs, error: errorNpcs } = useNpcs(path)
     const { isLoading: isLoadingPcs, error: errorPcs } = usePcs(path)
-
-    const { campaigns } = useCampaignsContext() 
-    const { pcs } = usePcsContext()
-    const { npcs } = useNpcsContext()
+    const { isLoading: isLoadingCreatures, error: errorCreatures } = useCreatures(path)
+    const { isLoading: isLoadingQuests, error: errorQuests } = useQuests(path)
+    const { isLoading: isLoadingMaps, error: errorMaps } = useMaps(path)
 
     useEffect(() => {
-        console.log("loadData", loadData)
-        if (loadData.length >= 7) {
+        if (!isLoading &&
+            !isLoadingUsers &&
+            !isLoadingNpcs &&
+            !isLoadingPcs &&
+            !isLoadingCreatures &&
+            !isLoadingQuests &&
+            !isLoadingMaps) {
             setLoading(false)
         }
-    }, [loadData])
-
-    useEffect(() => {
-        if (!isLoading) {
-            console.log("campaign", campaigns)
-            setLoadData(prevLoadData => [...prevLoadData, "campaign"])
-        }
-        if (!isLoadingUsers) {
-            console.log("campaign users", playerInfo)
-            setLoadData(prevLoadData => [...prevLoadData, "users"])
-        }
-        if (!isLoadingNpcs) {
-            console.log("npcs", npcs)
-            setLoadData(prevLoadData => [...prevLoadData, "npcs"])
-        }
-        if (!isLoadingPcs) {
-            console.log("pcs", pcs)
-            setLoadData(prevLoadData => [...prevLoadData, "pcs"])
-        }
-    }, [isLoading, isLoadingUsers, isLoadingNpcs, isLoadingPcs])
+    }, [
+        isLoading, 
+        isLoadingUsers, 
+        isLoadingNpcs, 
+        isLoadingPcs, 
+        isLoadingCreatures, 
+        isLoadingQuests, 
+        isLoadingMaps
+    ])
 
     return (
         <div className="campaign__Container">
-            {loading ? <Loading /> : <Bento setLoading={setLoading} />}
+            {loading ? <Loading /> : <Bento dmInfo={dmInfo} playerInfo={playerInfo} />}
         </div>
     )
 }
