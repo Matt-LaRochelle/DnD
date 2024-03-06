@@ -8,6 +8,7 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useMapsContext } from '../../../hooks/useMapsContext'
 
 // Components
+import Card from '../../../components/card/Card'
 import Loading from '../../../components/loading/Loading'
 
 const Maps = () => {
@@ -55,17 +56,19 @@ const Maps = () => {
             :   <div>
                     <h1>Maps</h1>
                     <div className="characters__flexy">
-                    {!loading && maps.map((map) => (
-                        <div className={map.hidden ? "npc npc-hidden" : "npc"} key={map._id} style={{ display: map.hidden && user.id !== campaigns.dmID && "none"}}>
-                        <h3>{map.name}</h3>
-                            <img src={map.image} alt={map.name} />
-                            <button className='button-primary' onClick={() => moreInfo(map._id)}>More Info</button>
-                            {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteMap(map._id)}>Delete</button>}
-                        </div>
+                    {maps.map((map) => (
+                        <Card 
+                                key={map._id}
+                                name={map.name}
+                                image={map.image}
+                                type="map"
+                                id={map._id}
+                                hidden={map.hidden}
+                            />
                         ))}
 
                     {campaigns.dmID === user.id && 
-                        <div className="npc" >
+                        <div id="card__container" >
                             <h3>Add Map</h3>
                             <img src="https://garden.spoonflower.com/c/14409649/p/f/m/7ymlkg-hbhMsJgmHbo_kFYPOIs3PddAIZ-Jsp793-WT9emAe4cmy/Grid%20wallpaper%20-%20cloud%20grey%20grid%20jumbo%20scale%20.jpg" alt="Add Map" />
                             <p onClick={handleClick} className='add'>+</p>

@@ -9,6 +9,7 @@ import { useAuthContext } from '../../../hooks/useAuthContext'
 
 // Components
 import Loading from '../../../components/loading/Loading'
+import Card from '../../../components/card/Card'
 
 const PlayerCharacters = () => {
     const { user } = useAuthContext()
@@ -61,14 +62,16 @@ const PlayerCharacters = () => {
                                 return !pc.hidden; // Exclude PCs with hidden=true
                             }
                         }).map((pc) => (
-                            <div className={pc.hidden ? "npc npc-hidden" : "npc"} key={pc._id}>
-                                <h3>{pc.name}</h3>
-                                <img src={pc.image} alt={pc.name} />
-                                <button className='button-primary' onClick={() => morePcInfo(pc._id)}>More Info</button>
-                                {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deletePC(pc._id)}>Delete</button> || pc.userID === user.id && <button className="button-secondary" onClick={() => deletePC(pc._id)}>Delete</button>}
-                            </div>
+                            <Card 
+                                key={pc._id}
+                                name={pc.name}
+                                image={pc.image}
+                                type="pc"
+                                id={pc._id}
+                                hidden={pc.hidden}
+                            />
                             ))}
-                        <div className="npc" >
+                        <div id="card__container" >
                             <h3>Add PC</h3>
                             <img src="https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg=" alt="Add PC" />
                             <p onClick={handlePcClick} className='add'>+</p>

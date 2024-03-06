@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom"
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useNpcsContext } from '../../../hooks/useNpcsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
+
+// Components
+import Card from '../../../components/card/Card'
 import Loading from '../../../components/loading/Loading'
 
 const NonPlayerCharacters = () => {
@@ -55,15 +58,17 @@ const NonPlayerCharacters = () => {
                     <h2>Non Player Characters</h2>
                     <div className="characters__flexy">
                     {npcs.map((npc) => (
-                        <div className={npc.hidden ? "npc npc-hidden" : "npc"} key={npc._id} style={{ display: npc.hidden && user.id !== campaigns.dmID && "none"}}>
-                        <h3>{npc.name}</h3>
-                            <img src={npc.image} alt={npc.name} />
-                            <button className='button-primary' onClick={() => moreNpcInfo(npc._id)}>More Info</button>
-                            {campaigns.dmID === user.id && <button className="button-secondary" onClick={() => deleteNPC(npc._id)}>Delete</button>}
-                        </div>
+                        <Card 
+                                key={npc._id}
+                                name={npc.name}
+                                image={npc.image}
+                                type="npc"
+                                id={npc._id}
+                                hidden={npc.hidden}
+                            />
                         ))}
                     {campaigns.dmID === user.id && 
-                        <div className="npc" >
+                        <div id="card__container" >
                             <h3>Add NPC</h3>
                             <img src="https://media.istockphoto.com/id/1451587807/vector/user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-vector.jpg?s=612x612&w=0&k=20&c=yDJ4ITX1cHMh25Lt1vI1zBn2cAKKAlByHBvPJ8gEiIg=" alt="Add NPC" />
                             <p onClick={handleNpcClick} className='add'>+</p>
