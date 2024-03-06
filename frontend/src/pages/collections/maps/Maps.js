@@ -11,7 +11,7 @@ import Card from '../../../components/card/Card'
 
 const Maps = () => {
     const { user } = useAuthContext()
-    const {campaigns } = useCampaignsContext()
+    const { campaigns } = useCampaignsContext()
     const { maps } = useMapsContext()
 
     const navigate = useNavigate()

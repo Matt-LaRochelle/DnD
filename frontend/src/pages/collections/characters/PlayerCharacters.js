@@ -9,16 +9,23 @@ import { useAuthContext } from '../../../hooks/useAuthContext'
 // Components
 import Card from '../../../components/card/Card'
 
+// Utilities
+import { checkDm } from '../../../utils/CheckDm';
+
 const PlayerCharacters = () => {
     const { user } = useAuthContext()
     const {campaigns } = useCampaignsContext()
     const { pcs, dispatch } = usePcsContext()
+
+    const dm = checkDm(user.id, campaigns.dmID)
 
     const navigate = useNavigate()
 
     const handlePcClick = () => {
         navigate(`/pc/add`);
     }
+
+
 
     return (
         <div className="characters__container glass">
