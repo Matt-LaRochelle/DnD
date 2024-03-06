@@ -105,6 +105,7 @@ const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordina
                 <h2>Characters</h2>
                 {campaigns.dmID === user.id ?
                 <ul className="map-pc-row">
+                {pcs.length === 0 && <li>You must create player characters before you can add them to the map.</li>}
                     {pcs.map(pc => (
                         <li key={pc._id}>
                             <Avatar image={pc.image} name={pc.name} hideName={true} />
@@ -129,6 +130,7 @@ const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordina
             <div>
                 <h2>Non Player Characters</h2>
                 <ul className="map-pc-row">
+                {npcs.length === 0 && <li>You must create non player characters before you can add them to the map.</li>}
                     {npcs.map(npc => (
                         <li key={npc._id}>
                             <Avatar image={npc.image} name={npc.name} hideName={true} />
@@ -142,6 +144,7 @@ const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordina
             <div>
                 <h2>Creatures</h2>
                 <ul className="map-pc-row">
+                {creatures.length === 0 && <li>You must create creatures before you can add them to the map.</li>}
                     {creatures.map(creature => (
                         <li key={creature._id}>
                             <Avatar image={creature.image} name={creature.name} hideName={true} />
