@@ -319,15 +319,15 @@ const Map = () => {
                                         </div>
                                         {avatarMenu === index && 
                                             <div className="avatar-menu">
-                                                <Link to={`/pc/${character._id}`} className="button-primary avatar-info"><MdOutlineContactPage /></Link>
+                                                <Link to={`/${character.type}/${character._id}`} className="button-primary avatar-info"><MdOutlineContactPage /></Link>
                                                 <p className="button-secondary avatar-remove" onClick={() => removeCharacter(index, character._id)}><MdDeleteOutline /></p>
                                                 <p className="button-primary avatar-move"><strong><IoIosMove id={character._id}/></strong></p>
                                                 <div className="debugging-avatar-div glass">
                                                     {character.type === "pc" && <p>{pcs.find(pc => pc._id === character._id).name}</p>}
                                                     {character.type === "npc" && <p>{npcs.find(npc => npc._id === character._id).name}</p>}
                                                     {character.type === "creature" && <p>{creatures.find(creature => creature._id === character._id).name}</p>}
-                                                    <p>CurrentX: {character.currentX}, currentY: {character.currentY}</p>
-                                                    <p>TrackedX: {character.trackedX}, trackedY: {character.trackedY}</p>
+                                                    {/* <p>CurrentX: {character.currentX}, currentY: {character.currentY}</p>
+                                                    <p>TrackedX: {character.trackedX}, trackedY: {character.trackedY}</p> */}
                                                 </div>
                                             </div>
                                         }

@@ -24,7 +24,13 @@ const Maps = () => {
         <div className="characters__container glass">
             <h1>Maps</h1>
             <div className="characters__flexy">
-                {maps.map((map) => (
+            {maps.filter((map) => {
+                    if (user.id === campaigns.dmID) {
+                        return true; // Include all Maps
+                    } else {
+                        return !map.hidden; // Exclude Maps with hidden=true
+                    }
+                }).map((map) => (
                     <Card 
                         key={map._id}
                         name={map.name}

@@ -116,11 +116,14 @@
 }
 .debugging-avatar-div {
     position: absolute;
-    bottom: -162px;
+    bottom: -45px;
     left: 50%;
     transform: translate(-50%, 0);
     width: max-content;
-    background-color: var(--secondary-200);
+    background-color: var(--primary-200);
+    padding: 4px;
+    opacity: .8;
+    border: 2px solid var(--white);
 }
 .map__image {
     width: 10000px;

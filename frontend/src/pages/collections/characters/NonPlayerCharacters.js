@@ -25,7 +25,13 @@ const NonPlayerCharacters = () => {
         <div className="characters__container glass">
             <h2>Non Player Characters</h2>
             <div className="characters__flexy">
-                {npcs.map((npc) => (
+                {npcs.filter((npc) => {
+                    if (user.id === campaigns.dmID) {
+                        return true; // Include all PCs
+                    } else {
+                        return !npc.hidden; // Exclude PCs with hidden=true
+                    }
+                }).map((npc) => (
                     <Card 
                         key={npc._id}
                         name={npc.name}
