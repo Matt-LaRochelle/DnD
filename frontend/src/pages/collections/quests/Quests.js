@@ -39,11 +39,10 @@ const Quests = () => {
     const { deleteItem, error: deleteError, isLoading: deleteLoading } = useDeleteItem()
 
 
-
+    // Delete an individual quest item
     const deleteQuest = async (id) => {
         deleteItem("quest", id)
     }
-
 
 
     // Clean HTML
@@ -59,6 +58,7 @@ const Quests = () => {
         setQuest(quests.find(quest => quest._id === id))
     }
 
+
     // Visibility of quests for DM and Players
     useEffect(() => {
         if (quest.type === "Main" || quest.type === "Side") {
@@ -72,6 +72,7 @@ const Quests = () => {
         }
     }, [quest])
 
+
     // Adding main, side, personal quests
     const handleClickMain = () => {
         navigate(`/quest/add-main`);
@@ -82,6 +83,7 @@ const Quests = () => {
     const handleClickPersonal = () => {
         navigate(`/quest/add/${user.id}`);
     }
+    
     
     return (
         <main className="characters__container glass">
