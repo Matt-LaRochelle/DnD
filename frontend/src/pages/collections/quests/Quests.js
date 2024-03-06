@@ -10,6 +10,7 @@ import { useAuthContext } from '../../../hooks/useAuthContext'
 
 // Hooks
 import { useCampaignUsers } from '../../../hooks/useCampaignUsers';
+import { useDeleteItem } from '../../../hooks/useDeleteItem';
 
 // Components
 import Avatar from '../../../components/avatar/Avatar'
@@ -35,26 +36,12 @@ const Quests = () => {
     const [dmAccessQuest, setDmAccessQuest] = useState(false)
 
     const { dmInfo, playerInfo, isLoading, error } = useCampaignUsers(campaigns._id)
-
+    const { deleteItem, error: deleteError, isLoading: deleteLoading } = useDeleteItem()
 
 
 
     const deleteQuest = async (id) => {
-        if (!user) {
-            return
-        }
-        const response = await fetch(`https://dnd-kukm.onrender.com/api/quest/${id}`, {
-            method: 'DELETE', // Specify the method here
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
-        })
-        const json = await response.json()
-
-        if (response.ok) {
-            questsDispatch({type: 'DELETE_QUEST', payload: json})
-            
-        }
+        deleteItem("quest", id)
     }
 
 
