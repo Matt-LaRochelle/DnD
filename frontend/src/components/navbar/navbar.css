@@ -40,7 +40,17 @@ header {
 }
 
 #small-menu-right img:hover {
-    animation: spin 7s linear infinite;
+    animation: spin 7s linear infinite, rainbow 4s linear infinite;
+}
+@keyframes rainbow {
+    0% { border-color: red; }
+    14% { border-color: orange; }
+    28% { border-color: yellow; }
+    42% { border-color: lime; }
+    57% { border-color: blue; }
+    71% { border-color: indigo; }
+    85% { border-color: violet; }
+    100% { border-color: red; }
 }
 
 .navbar__title {

@@ -14,6 +14,7 @@ import { useDeleteItem } from '../../../hooks/useDeleteItem';
 
 // Components
 import Avatar from '../../../components/avatar/Avatar'
+import QuestListItem from '../../../components/questListItem/QuestListItem'
 
 // Icons
 import { GiStairsGoal } from "react-icons/gi";
@@ -24,10 +25,12 @@ import { FaStar } from "react-icons/fa";
 
 // Utils
 import { cleanHTML } from '../../../utils/CleanHtml'
+import { checkDm } from '../../../utils/CheckDm'
 
 const Quests = () => {
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
+    const dm = checkDm(user.id, campaigns.dmID)
     const { quests, dispatch: questsDispatch } = useQuestsContext()
     const navigate = useNavigate()
 
@@ -96,28 +99,40 @@ const Quests = () => {
                 <div className="quest-column2">
                     
                     <h2><GiStairsGoal className="quest-icon" /> Main Quests <hr></hr></h2>
-                    {quests.filter(quest => quest.type === "Main").map((quest) => (
-                        <div className={quest.hidden ? "quest quest-hidden" : "quest"} onClick={() => moreInfo(quest._id)} key={quest._id} style={{ display: quest.hidden && user.id !== campaigns.dmID && "none"}}>
-                            <h3>
-                                {quest.title}
-                                {campaigns.dmID === user.id && <span className="material-symbols-outlined button-secondary trash" onClick={() => deleteQuest(quest._id)}>delete</span>}
-                                {quest.complete ? <FaStar className="quest-star" /> : <FaRegStar className="quest-star" />}
-                            </h3>
-                        </div>
-                    ))}
+                    {quests
+                        .filter(quest => quest.type === "Main")
+                        .filter(quest => !(quest.hidden && !dm))
+                        .map((quest) => (
+                            <QuestListItem
+                                key={quest._id}
+                                title={quest.title}
+                                dm={dm}
+                                complete={quest.complete}
+                                hidden={quest.hidden}
+                                id={quest._id}
+                                select={() => moreInfo(quest._id)}
+                            />
+                        ))}
                     {campaigns.dmID === user.id && 
                     <div className="quest" onClick={handleClickMain}>
                         <h3>Add Main Quest</h3>
                     </div>}
                    
                     <h2><GoGoal className="quest-icon" /> Side Quests <hr></hr></h2>
-                    {quests.filter(quest => quest.type === "Side").map((quest) => (
-                        <div className={quest.hidden ? "quest quest-hidden" : "quest"} onClick={() => moreInfo(quest._id)} key={quest._id} style={{ display: quest.hidden && user.id !== campaigns.dmID && "none"}}>
-                            <h3>{quest.title}</h3>
-                            {campaigns.dmID === user.id && <span className="material-symbols-outlined button-secondary trash" onClick={() => deleteQuest(quest._id)}>delete</span>}
-                            {quest.complete ? <FaStar className="quest-star" /> : <FaRegStar className="quest-star" />}
-                        </div>
-                    ))}
+                    {quests
+                        .filter(quest => quest.type === "Side")
+                        .filter(quest => !(quest.hidden && !dm))
+                        .map((quest) => (
+                            <QuestListItem
+                                key={quest._id}
+                                title={quest.title}
+                                dm={dm}
+                                complete={quest.complete}
+                                hidden={quest.hidden}
+                                id={quest._id}
+                                select={() => moreInfo(quest._id)}
+                            />
+                        ))}
                     {campaigns.dmID === user.id && 
                     <div className="quest" onClick={handleClickSide}>
                         <h3>Add Side Quest</h3>
@@ -125,11 +140,16 @@ const Quests = () => {
                     
                     <h2><GiAchievement className="quest-icon" /> Personal Quests <hr></hr></h2>
                     {quests.filter(quest => quest.type === "Personal" && (campaigns.dmID === user.id || user.id === quest.user)).map((quest) => (
-                        <div className={quest.hidden ? "quest quest-hidden" : "quest"} onClick={() => moreInfo(quest._id)} key={quest._id} style={{ display: quest.hidden && user.id !== campaigns.dmID && "none"}}>
-                            <h3>{quest.title}</h3>
-                            {campaigns.dmID === user.id && <span className="material-symbols-outlined button-secondary trash" onClick={() => deleteQuest(quest._id)}>delete</span>}
-                            {quest.complete ? <FaStar className="quest-star" /> : <FaRegStar className="quest-star" />}
-                        </div>
+                        <QuestListItem
+                            key={quest._id}
+                            title={quest.title}
+                            dm={dm}
+                            personal={user.id === quest.user}
+                            complete={quest.complete}
+                            hidden={quest.hidden}
+                            id={quest._id}
+                            select={() => moreInfo(quest._id)}
+                            />
                     ))}
                     {campaigns.dmID !== user.id && 
                     <div className="quest" onClick={handleClickPersonal}>
