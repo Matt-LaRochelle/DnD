@@ -109,6 +109,12 @@ const deleteCreature = async (req, res) => {
         return res.status(400).json({error: 'No such creature'})
     }
 
+    // Remove the Creature from all maps in the same campaign
+    await Map.updateMany(
+        { campaignID: creature.campaignID }, 
+        { $pull: { characterList: { _id: id } } }
+    );
+
     res.status(200).json(creature)
 }
 

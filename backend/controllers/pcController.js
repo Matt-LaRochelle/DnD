@@ -1,4 +1,5 @@
 const Pc = require('../models/pcModel')
+const Map = require('../models/mapModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
@@ -89,6 +90,12 @@ const deletePc = async (req, res) => {
     if (!pc) {
         return res.status(400).json({error: 'No such npc'})
     }
+
+    // Remove the PC from all maps in the same campaign
+    await Map.updateMany(
+        { campaignID: pc.campaignID }, 
+        { $pull: { characterList: { _id: id } } }
+    );
 
     res.status(200).json(pc)
 }
