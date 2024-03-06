@@ -14,15 +14,12 @@ import { useCampaignUsers } from '../../../hooks/useCampaignUsers';
 // Components
 import Avatar from '../../../components/avatar/Avatar'
 
-
 // Icons
 import { GiStairsGoal } from "react-icons/gi";
 import { GoGoal } from "react-icons/go";
 import { GiAchievement } from "react-icons/gi";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
-
-import DOMPurify from 'dompurify'
 
 // Utils
 import { cleanHTML } from '../../../utils/CleanHtml'
