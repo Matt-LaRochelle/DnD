@@ -1,4 +1,5 @@
 const Npc = require('../models/npcModel')
+const Map = require('../models/mapModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
@@ -89,6 +90,12 @@ const deleteNpc = async (req, res) => {
     if (!npc) {
         return res.status(400).json({error: 'No such npc'})
     }
+
+    // Remove the NPC from all maps in the same campaign
+    await Map.updateMany(
+        { campaignID: npc.campaignID }, 
+        { $pull: { characterList: id } }
+    );
 
     res.status(200).json(npc)
 }
