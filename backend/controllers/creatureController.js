@@ -1,4 +1,5 @@
 const Creature = require('../models/creatureModel')
+const Map = require('../models/mapModel')
 const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
