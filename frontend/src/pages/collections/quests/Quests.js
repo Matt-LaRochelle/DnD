@@ -26,6 +26,7 @@ import { FaStar } from "react-icons/fa";
 // Utils
 import { cleanHTML } from '../../../utils/CleanHtml'
 import { checkDm } from '../../../utils/CheckDm'
+import Quest from '../../../components/quest/Quest'
 
 const Quests = () => {
     const { user } = useAuthContext()
@@ -159,7 +160,33 @@ const Quests = () => {
 
                 <div className="quest-column3">
                     {quest ? 
-                    <div className="individual-quest">
+                        <Quest
+                            image={quest.image}
+                            title={quest.title}
+                            type={quest.type}
+                            givenBy={quest.givenBy}
+                            returnTo={quest.returnTo}
+                            description={questDescription}
+                            complete={quest.complete}
+                            _id={quest._id}
+                            user={quest.user}
+                            dmAccessQuest={dmAccessQuest}
+                            playerInfo={playerInfo}
+
+                    />
+                    : <h2>Select a quest to view more information</h2>
+                    }
+                </div>
+            </div>
+            
+        </main>
+    )
+}
+
+export default Quests
+
+
+{/* <div className="individual-quest">
                         <img src={quest.image} alt={quest.title} />
                         <div className="quest-content">
                             {quest.type === "Main" && <h2><GiStairsGoal className="quest-icon" /> {quest.title}</h2>}
@@ -180,14 +207,4 @@ const Quests = () => {
                                 />
                             }
                         </div>
-                    </div>
-                    : <h2>Select a quest to view more information</h2>
-                    }
-                </div>
-            </div>
-            
-        </main>
-    )
-}
-
-export default Quests
+                    </div> */}

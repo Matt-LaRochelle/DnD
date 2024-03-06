@@ -1,0 +1,44 @@
+.individual-quest {
+
+    /* background: rgba(128, 0, 128, 0.785); */
+    min-height: 100%;
+}
+.individual-quest img {
+    height: 240px;
+    width: 100%;
+    object-fit: cover;
+    border: 1px solid var(--white);
+}
+.quest-content {
+    padding: 10px;
+    border-left: 1px dotted var(--white);
+}
+.individual-quest h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.given-return {
+    display: flex;
+    justify-content: space-between;
+    color: var(--gray);
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+.given-return span {
+    color: var(--primary-500);
+}
+.given-return hr {
+    width: 500px; /* This will make the hr take the full width of its container */
+    height: 1px; /* This will make the hr very thin, like a line */
+    border: none; /* This will remove the default border */
+    background-color: var(--gray); /* This will make the hr black */
+    margin-top: 12px;
+}
+.returnTo {
+    text-align: right;
+}
+.quest-complete {
+    color: gold;
+    font-size: 4rem;
+    text-align: center;
+}
