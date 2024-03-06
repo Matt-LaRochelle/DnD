@@ -65,7 +65,7 @@ const Creature = () => {
                     <div className='character__grid'>
                     <img src={creature.image} alt={creature.name} />
                         <div>
-                            <label>Description</label>
+                            <label className="first-label">Description</label>
                             <p dangerouslySetInnerHTML={{__html: description}}></p>
                             <label>Alignment</label>
                             <p>{creature.alignment}</p>

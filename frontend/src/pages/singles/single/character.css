@@ -9,11 +9,16 @@
     object-fit: cover;
     border-radius: 10px;
     margin: 0 auto;
+    border: 1px solid var(--white);
+    box-shadow: var(--clear);
 }
 
 .character__container label {
-    margin-top: 40px;
     font-weight: 700;
+    margin-top: 30px;
+}
+.character__container .first-label {
+    margin-top: 0;
 }
 .character__grid {
     display: grid;
@@ -24,6 +29,7 @@
 .character__grid div {
     width: min(400px, 90vw);
     margin: 0 auto;
+    border: 2px solid red;
 }
 
 @media screen and (max-width: 768px) {
