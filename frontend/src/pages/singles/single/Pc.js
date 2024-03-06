@@ -74,7 +74,7 @@ const Pc = () => {
                             <label>Last Seen</label>
                             <p>{pc.lastSeen}</p>
                             <label>Played by</label>
-                            <p>{pc.playedBy}</p>
+                            <p>{pc.username}</p>
                             {pc.userID === user.id && 
                                 <button className="button-primary" onClick={() => navigate(`/pc/edit/${pc._id}`)}>Edit</button>
                             }

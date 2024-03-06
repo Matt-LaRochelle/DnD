@@ -115,6 +115,7 @@ const ControlPanel = ({ clientCharacterList, setClientCharacterList, mapCoordina
                 </ul>
                 :
                 <ul className="map-pc-row">
+                    {(pcs.length === 0 || pcs.every(pc => pc.userID !== user.id)) && <li>You must create player characters before you can add them to the map.</li>}
                     {pcs.filter(pc => pc.userID === user.id).map(pc => (
                         <li key={pc._id}>
                             <Avatar image={pc.image} name={pc.name} hideName={true} />

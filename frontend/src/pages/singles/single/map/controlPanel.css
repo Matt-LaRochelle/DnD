@@ -15,9 +15,9 @@
     overflow-x: scroll;
     padding: 20px;
     color: var(--white);
-    border: 2px solid var(--primary-200);
+    border: 2px solid var(--white);
     border-radius: 10px 10px 10px 10px;
-    background: radial-gradient(ellipse at 30px 50px, transparent, rgba(82, 90, 82, 0.162));
+    background: var(--dark-gradient);
 }
 
 .map-pc-row::-webkit-scrollbar {
