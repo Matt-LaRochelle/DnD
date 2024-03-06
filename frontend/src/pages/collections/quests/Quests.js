@@ -10,43 +10,33 @@ import { useAuthContext } from '../../../hooks/useAuthContext'
 
 // Hooks
 import { useCampaignUsers } from '../../../hooks/useCampaignUsers';
-import { useDeleteItem } from '../../../hooks/useDeleteItem';
 
 // Components
-import Avatar from '../../../components/avatar/Avatar'
 import QuestListItem from '../../../components/questListItem/QuestListItem'
+import Quest from '../../../components/quest/Quest'
 
 // Icons
 import { GiStairsGoal } from "react-icons/gi";
 import { GoGoal } from "react-icons/go";
 import { GiAchievement } from "react-icons/gi";
-import { FaRegStar } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
 
 // Utils
 import { cleanHTML } from '../../../utils/CleanHtml'
 import { checkDm } from '../../../utils/CheckDm'
-import Quest from '../../../components/quest/Quest'
 
 const Quests = () => {
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
-    const dm = checkDm(user.id, campaigns.dmID)
-    const { quests, dispatch: questsDispatch } = useQuestsContext()
+    const { quests } = useQuestsContext()
+    
     const navigate = useNavigate()
-
+    
     const [quest, setQuest] = useState("")
     const [questDescription, setQuestDescription] = useState("")
     const [dmAccessQuest, setDmAccessQuest] = useState(false)
-
-    const { dmInfo, playerInfo, isLoading, error } = useCampaignUsers(campaigns._id)
-    const { deleteItem, error: deleteError, isLoading: deleteLoading } = useDeleteItem()
-
-
-    // Delete an individual quest item
-    const deleteQuest = async (id) => {
-        deleteItem("quest", id)
-    }
+    
+    const { playerInfo, isLoading, error } = useCampaignUsers(campaigns._id)
+    const dm = checkDm(user.id, campaigns.dmID)
 
 
     // Clean HTML
@@ -159,8 +149,8 @@ const Quests = () => {
                 </div>
 
                 <div className="quest-column3">
-                    {quest ? 
-                        <Quest
+                    {quest
+                    ?   <Quest
                             image={quest.image}
                             title={quest.title}
                             type={quest.type}
@@ -172,8 +162,7 @@ const Quests = () => {
                             user={quest.user}
                             dmAccessQuest={dmAccessQuest}
                             playerInfo={playerInfo}
-
-                    />
+                        />
                     : <h2>Select a quest to view more information</h2>
                     }
                 </div>
@@ -184,27 +173,3 @@ const Quests = () => {
 }
 
 export default Quests
-
-
-{/* <div className="individual-quest">
-                        <img src={quest.image} alt={quest.title} />
-                        <div className="quest-content">
-                            {quest.type === "Main" && <h2><GiStairsGoal className="quest-icon" /> {quest.title}</h2>}
-                            {quest.type === "Side" && <h2><GoGoal className="quest-icon" /> {quest.title}</h2>}
-                            {quest.type === "Personal" && <h2><GiAchievement className="quest-icon" /> {quest.title}</h2>}
-                            <div className="given-return"><p>Given by <span>{quest.givenBy}</span></p><hr></hr><p className="returnTo">Return to <span>{quest.returnTo}</span></p></div>
-                            <p dangerouslySetInnerHTML={{__html: questDescription}}></p>
-                            {quest.complete && <h3 className="quest-complete">Complete</h3>}
-                            {dmAccessQuest && 
-                                <button className="button-primary" onClick={() => navigate(`/quest/edit/${quest._id}`)}>Edit</button>
-                            }
-                            {
-                                playerInfo.find(player => player.id === quest.user) &&
-                                <Avatar
-                                    image={playerInfo.find(player => player.id === quest.user).image}
-                                    name={playerInfo.find(player => player.id === quest.user).username}
-                                    hideName={false} 
-                                />
-                            }
-                        </div>
-                    </div> */}
