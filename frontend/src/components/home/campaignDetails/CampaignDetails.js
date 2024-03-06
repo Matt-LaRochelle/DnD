@@ -1,13 +1,19 @@
+import './campaignDetails.css'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+
+// Context
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useAuthContext } from '../../../hooks/useAuthContext'
-import { Link } from 'react-router-dom'
-import './campaignDetails.css'
-import DOMPurify from 'dompurify'
-// date fns
-// import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { useEffect, useState } from 'react'
 
+// Hooks
+import { useCampaignUsers } from '../../../hooks/useCampaignUsers';
+
+// Components
 import CharacterRow from '../../characterRow/CharacterRow'
+
+// 3rd party
+import DOMPurify from 'dompurify'
 
 const CampaignDetails = ({ campaign }) => {
     const { dispatch } = useCampaignsContext()
@@ -15,8 +21,7 @@ const CampaignDetails = ({ campaign }) => {
     const [showID, setShowID] = useState('')
     const [dmRole, setDmRole] = useState(false);
 
-    const [playerInfo, setPlayerInfo] = useState([]);
-    const [dmInfo, setDmInfo] = useState({});
+    const { dmInfo, playerInfo, isLoading, error } = useCampaignUsers(campaign._id)
 
     const [campaignDescription, setCampaignDescription] = useState('')
 
@@ -24,25 +29,6 @@ const CampaignDetails = ({ campaign }) => {
         if (user.id === campaign.dmID) {
             setDmRole(true);
         }
-    }, [])
-
-    // Get all users and dm info for the campaign
-    useEffect(() => {
-        const fetchUsers = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/user/campaign/' + campaign._id, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const json = await response.json()
-
-            if (response.ok) {
-                setPlayerInfo(json.users)
-                setDmInfo(json.dm)
-            }
-        }
-        fetchUsers()
-    
     }, [])
 
     // This deletes the DM's campaign - only available for DMs
@@ -112,26 +98,29 @@ const CampaignDetails = ({ campaign }) => {
 
     return (
         <div key={campaign._id} className="campaignDetails__container">
-            <h2 className="campaignDetails__main-title">{campaign.title}</h2>
-            {/* <h3>Description:</h3> 
-            <p className="campaingDetails__description" dangerouslySetInnerHTML={{__html: campaignDescription}}></p> */}
-            <div className="campaignDetails__list">
-                <CharacterRow 
-                    playerInfo={playerInfo}
-                    dmInfo={dmInfo}
-                />
-            </div>
-            {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
-            <Link to={path} className="button-primary campaignDetails__enter">Enter</Link>
+            {!isLoading && <div>
 
-            {dmRole 
-                ?   <div>
-                        <span className="material-symbols-outlined button-secondary trash" onClick={handleClick}>delete</span>
-                        <p id="campaignDetails__id-checker" className="button-primary" onClick={giveID}>Check Campaign Room Number</p>
-                        <p className="campaign-details__id" style={{display: showID ? "inline-block" : "none"}}>{campaign._id}</p>
-                    </div>
-                :   <span className="button-secondary" onClick={leaveCampaign}>Leave Campaign</span>
-                }
+                <h2 className="campaignDetails__main-title">{campaign.title}</h2>
+                {/* <h3>Description:</h3> 
+                <p className="campaingDetails__description" dangerouslySetInnerHTML={{__html: campaignDescription}}></p> */}
+                <div className="campaignDetails__list">
+                    <CharacterRow 
+                        playerInfo={playerInfo}
+                        dmInfo={dmInfo}
+                    />
+                </div>
+                {/* <p>{formatDistanceToNow(new Date(campaign.createdAt), { addSuffix: true })}</p> */}
+                <Link to={path} className="button-primary campaignDetails__enter">Enter</Link>
+
+                {dmRole 
+                    ?   <div>
+                            <span className="material-symbols-outlined button-secondary trash" onClick={handleClick}>delete</span>
+                            <p id="campaignDetails__id-checker" className="button-primary" onClick={giveID}>Check Campaign Room Number</p>
+                            <p className="campaign-details__id" style={{display: showID ? "inline-block" : "none"}}>{campaign._id}</p>
+                        </div>
+                    :   <span className="button-secondary" onClick={leaveCampaign}>Leave Campaign</span>
+                    }
+            </div>}
         </div>
     )
 }

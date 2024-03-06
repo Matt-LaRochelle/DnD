@@ -57,6 +57,7 @@
     border-radius: 6px;
     transition: .4s;
     display: flex;
+    position: relative;
 }
 
 
@@ -83,9 +84,10 @@
     border: 2px solid purple;
     background: rgba(77, 12, 77, 0.216);
     position: relative;
+    overflow: hidden;
 }
 .quest-hidden::after {
-    content: "Hidden";
+    /* content: "Hidden";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -98,7 +100,30 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4); */
+}
+
+.quest-hidden::after {
+    content: "Hidden";
+    position: absolute;
+    top: -5px;
+    right: -70px;
+    rotate: 45deg;
+    z-index: 1;
+    border: 2px solid purple;
+    background: purple;
+    width: 130px;
+    height: 5px;
+    padding: 20px;
+    color: var(--white);
+    text-align: center;
+}
+
+.quest-star {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    color: yellow;
 }
 
 .quest-column3 {
