@@ -62,8 +62,8 @@ const Pc = () => {
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
                         <img src={pc.image} alt={pc.name} />
-                        <div>
-                            <label>Description</label>
+                        <div className="character-information">
+                            <label className="first-label">Description</label>
                             <p dangerouslySetInnerHTML={{__html: pcDescription}}></p>
                             {pc.userID === user.id && 
                             <div>

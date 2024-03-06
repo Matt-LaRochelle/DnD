@@ -68,8 +68,8 @@ const Npc = () => {
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
                         <img src={npc.image} alt={npc.name} />
-                        <div>
-                            <label>Description</label>
+                        <div className="character-information">
+                            <label className="first-label">Description</label>
                             <p dangerouslySetInnerHTML={{__html: npcDescription}}></p>
                             {campaigns.dmID === user.id && 
                             <div>

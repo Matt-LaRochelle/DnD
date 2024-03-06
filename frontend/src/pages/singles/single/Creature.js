@@ -64,7 +64,7 @@ const Creature = () => {
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
                     <img src={creature.image} alt={creature.name} />
-                        <div>
+                        <div className="character-information">
                             <label className="first-label">Description</label>
                             <p dangerouslySetInnerHTML={{__html: description}}></p>
                             <label>Alignment</label>

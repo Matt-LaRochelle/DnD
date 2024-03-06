@@ -17,8 +17,8 @@
     font-weight: 700;
     margin-top: 30px;
 }
-.character__container .first-label {
-    margin-top: 0;
+.character__grid .first-label {
+    margin-top: 0px;
 }
 .character__grid {
     display: grid;
@@ -27,9 +27,16 @@
 }
 
 .character__grid div {
-    width: min(400px, 90vw);
+    /* width: min(370px, 90vw); */
     margin: 0 auto;
-    border: 2px solid red;
+}
+
+.character__grid .character-information {
+    background: var(--dark-gradient);
+    color: var(--white);
+    padding: 40px;
+    border-radius: 12px;
+    border: 2px solid var(--white);
 }
 
 @media screen and (max-width: 768px) {

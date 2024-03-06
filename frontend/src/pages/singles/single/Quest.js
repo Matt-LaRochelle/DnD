@@ -69,8 +69,8 @@ const Quest = () => {
                     <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
                     <img src={quest.image} alt={quest.title} />
-                        <div>
-                            <label>Description</label>
+                        <div className="character-information">
+                            <label className="first-label">Description</label>
                             <p dangerouslySetInnerHTML={{__html: description}}></p>
                             <label>Type</label>
                             <p>{quest.type}</p>
