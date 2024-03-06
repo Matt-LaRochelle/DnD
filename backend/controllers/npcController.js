@@ -94,7 +94,7 @@ const deleteNpc = async (req, res) => {
     // Remove the NPC from all maps in the same campaign
     await Map.updateMany(
         { campaignID: npc.campaignID }, 
-        { $pull: { characterList: id } }
+        { $pull: { characterList: { _id: id } } }
     );
 
     res.status(200).json(npc)
