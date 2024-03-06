@@ -1,5 +1,4 @@
 import '../characters/characters.css'
-import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 // Hooks
@@ -12,7 +11,7 @@ import Card from '../../../components/card/Card'
 
 const Creatures = () => {
     const { user } = useAuthContext()
-    const {campaigns } = useCampaignsContext()
+    const { campaigns } = useCampaignsContext()
     const { creatures } = useCreaturesContext()
 
     const navigate = useNavigate()
@@ -25,7 +24,13 @@ const Creatures = () => {
         <div className="characters__container glass">
             <h1>Creatures</h1>
             <div className="characters__flexy">
-                {creatures.map((creature) => (
+            {creatures.filter((creature) => {
+                    if (user.id === campaigns.dmID) {
+                        return true; // Include all creatures
+                    } else {
+                        return !creature.hidden; // Exclude creatures with hidden=true
+                    }
+                }).map((creature) => (
                     <Card 
                         key={creature._id}
                         name={creature.name}
