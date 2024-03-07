@@ -52,6 +52,8 @@ const CampaignStart = () => {
             setError(null)
             setEmptyFields([])
             dispatch({type: 'CREATE_CAMPAIGN', payload: json})
+            alert("Campaign created")
+            setShowForm(false);
         }
     }
 

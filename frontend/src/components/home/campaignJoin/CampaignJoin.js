@@ -44,6 +44,8 @@ const CampaignJoin = () => {
             setCampaignID('')
             setError(null)
             dispatch({type: 'CREATE_CAMPAIGN', payload: json})
+            alert("Joined campaign successfully!")
+            setShowForm(false);
         }
     }
 
