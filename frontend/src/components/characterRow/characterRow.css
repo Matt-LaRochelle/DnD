@@ -32,6 +32,7 @@
 }
 .characterRow__dm img {
     border: 2px solid var(--error);
+
     
 }
 .characterRow__players {
@@ -41,4 +42,21 @@
     gap: 10px;
     padding: 10px;
     min-width: 140px;
+}
+
+@media screen and (max-width: 500px) {
+    .characterRow__container {
+        grid-template-columns: 1fr;
+
+    }
+    .characterRow__dm {
+        margin: auto;
+        border-bottom: 1px solid #4d4d4d;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
+    .characterRow__container h2:nth-child(2) {
+        order: 2;
+    }
 }
