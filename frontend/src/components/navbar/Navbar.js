@@ -52,7 +52,7 @@ const Navbar = () => {
     return (
         <header onClick={giveLocation} >
             <div className="container">
-                <Link to="/">
+            <Link to={(!Array.isArray(campaigns) || campaigns === null) ? `/campaign/${campaigns?._id}` : "/"}>
                     <div className="navbar__title">
                         <div className="navbar__logo">
                             <Link to="/dice"><Logo /></Link>
