@@ -18,6 +18,7 @@ import Campaign from './pages/campaign/Campaign'
 import CampaignDescription from './pages/campaign/CampaignDescription'
 import EditCampaign from './pages/campaign/EditCampaign'
 import CampaignSettings from './pages/settings/CampaignSettings';
+import Dice from './pages/dice/Dice'
 
 import Maps from './pages/collections/maps/Maps';
 import Map from './pages/singles/single/map/Map'
@@ -78,6 +79,10 @@ function App() {
             <Route 
               path="/campaign/edit/:id"
               element={user ? <EditCampaign /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/dice"
+              element={user ? <Dice /> : <Navigate to="/login" />}
             />
             <Route
               path="/player-characters"

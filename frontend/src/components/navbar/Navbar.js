@@ -55,7 +55,7 @@ const Navbar = () => {
                 <Link to="/">
                     <div className="navbar__title">
                         <div className="navbar__logo">
-                            <Logo />
+                            <Link to="/dice"><Logo /></Link>
                         </div>
                         <h1>Role Playing Buddy</h1>
                         <h1>RPB</h1>

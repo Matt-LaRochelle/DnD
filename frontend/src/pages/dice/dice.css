@@ -1,0 +1,12 @@
+.dice__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 300px;
+    background: var(--dark-gradient);
+    width: 100px;
+    padding: 5px 10px;
+    border: 2px solid var(--white);
+    border-radius: 12px;
+}
