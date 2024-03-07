@@ -14,6 +14,7 @@ import { usePcs } from '../../hooks/usePcs';
 import { useCreatures } from '../../hooks/useCreatures';
 import { useQuests } from '../../hooks/useQuests';
 import { useMaps } from '../../hooks/useMaps';
+import CharacterRow from '../../components/characterRow/CharacterRow';
 
 
 
@@ -55,7 +56,12 @@ const Campaign = () => {
 
     return (
         <div className="campaign__Container">
-            {loading ? <Loading /> : <Bento dmInfo={dmInfo} playerInfo={playerInfo} />}
+            {loading 
+            ? <Loading /> 
+            : <div className="bento-characterRow-separation">
+                <Bento dmInfo={dmInfo} playerInfo={playerInfo} />
+                <CharacterRow dmInfo={dmInfo} playerInfo={playerInfo} />
+            </div>}
         </div>
     )
 }

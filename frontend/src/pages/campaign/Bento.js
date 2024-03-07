@@ -61,12 +61,6 @@ const Bento = ({ dmInfo, playerInfo }) => {
                 <h2>Non Player Characters</h2>
                 <FaRobot className="bento-icon" />
             </div>
-            <div className="bento-item8">
-                <CharacterRow 
-                    dmInfo={dmInfo}
-                    playerInfo={playerInfo}
-                />
-            </div>
         </div>
     )
 }
