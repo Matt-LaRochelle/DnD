@@ -92,9 +92,10 @@
     bottom: 70px;
     right: 20px; */
     margin-left: 20px;
-    border: 2px solid #ddd;
+    color: var(--error-200);
+    /* border: 2px solid #ddd;
     padding: 8px;
-    background: radial-gradient(ellipse at 30px 50px, #440202bb, #741a01b6);
+    background: radial-gradient(ellipse at 30px 50px, #440202bb, #741a01b6); */
   }
 
   @media screen and (max-width: 600px) {

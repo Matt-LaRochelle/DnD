@@ -14,6 +14,12 @@ header {
     color: #e2e2e2;
     text-decoration: none;
   }
+  .navbar__title h1:first-child {
+    display: static;
+  }
+  .navbar__title h1:nth-child(3) {
+    display: none;
+  }
 
 
 /* navbar */
@@ -162,9 +168,12 @@ nav button {
         align-items: center;
         gap: 30px;
         height: 90vh;
+        /* border: 2px solid red; */
     }
     .nav-menu ul li {
         width: 250px;
+        /* border: 2px solid green; */
+        text-align: center;
     }
     .menu-icon:hover {
         background: var(--white);
@@ -196,11 +205,35 @@ nav button {
       }
 
     .navbar__logo {
-        height: 40px;
-        width: 40px;
+        height: 50px;
+        width: 50px;
         margin-right: 20px;
     }
     .navbar__title h1 {
         font-size: 1.5rem;
     }
+}
+
+@media screen and (max-width: 460px) {
+    .navbar__title {
+        display: flex;
+        align-items: center;
+    }
+
+
+    /* .navbar__logo {
+        align-self:first baseline;
+        height: 50px;
+        width: 50px;
+    } */
+    #small-menu-right {
+        /* left: 50%;
+        transform: translateX(-50%); */
+    }
+    .navbar__title h1:nth-child(2) {
+        display: none;
+      }
+      .navbar__title h1:nth-child(3) {
+        display: inline;
+      }
 }

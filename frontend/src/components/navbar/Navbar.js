@@ -58,6 +58,7 @@ const Navbar = () => {
                             <Logo />
                         </div>
                         <h1>Role Playing Buddy</h1>
+                        <h1>RPB</h1>
                     </div>
                 </Link>
                 <nav>
