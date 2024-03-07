@@ -1,3 +1,8 @@
+.dice__page {
+    width: 100%;
+    height: calc(100vh - 160px);
+}
+
 .dice__container {
     display: flex;
     flex-direction: column;
