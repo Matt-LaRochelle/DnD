@@ -59,31 +59,39 @@
     margin: 20px 0; */
   }
 
-  /* .campaignDetails__container a:hover,
-  .campaignDetails__id-checker:hover {
-    color: var(--black);
-    background: linear-gradient(to right, #d9e8e2, #c1ebe5);
-  } */
-
-  .campaignDetails__container .campaignDetails__enter {
-    /* position: absolute;
-    left: 20px;
-    bottom: 0px; */
+  .campaignDetails__container .leave-campaign {
+    position: static;
+    display: block;
+    font-weight: 500;
+    color: var(--error);
+    border-bottom: 2px solid var(--error);
+    width: max-content;
+    transition: all .4s;
+  }
+  .campaignDetails__container .leave-campaign:hover {
+    color: var(--error-200);
+    border-bottom: 2px solid var(--error-200);
+    cursor: pointer;
   }
 
   #campaignDetails__id-checker {
-    /* position: absolute;
-    bottom: 20px;
-    right: 20px; */
     font-weight: 500;
-    color: var(--primary-800);
-    white-space: normal !important;
+    color: var(--primary-500);
+    border-bottom: 2px solid var(--primary-500);
+    display: inline-block;
+    transition: all .4s;
   }
+  #campaignDetails__id-checker:hover {
+    color: var(--primary-200);
+    border-bottom: 2px solid var(--primary-200);
+    cursor: pointer;
+  }
+
   .campaignDetails__container .campaign-details__id {
     /* position: absolute;
     bottom: 70px;
     right: 20px; */
-    margin-top: 20px;
+    margin-left: 20px;
     border: 2px solid #ddd;
     padding: 8px;
     background: radial-gradient(ellipse at 30px 50px, #440202bb, #741a01b6);
