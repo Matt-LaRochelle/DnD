@@ -1,8 +1,8 @@
 import './dice.css';
 
-const D6 = () => {
+const D4 = () => {
     return (
-        <div className="dice6">
+        <div className="dice4">
             <div className="dice-face">
                 <span>1</span>
             </div>
@@ -15,14 +15,8 @@ const D6 = () => {
             <div className="dice-face">
                 <span>4</span>
             </div>
-            <div className="dice-face">
-                <span>5</span>
-            </div>
-            <div className="dice-face">
-                <span>6</span>
-            </div>
         </div>
     )
 }
 
-export default D6;
+export default D4;

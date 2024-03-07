@@ -1,5 +1,6 @@
 import './dice.css'
 import D6 from '../../components/dice/D6'
+import D4 from '../../components/dice/D4'
 
 const Dice = () => {
     return (
@@ -14,6 +15,7 @@ const Dice = () => {
                 <p>D20</p>
                 <p>D100</p>
             </div>
+            <D4 />
             <D6 />
         </div>
     )
