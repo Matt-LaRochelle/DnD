@@ -84,7 +84,7 @@ const Navbar = () => {
                                 {(!Array.isArray(campaigns) || campaigns === null) && (
                                     <>
                                         <li onClick={() => setNav(!nav)}><Link to={`/campaign/${campaigns?._id}`}><TbWorld className="nav-icon" />Campaign</Link></li>
-                                        <li onClick={() => setNav(!nav)}><Link to="/campaign-settings"><IoIosSettings className="nav-icon" />Settings</Link></li>
+                                        {/* <li onClick={() => setNav(!nav)}><Link to="/campaign-settings"><IoIosSettings className="nav-icon" />Settings</Link></li> */}
                                         <li onClick={() => setNav(!nav)}><Link to='/player-characters'><FaPeopleGroup className="nav-icon" />Player Characters</Link></li>
                                         <li onClick={() => setNav(!nav)}><Link to='/non-player-characters'><FaRobot className="nav-icon" />Non Player Characters</Link></li>
                                         <li onClick={() => setNav(!nav)}><Link to='/maps'><LiaMapSolid className="nav-icon" />Maps</Link></li>

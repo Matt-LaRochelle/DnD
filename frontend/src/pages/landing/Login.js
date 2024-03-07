@@ -37,6 +37,7 @@ const Login = () => {
             />
             <p>Forgot your password? <Link to="/forgot">Reset it here</Link></p>
             <button disabled={isLoading} className="button-primary">Log in</button>
+            <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
             {error && <div className='error'>{error}</div>}
             {isLoading && 
                     <LoginLoading />}

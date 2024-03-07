@@ -2,8 +2,17 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin: 0 auto 100px;
+    /* margin: 0 auto 100px;
     padding: 1rem;
     background: linear-gradient(rgba(33, 2, 2, 0.683), black) ;
-    border-radius: 10px;
+    border-radius: 10px; */
+}
+
+@media screen and (max-width: 642px) {
+    .characters__container h2 {
+        text-align: center;
+    }
+    .characters__flexy {
+        justify-content: center;
+    }
 }

@@ -6,6 +6,7 @@ import { useSignup } from '../../hooks/useSignup'
 
 // Components
 import LoginLoading from '../../components/loading/LoginLoading';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
     const [email, setEmail] = useState('')
@@ -43,6 +44,7 @@ const Signup = () => {
             />
             
             <button className="button-primary" disabled={isLoading}>Sign up</button>
+            <p>Already have an account? <Link to="/login">Login here</Link></p>
             {error && <div className="error">{error}</div>}
             {isLoading && 
                     <LoginLoading />}

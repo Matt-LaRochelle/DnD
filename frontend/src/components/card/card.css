@@ -49,3 +49,12 @@
     color: var(--black);
     border: 2px solid var(--primary-700);
 }
+
+@media screen and (max-width: 330px) {
+    #card__container {
+        width: 100%;
+    }
+    #card__container img {
+        width: 100%;
+    }
+}
