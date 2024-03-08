@@ -1,14 +1,20 @@
 import './edit.css'
 import { useEffect, useState } from 'react'
-import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
-import { useQuestsContext } from '../../../hooks/useQuestsContext'
-import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import DOMPurify from 'dompurify'
+// Context
+import { useAuthContext } from '../../../hooks/useAuthContext'
+import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { useQuestsContext } from '../../../hooks/useQuestsContext'
+
+// Components
 import Editor from '../../../components/editor/Editor'
 
+// Icons
 import { FaEdit } from "react-icons/fa";
+
+// Utils
+import { cleanHTML } from '../../../utils/CleanHtml'
 
 const EditQuest = () => {
     const [formState, setFormState] = useState({
@@ -20,9 +26,7 @@ const EditQuest = () => {
         hidden: false,
         complete: false
     });
-    const [error, setError] = useState(null)
-    const [emptyFields, setEmptyFields ] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [questInfo, setQuestInfo] = useState({})
 
     const [eTitle, setETitle] = useState(false)
     const [eDescription, setEDescription] = useState(false)
@@ -35,7 +39,7 @@ const EditQuest = () => {
     const [dbDescription, setDbDescription] = useState('')
 
     const { campaigns } = useCampaignsContext()
-    const { quests, dispatch } = useQuestsContext()
+    const { quests } = useQuestsContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
@@ -54,26 +58,18 @@ const EditQuest = () => {
     useEffect(() => {
         // Fetch a Quest's information
         const fetchQuestInfo = async () => {
-            setLoading(true);
-            const response = await fetch(`https://dnd-kukm.onrender.com/api/quest/${campaigns._id}/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const questInfo = await response.json()
-
-            if (response.ok) {
-                dispatch({ type: 'SET_QUEST', payload: questInfo })
-                setLoading(false)
+            const data = quests.find(quest => quest._id === path);
+            if (data) {
+                setQuestInfo(data)
                 setFormState({
                     title: '',
                     description: '',
                     image: '',
-                    type: questInfo.type,
+                    type: data.type,
                     givenBy: '',
                     returnTo: '',
-                    complete: questInfo.complete,
-                    hidden: questInfo.hidden
+                    complete: data.complete,
+                    hidden: data.hidden
                 })
             }
         }
@@ -119,18 +115,14 @@ const EditQuest = () => {
 
     }
 
-    // For handling inner HTML
-    useEffect(()=> {
-        const cleanHtml = () => {
-            if (quests.description) {
-                let cleanDescription = DOMPurify.sanitize(quests.description)
-                setDbDescription(cleanDescription)
-            }
+
+    // Clean HTML
+    useEffect(() => {
+        if (questInfo) {
+            cleanHTML(questInfo.description, setDbDescription);
+
         }
-        if (quests) {
-            cleanHtml()
-        }
-    }, [quests])
+    }, [questInfo]);
 
     useEffect(() => {
         setFormState(prevState => ({
@@ -144,7 +136,7 @@ const EditQuest = () => {
         <form className='editCharacter__form glass'>
            <h2>Edit Quest</h2>
             <label>Title <FaEdit onClick={() => setETitle(!eTitle)}/></label>
-            <p>{quests.title}</p>
+            <p>{questInfo.title}</p>
             {eTitle &&
             <div>
                 <input 
@@ -171,7 +163,7 @@ const EditQuest = () => {
             }
 
             <label>Image <FaEdit onClick={() => setEImage(!eImage)}/></label>
-            <img src={quests.image} alt={quests.name}/>
+            <img src={questInfo.image} alt={questInfo.name}/>
             {eImage &&
             <div>
                 <input 
@@ -184,20 +176,20 @@ const EditQuest = () => {
             }
 
             {/* <label>Type <FaEdit onClick={() => setEType(!eType)}/></label>
-            <p>{quests.type}</p>
+            <p>{questInfo.type}</p>
             {eType &&
             <div>
                 <select id="type" onChange={handleChange}>
-                    <option value="Main" selected={quests.type === "Main" ? true : false}>Main Quest</option>
-                    <option value="Side" selected={quests.type === "Side" ? true : false}>Side Quest</option>
-                    <option value="Personal" selected={quests.type === "Personal" ? true : false}>Personal Quest</option>
+                    <option value="Main" selected={questInfo.type === "Main" ? true : false}>Main Quest</option>
+                    <option value="Side" selected={questInfo.type === "Side" ? true : false}>Side Quest</option>
+                    <option value="Personal" selected={questInfo.type === "Personal" ? true : false}>Personal Quest</option>
                 </select>
                 {formState.type && <button onClick={submit} className="button-primary">Save</button>}
             </div>
             } */}
             
             <label>Given by <FaEdit onClick={() => setEGivenBy(!eGivenBy)}/></label>
-            <p>{quests.givenBy}</p>
+            <p>{questInfo.givenBy}</p>
             {eGivenBy &&
             <div>
                 <input 
@@ -210,7 +202,7 @@ const EditQuest = () => {
             }
            
             <label>Return to <FaEdit onClick={() => setEReturnTo(!eReturnTo)}/></label>
-            <p>{quests.returnTo}</p>
+            <p>{questInfo.returnTo}</p>
             {eReturnTo &&
             <div>
                 <input 
@@ -226,14 +218,14 @@ const EditQuest = () => {
                 <input type="checkbox" id="complete" checked={formState.complete} onChange={handleChange} className="slider-checkbox" />
                 <span className="slider-round"></span>
             </label>
-                {formState.complete !== quests.complete && <button onClick={submit} className="button-primary">Save</button>}
+                {formState.complete !== questInfo.complete && <button onClick={submit} className="button-primary">Save</button>}
                  
             <label>Hide Quest</label>
             <label className="slider" style={{backgroundColor: formState.hidden ? "var(--primary-800)" : "#ccc"}}>
                 <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
                 <span className="slider-round"></span>
             </label>
-                {formState.hidden !== quests.hidden && <button onClick={submit} className="button-primary">Save</button>}
+                {formState.hidden !== questInfo.hidden && <button onClick={submit} className="button-primary">Save</button>}
 
             
         </form>

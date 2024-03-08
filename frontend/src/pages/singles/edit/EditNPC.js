@@ -20,9 +20,7 @@ const EditNPC = () => {
         lastSeen: '',
         hidden: false
     });
-    const [error, setError] = useState(null)
-    const [emptyFields, setEmptyFields ] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [npcInfo, setNpcInfo] = useState({})
 
     const [eName, setEName] = useState(false)
     const [eDescription, setEDescription] = useState(false)
@@ -38,7 +36,7 @@ const EditNPC = () => {
     const [catchphrases, setCatchphrases] = useState('')
 
     const { campaigns } = useCampaignsContext()
-    const { npcs, dispatch } = useNpcsContext()
+    const { npcs } = useNpcsContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
@@ -72,17 +70,10 @@ const EditNPC = () => {
     useEffect(() => {
         // Fetch an NPC's information
         const fetchNPCinfo = async () => {
-            setLoading(true);
-            const response = await fetch(`https://dnd-kukm.onrender.com/api/npc/${campaigns._id}/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const npcInfo = await response.json()
-
-            if (response.ok) {
-                dispatch({ type: 'SET_NPC', payload: npcInfo })
-                setLoading(false)
+            const data = npcs.find(npc => npc._id === path);
+    
+            if (data) {
+                setNpcInfo(data)
                 setFormState({
                     description: '',
                     image: '',
@@ -90,7 +81,7 @@ const EditNPC = () => {
                     catchphrases: '',
                     secrets: '',
                     lastSeen: '',
-                    hidden: npcInfo.hidden
+                    hidden: data.hidden
                 })
             }
         }
@@ -141,7 +132,7 @@ const EditNPC = () => {
         <form className='editCharacter__form glass'>
            <h2>Edit NPC</h2>
             <label>Name <FaEdit onClick={() => setEName(!eName)}/></label>
-            <p>{npcs.name}</p>
+            <p>{npcInfo.name}</p>
             
             {eName &&
                 <div>
@@ -156,7 +147,7 @@ const EditNPC = () => {
             }
 
             <label>Description <FaEdit onClick={() => setEDescription(!eDescription)}/></label>
-            <p dangerouslySetInnerHTML={{__html: npcs.description}}></p>
+            <p dangerouslySetInnerHTML={{__html: npcInfo.description}}></p>
             {eDescription &&
                 <div>
                     <Editor 
@@ -168,7 +159,7 @@ const EditNPC = () => {
                 }
 
             <label>Image <FaEdit onClick={() => setEImage(!eImage)}/></label>
-            <img src={npcs.image} alt={npcs.name}/>
+            <img src={npcInfo.image} alt={npcInfo.name}/>
             {eImage &&
                 <div>
                     <input 
@@ -181,7 +172,7 @@ const EditNPC = () => {
             }
 
             <label>Voice <FaEdit onClick={() => setEVoice(!eVoice)}/></label>
-            <p dangerouslySetInnerHTML={{__html: npcs.voice}}></p>
+            <p dangerouslySetInnerHTML={{__html: npcInfo.voice}}></p>
             {eVoice &&
                 <div>
                     <Editor 
@@ -193,7 +184,7 @@ const EditNPC = () => {
                 }
 
             <label>Catchphrases <FaEdit onClick={() => setECatchphrases(!eCatchphrases)}/></label>
-            <p dangerouslySetInnerHTML={{__html: npcs.catchphrases}}></p>
+            <p dangerouslySetInnerHTML={{__html: npcInfo.catchphrases}}></p>
             {eCatchphrases &&
                 <div>
                     <Editor 
@@ -205,7 +196,7 @@ const EditNPC = () => {
                 }
 
             <label>Secrets <FaEdit onClick={() => setESecrets(!eSecrets)}/></label>
-            <p dangerouslySetInnerHTML={{__html: npcs.secrets}}></p>
+            <p dangerouslySetInnerHTML={{__html: npcInfo.secrets}}></p>
             {eSecrets &&
                 <div>
                     <Editor 
@@ -217,7 +208,7 @@ const EditNPC = () => {
                 }
 
             <label>Last Seen <FaEdit onClick={() => setELastSeen(!eLastSeen)}/></label>
-            <p dangerouslySetInnerHTML={{__html: npcs.lastSeen}}></p>
+            <p dangerouslySetInnerHTML={{__html: npcInfo.lastSeen}}></p>
             {eLastSeen &&
                 <div>
                     <input 
@@ -233,7 +224,7 @@ const EditNPC = () => {
                 <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
                 <span className="slider-round"></span>
             </label>
-            {formState.hidden !== npcs.hidden && <button onClick={submit} className="button-primary">Save</button>}
+            {formState.hidden !== npcInfo.hidden && <button onClick={submit} className="button-primary">Save</button>}
 
             
         </form>

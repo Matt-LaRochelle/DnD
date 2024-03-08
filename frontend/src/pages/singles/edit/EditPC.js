@@ -1,14 +1,20 @@
 import './edit.css'
 import { useEffect, useState } from 'react'
-import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
-import { usePcsContext } from '../../../hooks/usePcsContext'
-import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import DOMPurify from 'dompurify'
+// Contexts
+import { useAuthContext } from '../../../hooks/useAuthContext'
+import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { usePcsContext } from '../../../hooks/usePcsContext'
+
+// Components
 import Editor from '../../../components/editor/Editor'
 
+// Icons
 import { FaEdit } from "react-icons/fa";
+
+// Utils
+import { cleanHTML } from '../../../utils/CleanHtml'
 
 const EditPC = () => {
     const [formState, setFormState] = useState({
@@ -19,9 +25,7 @@ const EditPC = () => {
         lastSeen: '',
         hidden: false
     });
-    const [error, setError] = useState(null)
-    const [emptyFields, setEmptyFields ] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [pcInfo, setPcInfo] = useState({})
 
     const [eName, setEName] = useState(false)
     const [eDescription, setEDescription] = useState(false)
@@ -35,7 +39,7 @@ const EditPC = () => {
     const [dbSecrets, setDbSecrets] = useState('')
 
     const { campaigns } = useCampaignsContext()
-    const { pcs, dispatch } = usePcsContext()
+    const { pcs } = usePcsContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
@@ -55,24 +59,16 @@ const EditPC = () => {
     useEffect(() => {
         // Fetch an PC's information
         const fetchPCinfo = async () => {
-            setLoading(true);
-            const response = await fetch(`https://dnd-kukm.onrender.com/api/pc/${campaigns._id}/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const pcInfo = await response.json()
-
-            if (response.ok) {
-                dispatch({ type: 'SET_PC', payload: pcInfo })
-                setLoading(false)
+            const data = pcs.find(pc => pc._id === path);
+            if (data) {
+                setPcInfo(data)
                 setFormState({
                     name: '',
                     description: '',
                     image: '',
                     secrets: '',
                     lastSeen: '',
-                    hidden: pcInfo.hidden
+                    hidden: data.hidden
                 })
             }
         }
@@ -119,22 +115,13 @@ const EditPC = () => {
 
     }
 
-    // For handling inner HTML
-    useEffect(()=> {
-        const cleanHtml = () => {
-            if (pcs.description) {
-                let cleanDescription = DOMPurify.sanitize(pcs.description)
-                setDbDescription(cleanDescription)
-            }
-            if (pcs.secrets) {
-                let cleanSecrets = DOMPurify.sanitize(pcs.secrets)
-                setDbSecrets(cleanSecrets)
-            }
+    // Clean HTML
+    useEffect(() => {
+        if (pcInfo) {
+            cleanHTML(pcInfo.description, setDbDescription);
+            cleanHTML(pcInfo.secrets, setDbSecrets);
         }
-        if (pcs) {
-            cleanHtml()
-        }
-    }, [pcs])
+    }, [pcInfo]);
 
     useEffect(() => {
         setFormState(prevState => ({
@@ -150,7 +137,7 @@ const EditPC = () => {
         <form className='editCharacter__form glass'>
            <h2>Edit PC</h2>
             <label>Name <FaEdit onClick={() => setEName(!eName)}/></label>
-            <p>{pcs.name}</p>
+            <p>{pcInfo.name}</p>
             {eName &&
                 <div>
                     <input 
@@ -158,7 +145,7 @@ const EditPC = () => {
                         type="text" 
                         id="name" 
                         onChange={handleChange} 
-                        placeholder={pcs.name}>
+                        placeholder={pcInfo.name}>
                     </input>
                     {/* if the input with id="name" is onFocus, then show this button */}
                     {formState.name && <button onClick={submit} className="button-primary">Save</button>}
@@ -178,7 +165,7 @@ const EditPC = () => {
             }
 
             <label>Image <FaEdit onClick={() => setEImage(!eImage)}/></label>
-            <img src={pcs.image} alt={pcs.name}/>
+            <img src={pcInfo.image} alt={pcInfo.name}/>
             {eImage &&
             <div>
                 <input 
@@ -205,7 +192,7 @@ const EditPC = () => {
             }
 
             <label>Last Seen <FaEdit onClick={() => setELastSeen(!eLastSeen)}/></label>
-            <p dangerouslySetInnerHTML={{__html: pcs.lastSeen}}></p>
+            <p dangerouslySetInnerHTML={{__html: pcInfo.lastSeen}}></p>
             {eLastSeen &&
                 <div>
                     <input 
@@ -221,7 +208,7 @@ const EditPC = () => {
                 <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
                 <span className="slider-round"></span>
             </label>
-                {formState.hidden !== pcs.hidden && <button onClick={submit} className="button-primary">Save</button>}
+                {formState.hidden !== pcInfo.hidden && <button onClick={submit} className="button-primary">Save</button>}
 
             
         </form>
