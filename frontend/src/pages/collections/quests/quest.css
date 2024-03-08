@@ -85,3 +85,25 @@
 .given-return hr {
     display: block;
 } */
+
+@media screen and (max-width: 1100px) {
+    .quest-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 70px 300px 1fr;
+        border: 2px solid white;
+        height: 1000px;
+    }
+    .quest-column1 {
+        flex-direction: row;
+    }
+    .quest-column2 {
+        border: 2px dotted var(--white);
+        border-radius: 5px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .quest-column1 {
+        gap: 14px;
+    }
+}
