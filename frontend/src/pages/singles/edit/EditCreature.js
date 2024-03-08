@@ -1,14 +1,21 @@
 import './edit.css'
 import { useEffect, useState } from 'react'
-import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
-import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
-import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import DOMPurify from 'dompurify'
+// Contexts
+import { useAuthContext } from '../../../hooks/useAuthContext'
+import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
+import { useCreaturesContext } from '../../../hooks/useCreaturesContext'
+
+// Components
 import Editor from '../../../components/editor/Editor'
 
+// Icons
 import { FaEdit } from "react-icons/fa";
+
+// Utils
+import { cleanHTML } from '../../../utils/CleanHtml'
+
 
 const EditCreature = () => {
     const [formState, setFormState] = useState({
@@ -19,9 +26,7 @@ const EditCreature = () => {
         secrets: '',
         hidden: false
     });
-    const [error, setError] = useState(null)
-    const [emptyFields, setEmptyFields ] = useState([])
-    const [loading, setLoading] = useState(true)
+
 
     const [eName, setEName] = useState(false)
     const [eDescription, setEDescription] = useState(false)
@@ -38,12 +43,14 @@ const EditCreature = () => {
     const [dbSecrets, setDbSecrets] = useState('')
 
     const { campaigns } = useCampaignsContext()
-    const { creatures, dispatch } = useCreaturesContext()
+    const { creatures } = useCreaturesContext()
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
     const location = useLocation()
     const path = location.pathname.split("/")[3]
+
+    const [creatureInfo, setCreatureInfo] = useState({})
 
     const handleChange = (event) => {
         const isCheckbox = event.target.type === 'checkbox';
@@ -56,18 +63,11 @@ const EditCreature = () => {
 
     useEffect(() => {
         // Fetch a Creature's information
-        const fetchCreatureInfo = async () => {
-            setLoading(true);
-            const response = await fetch(`https://dnd-kukm.onrender.com/api/creature/${campaigns._id}/${path}`, {
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            })
-            const creatureInfo = await response.json()
-
-            if (response.ok) {
-                dispatch({ type: 'SET_CREATURE', payload: creatureInfo })
-                setLoading(false)
+        const fetchCreatureInfo = () => {
+            const data = creatures.find(creature => creature._id === path);
+    
+            if (data) {
+                setCreatureInfo(data)
                 setFormState({
                     name: '',
                     description: '',
@@ -75,15 +75,15 @@ const EditCreature = () => {
                     nativeTo: '',
                     alignment: '',
                     secrets: '',
-                    hidden: creatureInfo.hidden
+                    hidden: data.hidden
                 })
             }
         }
-
+    
         if (user) {
             fetchCreatureInfo()
         }
-    }, [user])
+    }, [user, creatures, path])
 
 
     const submit = async (e) => {
@@ -121,23 +121,15 @@ const EditCreature = () => {
 
     }
 
-    // For handling inner HTML
-    useEffect(()=> {
-        const cleanHtml = () => {
-            if (creatures.description) {
-                let cleanDescription = DOMPurify.sanitize(creatures.description)
-                setDbDescription(cleanDescription)
-            }
-            if (creatures.secrets) {
-                let cleanSecrets = DOMPurify.sanitize(creatures.secrets)
-                setDbSecrets(cleanSecrets)
-            }
+    // Clean HTML
+    useEffect(() => {
+        if (creatureInfo) {
+            cleanHTML(creatureInfo.description, setDbDescription);
+            cleanHTML(creatureInfo.secrets, setDbSecrets);
         }
-        if (creatures) {
-            cleanHtml()
-        }
-    }, [creatures])
+    }, [creatureInfo]);
 
+    // Set formState to the creature's information
     useEffect(() => {
         setFormState(prevState => ({
             ...prevState,
@@ -152,7 +144,7 @@ const EditCreature = () => {
         <form className='editCharacter__form glass'>
            <h2>Edit Creature</h2>
             <label>Name <FaEdit onClick={() => setEName(!eName)}/></label>
-            <p>{creatures.name}</p>
+            <p>{creatureInfo.name}</p>
             {eName &&
             <div>
                 <input 
@@ -181,7 +173,7 @@ const EditCreature = () => {
             }
 
             <label>Image  <FaEdit onClick={() => setEImage(!eImage)}/></label>
-            <img src={creatures.image} alt={creatures.name}/>
+            <img src={creatureInfo.image} alt={creatureInfo.name}/>
             {eImage &&
             <div>
                 <input 
@@ -195,7 +187,7 @@ const EditCreature = () => {
             }
 
             <label>Native to <FaEdit onClick={() => setENativeTo(!eNativeTo)}/></label>
-            <p>{creatures.nativeTo}</p>
+            <p>{creatureInfo.nativeTo}</p>
             {eNativeTo &&
             <div>
                 <input 
@@ -209,14 +201,14 @@ const EditCreature = () => {
             }
 
             <label>Alignment <FaEdit onClick={() => setENativeTo(!eNativeTo)}/></label>
-            <p>{creatures.alignment}</p>
+            <p>{creatureInfo.alignment}</p>
             {eAlignment &&
             <div>
                 <select id="alignment" onChange={handleChange}>
-                    <option value="Good" selected={creatures.alignment === "Good" ? true : false}>Good</option>
-                    <option value="Neutral" selected={creatures.alignment === "Neutral" ? true : false}>Neutral</option>
-                <option value="Evil" selected={creatures.alignment === "Evil" ? true : false}>Evil</option>
-                <option value="Unknown" selected={creatures.alignment === "Unknown" ? true : false}>Unknown</option>
+                    <option value="Good" selected={creatureInfo.alignment === "Good" ? true : false}>Good</option>
+                    <option value="Neutral" selected={creatureInfo.alignment === "Neutral" ? true : false}>Neutral</option>
+                <option value="Evil" selected={creatureInfo.alignment === "Evil" ? true : false}>Evil</option>
+                <option value="Unknown" selected={creatureInfo.alignment === "Unknown" ? true : false}>Unknown</option>
                 </select>
                 {formState.alignment && <button onClick={submit} className="button-primary">Save</button>}
             </div>
@@ -240,7 +232,7 @@ const EditCreature = () => {
                 <input type="checkbox" id="hidden" checked={formState.hidden} onChange={handleChange} className="slider-checkbox" />
                 <span className="slider-round"></span>
             </label>
-                {formState.hidden !== creatures.hidden && <button onClick={submit} className="button-primary">Save</button>}
+                {formState.hidden !== creatureInfo.hidden && <button onClick={submit} className="button-primary">Save</button>}
 
             
         </form>

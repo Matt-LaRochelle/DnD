@@ -1,18 +1,23 @@
 import '../characters/characters.css'
 import { useNavigate } from "react-router-dom"
 
-// Hooks
+// Context
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useMapsContext } from '../../../hooks/useMapsContext'
 
+// Hooks
+import { useMaps } from '../../../hooks/useMaps'
+
 // Components
 import Card from '../../../components/card/Card'
+import Loading from '../../../components/loading/Loading'
 
 const Maps = () => {
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
     const { maps } = useMapsContext()
+    const { isLoading, error } = useMaps(campaigns._id)
 
     const navigate = useNavigate()
 
@@ -23,6 +28,7 @@ const Maps = () => {
     return (
         <div className="characters__container glass">
             <h1>Maps</h1>
+            {isLoading ? <Loading /> :
             <div className="characters__flexy">
             {maps.filter((map) => {
                     if (user.id === campaigns.dmID) {
@@ -48,7 +54,7 @@ const Maps = () => {
                         <p onClick={handleClick} className='add'>+</p>
                     </div>
                 }
-            </div>
+            </div>}
         </div>
     )
 }
