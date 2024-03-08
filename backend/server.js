@@ -10,6 +10,7 @@ const pcRoutes = require('./routes/pc')
 const mapRoutes = require('./routes/map')
 const creatureRoutes = require('./routes/creature')
 const questRoutes = require('./routes/quest')
+const artworkRoutes = require('./routes/artwork')
 
 
 // express app
@@ -32,6 +33,7 @@ app.use('/api/pc/', pcRoutes)
 app.use('/api/map/', mapRoutes)
 app.use('/api/creature/', creatureRoutes)
 app.use('/api/quest/', questRoutes)
+app.use('/api/artwork/', artworkRoutes)
 
 
 // connect to db

@@ -37,7 +37,7 @@ const Bento = ({ dmInfo, playerInfo }) => {
                 <h2>{campaigns.title}</h2>
                 <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
             </div>
-            <div className="bento-item2">
+            <div className="bento-item2" onClick={() => navigate('/artwork')}>
                 <h2>Campaign Artwork</h2>
                 <IoIosImages className="bento-icon" />
             </div>

@@ -1,0 +1,23 @@
+.artwork__container {
+    border: 2px solid red;
+}
+
+.mySwiper {
+    width: 100%;
+    height: calc(100vh - 160px);
+}
+
+.add-art {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-art input {
+    width: 250px;
+}
