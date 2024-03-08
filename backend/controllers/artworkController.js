@@ -26,20 +26,14 @@ const getArtworks = async (req, res) => {
 // DM creates a new artwork
 const createArtwork = async (req, res) => {
     const {
-        title, 
-        description, 
-        image, 
-        type, 
-        user,
-        givenBy, 
-        returnTo, 
-        hidden, 
+        url,
+        description,
         campaignID
     } = req.body
     
     // Check that user filled out all information
     let emptyFields = []
-    if (!title) {
+    if (!url) {
         emptyFields.push('title')
     }
 
@@ -61,15 +55,8 @@ const createArtwork = async (req, res) => {
     // Add doc to db
     try {
         const artwork = await Artwork.create({
-            title, 
+            url, 
             description, 
-            image, 
-            type, 
-            user,
-            givenBy, 
-            returnTo, 
-            hidden, 
-            complete: false,
             campaignID
         })
         res.status(200).json(artwork);
