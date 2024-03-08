@@ -8,6 +8,9 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 // Components
 import Editor from '../../../components/editor/Editor'
 
+// Utils
+import { cleanHTML } from '../../../utils/CleanHtml'
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -22,18 +25,22 @@ const Artwork = () => {
     const [url, setUrl] = useState("");
     const [description, setDescription] = useState("");
     const [images, setImages] = useState([]);
+    const [descriptionsArray, setDescriptionsArray] = useState([])
 
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const { user } = useAuthContext()
-    const { campaignID } = useCampaignsContext()
+    const { campaigns } = useCampaignsContext()
 
     const handleSubmit = async () => {
         console.log(url, description);
         const response = await fetch('https://dnd-kukm.onrender.com/api/artwork/', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({url, description, campaignID})
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            },
+            body: JSON.stringify({url, description, campaignID: campaigns._id})
         })
         const json = await response.json()
 
@@ -51,6 +58,9 @@ const Artwork = () => {
     const handleChange = (event) => {
         setUrl(event.target.value);
     }
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
+    }
 
 
 
@@ -59,7 +69,7 @@ const Artwork = () => {
         setError(null)
 
         const fetchImages = async () => {
-            const response = await fetch('https://dnd-kukm.onrender.com/api/artwork/' + campaignID, {
+            const response = await fetch('https://dnd-kukm.onrender.com/api/artwork/' + campaigns._id, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }
@@ -82,13 +92,25 @@ const Artwork = () => {
     
     }, [user])
 
+    // useEffect(() => {
+    //     for(let i = 0; i < images.length; i++) {
+    //         if (images[i].description) {
+    //             let singleDescription = cleanHTML(images[i].description)
+    //             setDescriptionsArray([...descriptionsArray, singleDescription])
+    //         }
+    //         let singleDescription = ""
+    //         setDescriptionsArray([...descriptionsArray, singleDescription])
+    //     }
+    // })
+
     return (
         <div className="artwork__container">
             <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
             {images.map((image, index) => {
                 return (
-                    <SwiperSlide key={index}>
-                        <img src={image.url} alt={image.name} />
+                    <SwiperSlide key={index} className="image-slide">
+                        <img className="slider-image" src={image.url} alt={image.name} />
+                        <p>{image.description}</p>
                     </SwiperSlide>
                 )
             }
@@ -97,9 +119,10 @@ const Artwork = () => {
                     <div className="add-art">
                         <h2>Add Art</h2>
                         <input type="text" value={url} placeholder='URL' onChange={handleChange}></input>
-                        <label>Description</label>
-                        <Editor value={description} onChange={setDescription}/>
-                        <button onClick={handleSubmit}>Submit</button>
+                        <input type="text" value={description} placeholder='Description' onChange={handleDescriptionChange}></input>
+                        <button className="button-primary" onClick={handleSubmit}>Submit</button>
+                        {isLoading && <p>Loading...</p>}
+                        {error && <p>{error}</p>}
                     </div>
                 </SwiperSlide>
             </Swiper>

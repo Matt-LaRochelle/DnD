@@ -7,6 +7,22 @@
     height: calc(100vh - 160px);
 }
 
+.image-slide {
+    position: relative;
+}
+.image-slide img {
+    width: 100%;
+    object-fit: cover;
+}
+.image-slide p {
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0 10px;
+}
+
 .add-art {
     display: flex;
     flex-direction: column;
@@ -20,4 +36,8 @@
 
 .add-art input {
     width: 250px;
+}
+
+.add-art .button-primary {
+    margin-top: 40px;
 }
