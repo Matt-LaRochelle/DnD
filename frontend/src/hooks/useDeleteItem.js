@@ -39,20 +39,24 @@ export const useDeleteItem = () => {
             return
         }
         if (response.ok) {
-            if (type === 'npc') {
-                dispatchNpc({type: 'DELETE_NPC', payload: json})
-            }
-            if (type === 'pc') {
-                dispatchPc({type: 'DELETE_PC', payload: json})
-            }
-            if (type === 'creature') {
-                dispatchCreature({type: 'DELETE_CREATURE', payload: json})
-            }
-            if (type === 'map') {
-                dispatchMap({type: 'DELETE_MAP', payload: json})
-            }
-            if (type === 'quest') {
-                dispatchQuest({type: 'DELETE_QUEST', payload: json})
+            switch (type) {
+                case 'npc':
+                    dispatchNpc({type: 'DELETE_NPC', payload: json})
+                    break
+                case 'pc':
+                    dispatchPc({type: 'DELETE_PC', payload: json})
+                    break
+                case 'creature':
+                    dispatchCreature({type: 'DELETE_CREATURE', payload: json})
+                    break
+                case 'map':
+                    dispatchMap({type: 'DELETE_MAP', payload: json})
+                    break
+                case 'quest':
+                    dispatchQuest({type: 'DELETE_QUEST', payload: json})
+                    break
+                default:
+                    break
             }
             setIsLoading(false)
         }
