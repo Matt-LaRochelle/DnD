@@ -47,10 +47,6 @@ const Quest = () => {
         }
     }, [user])
 
-    const goBack = () => {
-        navigate(`/campaign/${campaigns._id}`)
-    }
-
     // For handling inner HTML
     useEffect(() => {
         if (quest) {
@@ -66,7 +62,6 @@ const Quest = () => {
                 :
                 <div className='character__container glass'>
                     <h1>{quest.title}</h1>
-                    <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
                     <img src={quest.image} alt={quest.title} />
                         <div className="character-information">

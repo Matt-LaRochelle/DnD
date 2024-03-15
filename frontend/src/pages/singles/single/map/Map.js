@@ -1,7 +1,7 @@
 import './map.css'
 
 import React, { useEffect, useState, useRef } from 'react'
-import { useLocation, useNavigate, Link } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 // Context
 import { useAuthContext } from '../../../../hooks/useAuthContext'
@@ -46,7 +46,6 @@ const Map = () => {
 
     const location = useLocation()
     const path = location.pathname.split("/")[2]
-    const navigate = useNavigate()
 
     const [highlightedAvatar, setHighlightedAvatar] = useState(null);
     const [fullScreen, setFullScreen] = useState(false)
@@ -88,10 +87,6 @@ const Map = () => {
             fetchMapInfo()
         }
     }, [user])
-
-    const goBack = () => {
-        navigate(`/campaign/${campaigns._id}`)
-    }
 
 
     // Remove a character from the map
@@ -266,7 +261,6 @@ const Map = () => {
                 :
                 <div className={!fullScreen && 'map__container glass'}>
                     <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
-                    <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className={fullScreen && "map-full-screen"}>
                         <div className={!fullScreen && "map__box"}>
 

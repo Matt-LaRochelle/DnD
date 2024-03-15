@@ -200,7 +200,7 @@ input.error {
   backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
-  padding-top: 30px;
+  padding-top: 80px;
   border-bottom: 1px dotted var(--white);
   /* align-items: center; */
   z-index: 10;

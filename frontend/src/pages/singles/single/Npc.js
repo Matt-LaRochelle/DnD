@@ -42,10 +42,6 @@ const Npc = () => {
         setLoading(false);
     }, [])
 
-    const goBack = () => {
-        navigate(`/campaign/${campaigns._id}`)
-    }
-
     // Clean HTML
     useEffect(() => {
         if (npc) {
@@ -65,7 +61,6 @@ const Npc = () => {
                 :
                 <div className='character__container glass'>
                     <h1>{npc.name}</h1>
-                    <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
                         <img src={npc.image} alt={npc.name} />
                         <div className="character-information">

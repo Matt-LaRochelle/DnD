@@ -40,11 +40,6 @@ const Creature = () => {
         setLoading(false);
     }, [])
 
-
-    const goBack = () => {
-        navigate(`/campaign/${campaigns._id}`)
-    }
-
     // Clean HTML
     useEffect(() => {
         if (creature) {
@@ -61,7 +56,6 @@ const Creature = () => {
                 :
                 <div className='character__container glass'>
                     <h1>{creature.name}</h1>
-                    <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
                     <img src={creature.image} alt={creature.name} />
                         <div className="character-information">

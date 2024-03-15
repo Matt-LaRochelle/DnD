@@ -40,10 +40,6 @@ const Pc = () => {
         setLoading(false);
     }, [])
 
-    const goBack = () => {
-        navigate(`/campaign/${campaigns._id}`)
-    }
-
     // Clean HTML
     useEffect(() => {
         if (pc) {
@@ -59,7 +55,6 @@ const Pc = () => {
             ?   <Loading />
             :   <div className='character__container glass'>
                     <h1>{pc.name}</h1>
-                    <button className="button-primary back" onClick={goBack}>Back</button>
                     <div className='character__grid'>
                         <img src={pc.image} alt={pc.name} />
                         <div className="character-information">
