@@ -9,11 +9,7 @@ import Bento from './Bento';
 // Hooks
 import { useCampaign } from '../../hooks/useCampaign'
 import { useCampaignUsers } from '../../hooks/useCampaignUsers';
-import { useNpcs } from '../../hooks/useNpcs';
-import { usePcs } from '../../hooks/usePcs';
-import { useCreatures } from '../../hooks/useCreatures';
-import { useQuests } from '../../hooks/useQuests';
-import { useMaps } from '../../hooks/useMaps';
+import { useFetch } from '../../hooks/useFetch';
 import CharacterRow from '../../components/characterRow/CharacterRow';
 
 
@@ -23,15 +19,16 @@ const Campaign = () => {
 
     const location = useLocation();
     const path = location.pathname.split("/")[2];
+    console.log("path", path)
 
     // Load the campaign
     const { isLoading, error } = useCampaign(path)
     const { dmInfo, playerInfo, isLoading: isLoadingUsers, error: errorUsers } = useCampaignUsers(path)
-    const { isLoading: isLoadingNpcs, error: errorNpcs } = useNpcs(path)
-    const { isLoading: isLoadingPcs, error: errorPcs } = usePcs(path)
-    const { isLoading: isLoadingCreatures, error: errorCreatures } = useCreatures(path)
-    const { isLoading: isLoadingQuests, error: errorQuests } = useQuests(path)
-    const { isLoading: isLoadingMaps, error: errorMaps } = useMaps(path)
+    const { isLoading: isLoadingNpcs, error: errorNpcs } = useFetch(`npc/${path}`, 'npc')
+    const { isLoading: isLoadingPcs, error: errorPcs } = useFetch(`pc/${path}`, 'pc')
+    const { isLoading: isLoadingCreatures, error: errorCreatures } = useFetch(`creature/${path}`, 'creature')
+    const { isLoading: isLoadingQuests, error: errorQuests } = useFetch(`quest/${path}`, 'quest')
+    const { isLoading: isLoadingMaps, error: errorMaps } = useFetch(`map/${path}`, 'map')
     
 
     useEffect(() => {

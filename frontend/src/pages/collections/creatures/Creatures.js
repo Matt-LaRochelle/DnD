@@ -22,7 +22,7 @@ const Creatures = () => {
 
     return (
         <div className="characters__container glass">
-            <h1>Creatures</h1>
+            <h2>Creatures</h2>
             <div className="characters__flexy">
             {creatures.filter((creature) => {
                     if (user.id === campaigns.dmID) {
