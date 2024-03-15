@@ -1,22 +1,32 @@
 import './dice.css'
-import D6 from '../../components/dice/D6'
-import D4 from '../../components/dice/D4'
+import { useState } from 'react'
 
 const Dice = () => {
+    const [dice, setDice] = useState(1)
+    const [isRotating, setIsRotating] = useState(false);
+
+    const handleClick = (number) => {
+        setIsRotating(true);
+        setTimeout(() => {
+            setDice(Math.floor(Math.random() * number) + 1);
+            setIsRotating(false);
+        }, 700);
+    }
     return (
         <div className="dice__page">
             <div className="dice__container">
                 <h1>Dice</h1>
-                <p>D4</p>
-                <p>D6</p>
-                <p>D8</p>
-                <p>D10</p>
-                <p>D12</p>
-                <p>D20</p>
-                <p>D100</p>
+                <div className={`dice-result ${isRotating ? 'dice-rotate' : ''}`}>
+                    {dice}
+                </div>
+                <p onClick={() => handleClick(4)}>D4</p>
+                <p onClick={() => handleClick(6)}>D6</p>
+                <p onClick={() => handleClick(8)}>D8</p>
+                <p onClick={() => handleClick(10)}>D10</p>
+                <p onClick={() => handleClick(12)}>D12</p>
+                <p onClick={() => handleClick(20)}>D20</p>
+                <p onClick={() => handleClick(100)}>D100</p>
             </div>
-            <D4 />
-            <D6 />
         </div>
     )
 }
