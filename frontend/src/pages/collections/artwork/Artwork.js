@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 
+// Utils
+import { checkDm } from '../../../utils/CheckDm'
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -24,6 +27,7 @@ const Artwork = () => {
     const [isLoading, setIsLoading] = useState(true)
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
+    const dm = checkDm(user._id, campaigns.dm)
 
     const handleSubmit = async () => {
         console.log(url, description);
@@ -85,16 +89,25 @@ const Artwork = () => {
     
     }, [user])
 
-    // useEffect(() => {
-    //     for(let i = 0; i < images.length; i++) {
-    //         if (images[i].description) {
-    //             let singleDescription = cleanHTML(images[i].description)
-    //             setDescriptionsArray([...descriptionsArray, singleDescription])
-    //         }
-    //         let singleDescription = ""
-    //         setDescriptionsArray([...descriptionsArray, singleDescription])
-    //     }
-    // })
+    const handleDelete = async (id) => {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/artwork/' + id, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+        const json = await response.json()
+        if (!response.ok) {
+            setError(json.error)
+            setIsLoading(false)
+            return
+        }
+        if (response.ok) {
+            setImages(prevImages => prevImages.filter(image => image._id !== json._id));
+            setIsLoading(false)
+        }
+    }
+
 
     return (
         <div className="artwork__container">
@@ -104,6 +117,7 @@ const Artwork = () => {
                     <SwiperSlide key={index} className="image-slide">
                         <img className="slider-image" src={image.url} alt={image.name} />
                         <p>{image.description}</p>
+                        {dm && <button className="button-secondary" onClick={() => handleDelete(image._id)}>Delete</button>}
                     </SwiperSlide>
                 )
             }
