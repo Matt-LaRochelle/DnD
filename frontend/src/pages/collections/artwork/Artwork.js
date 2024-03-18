@@ -5,12 +5,6 @@ import { useState, useEffect } from 'react'
 import { useAuthContext } from '../../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 
-// Components
-import Editor from '../../../components/editor/Editor'
-
-// Utils
-import { cleanHTML } from '../../../utils/CleanHtml'
-
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -25,7 +19,6 @@ const Artwork = () => {
     const [url, setUrl] = useState("");
     const [description, setDescription] = useState("");
     const [images, setImages] = useState([]);
-    const [descriptionsArray, setDescriptionsArray] = useState([])
 
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
