@@ -7,7 +7,7 @@ import { useCampaignsContext } from '../../../hooks/useCampaignsContext'
 import { useMapsContext } from '../../../hooks/useMapsContext'
 
 // Hooks
-import { useMaps } from '../../../hooks/useMaps'
+import { useFetch } from '../../../hooks/useFetch'
 
 // Components
 import Card from '../../../components/card/Card'
@@ -17,7 +17,7 @@ const Maps = () => {
     const { user } = useAuthContext()
     const { campaigns } = useCampaignsContext()
     const { maps } = useMapsContext()
-    const { isLoading, error } = useMaps(campaigns._id)
+    const { isLoading, error } = useFetch(`map/${campaigns._id}`, 'map')
 
     const navigate = useNavigate()
 
