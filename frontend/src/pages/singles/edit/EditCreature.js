@@ -104,7 +104,7 @@ const EditCreature = () => {
             }
         }
 
-        const response = await fetch('https://dnd-kukm.onrender.com/api/creature/' + creatures._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/creature/' + creatureInfo._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

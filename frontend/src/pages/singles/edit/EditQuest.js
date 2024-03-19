@@ -98,7 +98,7 @@ const EditQuest = () => {
             }
         }
 
-        const response = await fetch('https://dnd-kukm.onrender.com/api/quest/' + quests._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/quest/' + questInfo._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

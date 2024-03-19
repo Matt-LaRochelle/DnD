@@ -96,7 +96,7 @@ const EditPC = () => {
             }
         }
 
-        const response = await fetch('https://dnd-kukm.onrender.com/api/pc/' + pcs._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/pc/' + pcInfo._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',

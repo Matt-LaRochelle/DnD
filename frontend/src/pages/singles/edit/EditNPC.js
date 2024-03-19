@@ -110,7 +110,7 @@ const EditNPC = () => {
             }
         }
 
-        const response = await fetch('https://dnd-kukm.onrender.com/api/npc/' + npcs._id, {
+        const response = await fetch('https://dnd-kukm.onrender.com/api/npc/' + npcInfo._id, {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
