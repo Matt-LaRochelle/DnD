@@ -54,13 +54,15 @@ const Map = () => {
     // New stuff for zooming
     const [zoom, setZoom] = useState(1);
 
+    function roundToTenth(num) {
+        return Math.round(num * 10) / 10;
+    }
     const handleZoomIn = () => {
-        setZoom(prevZoom => Math.min(prevZoom + 0.1, 3)); // Limit max zoom level to 3
+        setZoom(prevZoom => roundToTenth(Math.min(prevZoom + 0.1, 2))); // Limit max zoom level to 3
         console.log(zoom);
     };
-
     const handleZoomOut = () => {
-        setZoom(prevZoom => Math.max(prevZoom - 0.1, 0.5)); // Limit min zoom level to 0.5
+        setZoom(prevZoom => roundToTenth(Math.max(prevZoom - 0.1, 0.1))); // Limit min zoom level to 0.5
         console.log(zoom);
     };
     // End new stuff for zooming
@@ -274,7 +276,7 @@ const Map = () => {
                 <Loading />
                 :
                 <div className={!fullScreen && 'map__container glass'}>
-                    <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
+                    <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y} Zoom level: {zoom}</h1>
                     <div className={fullScreen && "map-full-screen"}>
                     {/* This section is new */}
                     <div className="map-controls">
@@ -348,21 +350,22 @@ const Map = () => {
                                     </div>
                                 </Draggable>
                             ))}
-
-                            <Draggable 
-                                onDrag={handleMapDrag}
-                                onStop={handleMapDragStop}
-                                bounds={{ right: 0, bottom: 0, top: -9900, left: -9900}}>
-                                <div className='map__image' style={{    
-                                    backgroundImage: `url(${maps.image})`,
-                                    backgroundRepeat: 'no-repeat',
-                                    // This section is new
-                                    transform: `scale(${zoom})`, // Apply zoom level
-                                    transformOrigin: 'center center' // Ensure zoom is centered
-                                    // end new section
-                                    }}>
-                                </div>
-                            </Draggable>
+                            <div className="map__zoom" style={{
+                                transform: `scale(${zoom})`, // Apply zoom level
+                                transformOrigin: 'top left' // Ensure zoom is centered
+                            }}>
+                                <Draggable 
+                                    onDrag={handleMapDrag}
+                                    onStop={handleMapDragStop}
+                                    bounds={{ right: 0, bottom: 0, top: -9900, left: -9900}}
+                                    scale={zoom}>
+                                    <div className='map__image' style={{    
+                                        backgroundImage: `url(${maps.image})`,
+                                        backgroundRepeat: 'no-repeat',
+                                        }}>
+                                    </div>
+                                </Draggable>
+                            </div>
                         </div>
                     </div>
                     {!fullScreen &&

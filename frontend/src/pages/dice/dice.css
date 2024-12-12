@@ -37,3 +37,20 @@
 .dice-rotate {
     animation: rotate .7s linear;
 }
+
+
+
+
+.experiment {
+    width: 500px;
+    height: 500px;
+    /* background-image: url('../../images/sb.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px solid red;
+    position: absolute;
+    top: 100px;
+    right: 100px;
+    transform: scale(1);
+    transform-origin: center center;
+}

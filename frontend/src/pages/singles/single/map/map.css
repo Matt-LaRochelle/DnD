@@ -25,6 +25,7 @@
     position: relative;
     z-index: 1;
     transition: all 0.5s ease;
+    transform: scale(1);
 }
 .map-full-screen {
     position: absolute;
