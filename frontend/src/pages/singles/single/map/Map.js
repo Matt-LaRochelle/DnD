@@ -63,7 +63,8 @@ const Map = () => {
         setZoom(prevZoom => Math.max(prevZoom - 0.1, 0.5)); // Limit min zoom level to 0.5
         console.log(zoom);
     };
-
+    // End new stuff for zooming
+    
     useEffect(() => {
         // Fetch an Map's information
         const fetchMapInfo = async () => {
@@ -275,10 +276,12 @@ const Map = () => {
                 <div className={!fullScreen && 'map__container glass'}>
                     <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
                     <div className={fullScreen && "map-full-screen"}>
+                    {/* This section is new */}
                     <div className="map-controls">
                         <button onClick={handleZoomIn}>Zoom In</button>
                         <button onClick={handleZoomOut}>Zoom Out</button>
                     </div>
+                    {/* End new section */}
                         <div className={!fullScreen && "map__box"}>
 
                             {fullScreen 
@@ -353,8 +356,10 @@ const Map = () => {
                                 <div className='map__image' style={{    
                                     backgroundImage: `url(${maps.image})`,
                                     backgroundRepeat: 'no-repeat',
+                                    // This section is new
                                     transform: `scale(${zoom})`, // Apply zoom level
                                     transformOrigin: 'center center' // Ensure zoom is centered
+                                    // end new section
                                     }}>
                                 </div>
                             </Draggable>
