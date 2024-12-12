@@ -51,6 +51,19 @@ const Map = () => {
     const [fullScreen, setFullScreen] = useState(false)
 
 
+    // New stuff for zooming
+    const [zoom, setZoom] = useState(1);
+
+    const handleZoomIn = () => {
+        setZoom(prevZoom => Math.min(prevZoom + 0.1, 3)); // Limit max zoom level to 3
+        console.log(zoom);
+    };
+
+    const handleZoomOut = () => {
+        setZoom(prevZoom => Math.max(prevZoom - 0.1, 0.5)); // Limit min zoom level to 0.5
+        console.log(zoom);
+    };
+
     useEffect(() => {
         // Fetch an Map's information
         const fetchMapInfo = async () => {
@@ -262,6 +275,10 @@ const Map = () => {
                 <div className={!fullScreen && 'map__container glass'}>
                     <h1>{maps.name} Coordinates: {mapCoordinates.x} {mapCoordinates.y}</h1>
                     <div className={fullScreen && "map-full-screen"}>
+                    <div className="map-controls">
+                        <button onClick={handleZoomIn}>Zoom In</button>
+                        <button onClick={handleZoomOut}>Zoom Out</button>
+                    </div>
                         <div className={!fullScreen && "map__box"}>
 
                             {fullScreen 
@@ -335,7 +352,9 @@ const Map = () => {
                                 bounds={{ right: 0, bottom: 0, top: -9900, left: -9900}}>
                                 <div className='map__image' style={{    
                                     backgroundImage: `url(${maps.image})`,
-                                    backgroundRepeat: 'no-repeat'
+                                    backgroundRepeat: 'no-repeat',
+                                    transform: `scale(${zoom})`, // Apply zoom level
+                                    transformOrigin: 'center center' // Ensure zoom is centered
                                     }}>
                                 </div>
                             </Draggable>
