@@ -46,5 +46,6 @@
     color: var(--black);
     padding: 2px;
     border-radius: 4px;
+    max-width: 75ch;
 }
 
