@@ -59,11 +59,34 @@ const Map = () => {
     }
     const handleZoomIn = () => {
         setZoom(prevZoom => roundToTenth(Math.min(prevZoom + 0.1, 2))); // Limit max zoom level to 3
-        console.log(zoom);
+        console.log(zoom, clientCharacterList);
+        // For each character in clientCharacterList, update the currentX and currentY values to match the new zoom level
+        const newCharacterList = clientCharacterList.map(character => {
+            return {
+                _id: character._id,
+                type: character.type,
+                currentX: (character.trackedX * zoom) + mapCoordinates.x,
+                currentY: (character.trackedY * zoom) + mapCoordinates.y,
+                trackedX: character.trackedX,
+                trackedY: character.trackedY
+            }
+        })
+        setClientCharacterList(newCharacterList)
     };
     const handleZoomOut = () => {
-        setZoom(prevZoom => roundToTenth(Math.max(prevZoom - 0.1, 0.1))); // Limit min zoom level to 0.5
-        console.log(zoom);
+        setZoom(prevZoom => roundToTenth(Math.max(prevZoom - 0.1, 0.2))); // Limit min zoom level to 0.5
+        console.log(zoom, clientCharacterList);
+        const newCharacterList = clientCharacterList.map(character => {
+            return {
+                _id: character._id,
+                type: character.type,
+                currentX: (character.trackedX * zoom) + mapCoordinates.x,
+                currentY: (character.trackedY * zoom) + mapCoordinates.y,
+                trackedX: character.trackedX,
+                trackedY: character.trackedY
+            }
+        })
+        setClientCharacterList(newCharacterList)
     };
     // End new stuff for zooming
     
