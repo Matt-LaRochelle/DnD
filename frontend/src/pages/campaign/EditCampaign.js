@@ -18,25 +18,29 @@ const EditCampaign = () => {
     const { campaigns, dispatch } = useCampaignsContext()
     const navigate = useNavigate()
     
-    const [campaignDescription, setCampaignDescription] = useState('')
-    const [campaignPlotPoints, setCampaignPlotPoints] = useState('')
+    // Information from the DB
+    const [dbDescription, setDbDescription] = useState('')
+    const [dbPlotPoints, setDbPlotPoints] = useState('')
 
     // Editor and add windows
     const [eTitle, setETitle] = useState(false)
     const [eDescription, setEDescription] = useState(false)
     const [eImage, setEImage] = useState(false)
-    const [ePlotPoints, setEPlotPoints] = useState(false)
-    const [aPlotPoints, setAPlotPoints] = useState(false)
+    const [ePlotPoint, setEPlotPoint] = useState(false)
+    const [aPlotPoint, setAPlotPoint] = useState(false)
 
+    // This is the variable that gets sent to the DB
     const [formState, setFormState] = useState({
         title: '',
         description: '',
         image: '',
-        plotPoints: []
+        plotPoints: ''
     })
+
+    // Extra variables that hold data as it moves from the editor component to the local form state
     const [description, setDescription] = useState('')
     const [plotPoints, setPlotPoints] = useState('')
-    const [newPlotPoints, setNewPlotPoints] = useState('')
+    const [newPlotPoint, setNewPlotPoint] = useState('')
 
     // Toggle editor windows
     const editTitle = () => {
@@ -45,13 +49,13 @@ const EditCampaign = () => {
     const editDescription = () => {
         setEDescription(!eDescription)
     }
-    const editPlotPoints = () => {
-        console.log('Editing plot points')
-        setEPlotPoints(!ePlotPoints)
+    const editPlotPoint = () => {
+        console.log('Editing plot point')
+        setEPlotPoint(!ePlotPoint)
     }
-    const addPlotPoints = () => {
-        console.log('Adding plot points')
-        setAPlotPoints(!aPlotPoints)
+    const addPlotPoint = () => {
+        console.log('Adding plot point')
+        setAPlotPoint(!aPlotPoint)
     }
     const editImage = () => {
         setEImage(!eImage)
@@ -60,9 +64,15 @@ const EditCampaign = () => {
     // Function to add a new plot point
     const addANewPlotPoint = (e) => {
         console.log('Adding a new plot point')
-        console.log('old campaign plot points:', campaignPlotPoints)
-        campaignPlotPoints.push(newPlotPoints)
-        console.log('new campaign plot points:', campaignPlotPoints)
+        console.log('old campaign plot points:', dbPlotPoints)
+        dbPlotPoints.push(newPlotPoint)
+        console.log('new campaign plot points:', dbPlotPoints)
+        // Set form state so that everything remains the same except that dbPlotPoints is placed inside the array of plot points in the form state
+        setFormState({
+            ...formState,
+            plotPoints: [dbPlotPoints]
+        })
+        console.log('form state:', formState)
         submit(e)
     }
 
@@ -79,12 +89,12 @@ const EditCampaign = () => {
     useEffect(() => {
         console.log(
             "campaigns:", campaigns,
-            "campaignPlotPoints:", campaignPlotPoints,
+            "campaignPlotPoints:", dbPlotPoints,
             "plotPoints:", plotPoints,
-            "newPlotPoints:", newPlotPoints,
-            "This is just a test when campaigns, campaignPlotPoints, or plotPoints changes"
+            "newPlotPoint:", newPlotPoint,
+            "----------"
         )
-    }, [campaigns, campaignPlotPoints, plotPoints]
+    }, [campaigns, dbPlotPoints, plotPoints]
     )
 
     // For debugging
@@ -92,18 +102,15 @@ const EditCampaign = () => {
         console.log("formState:", formState)
     }, [formState])
 
-    // For handling inner HTML
+    // For handling inner HTML --> Take DB information and format it to HTML
     useEffect(()=> {
         const cleanHtml = () => {
-            // console.log(campaigns.description)
             if (campaigns.description) {
-                let cleanCampaignDescription = DOMPurify.sanitize(campaigns.description)
-                setCampaignDescription(cleanCampaignDescription)
+                let cleanDbDescription = DOMPurify.sanitize(campaigns.description)
+                setDbDescription(cleanDbDescription)
             } if (campaigns.plotPoints) {
-                console.log("plot points are located")
-                let cleanCampaignPlotPoints = campaigns.plotPoints.map(plotPoint => DOMPurify.sanitize(plotPoint));
-                console.log("plot points have been cleaned", cleanCampaignPlotPoints)
-                setCampaignPlotPoints(cleanCampaignPlotPoints);
+                let cleanDbPlotPoints = campaigns.plotPoints.map(plotPoint => DOMPurify.sanitize(plotPoint));
+                setDbPlotPoints(cleanDbPlotPoints);
             }
         }
         if (campaigns) {
@@ -125,7 +132,7 @@ const EditCampaign = () => {
         const updatedData = {};
         console.log("updatedData 1:", updatedData)
 
-        // I don't understand this function
+        // This goes through each object within the form state and adds it to updatedData if it's not undefined or an empty string
         for (const [key, value] of Object.entries(formState)) {
             if (value !== undefined && value !== "") {
                 updatedData[key] = value
@@ -133,7 +140,8 @@ const EditCampaign = () => {
         }
         console.log("updatedData 2:", updatedData)
 
-        // I also don't understand these two functions
+        // Since description doesn't have a key/value we assign one here.
+        // Plot points are a bit different since they are an array
         if (description) {
             updatedData['description'] = description
         } else if (plotPoints) {
@@ -160,8 +168,8 @@ const EditCampaign = () => {
             setETitle(false)
             setEDescription(false)
             setEImage(false)
-            setEPlotPoints(false)
-            setAPlotPoints(false)
+            setEPlotPoint(false)
+            setAPlotPoint(false)
         }
     }
 
@@ -179,7 +187,7 @@ const EditCampaign = () => {
             }
 
             <p><strong>Description</strong></p>
-            <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
+            <p dangerouslySetInnerHTML={{__html: dbDescription}}></p>
             <FaEdit onClick={editDescription} />
             {eDescription && 
                 <div>
@@ -189,25 +197,25 @@ const EditCampaign = () => {
             }
 
             <p><strong>Plot points</strong></p>
-            {campaignPlotPoints && campaignPlotPoints.map((campaignPlotPoint, index) => (
+            {dbPlotPoints && dbPlotPoints.map((dbPlotPoint, index) => (
                 <div className="plotPoint">
-                    <p key={index} dangerouslySetInnerHTML={{__html: campaignPlotPoint}}></p>
+                    <p key={index} dangerouslySetInnerHTML={{__html: dbPlotPoint}}></p>
                     <p>{index}</p>
-                    <FaEdit onClick={editPlotPoints} />
+                    <FaEdit onClick={editPlotPoint} />
                 </div>
             ))}
             {/* This is when we edit a plot point */}
-            {ePlotPoints && 
+            {ePlotPoint && 
                 <div>
                     <Editor value={plotPoints} onChange={setPlotPoints} />
                     <button onClick={submit}>Save</button>
                 </div>
             }
-            <FaEdit onClick={addPlotPoints} />
+            <FaEdit onClick={addPlotPoint} />
             {/* This is when we add a plot point */}
-            {aPlotPoints &&
+            {aPlotPoint &&
                 <div>
-                    <Editor value={newPlotPoints} onChange={setNewPlotPoints} />
+                    <Editor value={newPlotPoint} onChange={setNewPlotPoint} />
                     <button onClick={addANewPlotPoint}>Save</button>
                 </div>
             }
