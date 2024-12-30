@@ -22,6 +22,7 @@ const EditCampaign = () => {
     const [eDescription, setEDescription] = useState(false)
     const [eImage, setEImage] = useState(false)
     const [ePlotPoints, setEPlotPoints] = useState(false)
+    const [aPlotPoints, setAPlotPoints] = useState(false)
     const [formState, setFormState] = useState({
         title: '',
         description: '',
@@ -43,6 +44,11 @@ const EditCampaign = () => {
         console.log('Editing plot points')
         setEPlotPoints(!ePlotPoints)
     }
+    const addPlotPoints = () => {
+        console.log('Adding plot points')
+        setAPlotPoints(!aPlotPoints)
+    }
+
 
     const editImage = () => {
         setEImage(!eImage)
@@ -54,6 +60,16 @@ const EditCampaign = () => {
             [event.target.id]: event.target.value
         });
     }
+
+    useEffect(() => {
+        console.log(
+            "campaigns:", campaigns,
+            "campaignPlotPoints:", campaignPlotPoints,
+            "plotPoints:", plotPoints,
+            "This is just a test when campaigns, campaignPlotPoints, or plotPoints changes"
+        )
+    }, [campaigns, campaignPlotPoints, plotPoints]
+    )
 
     useEffect(() => {
         console.log("formState:", formState)
@@ -116,13 +132,13 @@ const EditCampaign = () => {
         if (response.ok) {
             console.log(json)
             dispatch({type: 'UPDATE_CAMPAIGN', payload: json})
+            // Close all editor windows
             setETitle(false)
             setEDescription(false)
             setEImage(false)
             setEPlotPoints(false)
+            setAPlotPoints(false)
         }
-
-
     }
 
     return (
@@ -154,8 +170,17 @@ const EditCampaign = () => {
                     <FaEdit onClick={editPlotPoints} />
                 </div>
             ))}
-            {!campaignPlotPoints && <FaEdit onClick={editPlotPoints} />}
+            <FaEdit onClick={addPlotPoints} />
+            {/* This is when we edit a plot point */}
             {ePlotPoints && 
+                <div>
+                    {/* <input type="text" id="plotPoints" onChange={handleChange} /> */}
+                    <Editor value={plotPoints} onChange={setPlotPoints} />
+                    <button onClick={submit}>Save</button>
+                </div>
+            }
+            {/* This is when we add a plot point */}
+            {aPlotPoints &&
                 <div>
                     {/* <input type="text" id="plotPoints" onChange={handleChange} /> */}
                     <Editor value={plotPoints} onChange={setPlotPoints} />
