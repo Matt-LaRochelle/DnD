@@ -145,9 +145,9 @@ const EditCampaign = () => {
             }
             <p><strong>Plot points</strong></p>
             {campaignPlotPoints && campaignPlotPoints.map((campaignPlotPoint, index) => (
-                <div>
-                    <p key={index}>{campaignPlotPoint}, {index}</p>
-                    {/* <p key={index} dangerouslySetInnerHTML={{__html: campaignPlotPoint}}></p> */}
+                <div className="plotPoint">
+                    <p key={index} dangerouslySetInnerHTML={{__html: campaignPlotPoint}}></p>
+                    <p>{index}</p>
                     <FaEdit onClick={editPlotPoints} />
                 </div>
             ))}
