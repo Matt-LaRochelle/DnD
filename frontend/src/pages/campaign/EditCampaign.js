@@ -1,15 +1,17 @@
 import '../settings/settings.css'
 
+// Hooks
 import { useState, useEffect } from 'react'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useCampaignsContext } from '../../hooks/useCampaignsContext'
 import { useNavigate } from 'react-router-dom'
 
+// Components and functions
 import Editor from '../../components/editor/Editor'
 import DOMPurify from 'dompurify'
 
+// Icons
 import { FaEdit } from "react-icons/fa";
-
 
 const EditCampaign = () => {
     const { user } = useAuthContext()
@@ -18,11 +20,14 @@ const EditCampaign = () => {
     
     const [campaignDescription, setCampaignDescription] = useState('')
     const [campaignPlotPoints, setCampaignPlotPoints] = useState('')
+
+    // Editor and add windows
     const [eTitle, setETitle] = useState(false)
     const [eDescription, setEDescription] = useState(false)
     const [eImage, setEImage] = useState(false)
     const [ePlotPoints, setEPlotPoints] = useState(false)
     const [aPlotPoints, setAPlotPoints] = useState(false)
+
     const [formState, setFormState] = useState({
         title: '',
         description: '',
@@ -31,15 +36,15 @@ const EditCampaign = () => {
     })
     const [description, setDescription] = useState('')
     const [plotPoints, setPlotPoints] = useState('')
+    const [newPlotPoints, setNewPlotPoints] = useState('')
 
+    // Toggle editor windows
     const editTitle = () => {
         setETitle(!eTitle)
     }
-
     const editDescription = () => {
         setEDescription(!eDescription)
     }
-
     const editPlotPoints = () => {
         console.log('Editing plot points')
         setEPlotPoints(!ePlotPoints)
@@ -48,12 +53,20 @@ const EditCampaign = () => {
         console.log('Adding plot points')
         setAPlotPoints(!aPlotPoints)
     }
-
-
     const editImage = () => {
         setEImage(!eImage)
     }
 
+    // Function to add a new plot point
+    const addANewPlotPoint = (e) => {
+        console.log('Adding a new plot point')
+        console.log('old campaign plot points:', campaignPlotPoints)
+        campaignPlotPoints.push(newPlotPoints)
+        console.log('new campaign plot points:', campaignPlotPoints)
+        submit(e)
+    }
+
+    // ???
     const handleChange = (event) => {
         setFormState({
             ...formState,
@@ -61,6 +74,7 @@ const EditCampaign = () => {
         });
     }
 
+    // For debugging
     useEffect(() => {
         console.log(
             "campaigns:", campaigns,
@@ -71,32 +85,34 @@ const EditCampaign = () => {
     }, [campaigns, campaignPlotPoints, plotPoints]
     )
 
+    // For debugging
     useEffect(() => {
         console.log("formState:", formState)
     }, [formState])
 
-        // For handling inner HTML
-        useEffect(()=> {
-            const cleanHtml = () => {
-                // console.log(campaigns.description)
-                if (campaigns.description) {
-                    let cleanCampaignDescription = DOMPurify.sanitize(campaigns.description)
-                    setCampaignDescription(cleanCampaignDescription)
-                } if (campaigns.plotPoints) {
-                    console.log("plot points are located")
-                    let cleanCampaignPlotPoints = campaigns.plotPoints.map(plotPoint => DOMPurify.sanitize(plotPoint));
-                    console.log("plot points have been cleaned", cleanCampaignPlotPoints)
-                    setCampaignPlotPoints(cleanCampaignPlotPoints);
-                }
+    // For handling inner HTML
+    useEffect(()=> {
+        const cleanHtml = () => {
+            // console.log(campaigns.description)
+            if (campaigns.description) {
+                let cleanCampaignDescription = DOMPurify.sanitize(campaigns.description)
+                setCampaignDescription(cleanCampaignDescription)
+            } if (campaigns.plotPoints) {
+                console.log("plot points are located")
+                let cleanCampaignPlotPoints = campaigns.plotPoints.map(plotPoint => DOMPurify.sanitize(plotPoint));
+                console.log("plot points have been cleaned", cleanCampaignPlotPoints)
+                setCampaignPlotPoints(cleanCampaignPlotPoints);
             }
-            if (campaigns) {
-                cleanHtml()
-            }
-        }, [campaigns])
+        }
+        if (campaigns) {
+            cleanHtml()
+        }
+    }, [campaigns])
 
-
+    // Submitting any type of data
     const submit = async (e) => {
         e.preventDefault();
+        console.log("Submitting form")
 
         if (!user) {
             alert("You must be logged in.")
@@ -105,13 +121,17 @@ const EditCampaign = () => {
 
         // Only add things that were updated
         const updatedData = {};
+        console.log("updatedData 1:", updatedData)
 
+        // I don't understand this function
         for (const [key, value] of Object.entries(formState)) {
             if (value !== undefined && value !== "") {
                 updatedData[key] = value
             }
         }
+        console.log("updatedData 2:", updatedData)
 
+        // I also don't understand these two functions
         if (description) {
             updatedData['description'] = description
         } else if (plotPoints) {
@@ -183,8 +203,8 @@ const EditCampaign = () => {
             {aPlotPoints &&
                 <div>
                     {/* <input type="text" id="plotPoints" onChange={handleChange} /> */}
-                    <Editor value={plotPoints} onChange={setPlotPoints} />
-                    <button onClick={submit}>Save</button>
+                    <Editor value={newPlotPoints} onChange={setNewPlotPoints} />
+                    <button onClick={addANewPlotPoint}>Save</button>
                 </div>
             }
             <p><strong>Image:</strong></p><FaEdit onClick={editImage} />
