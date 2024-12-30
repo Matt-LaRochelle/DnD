@@ -164,6 +164,7 @@ const EditCampaign = () => {
     return (
         <div className="settings__container glass">
             <h1>Campaign Editor</h1>
+
             <p><strong>Campaign title: </strong>{campaigns.title}</p>
             <FaEdit onClick={editTitle}/>
             {eTitle && 
@@ -172,6 +173,7 @@ const EditCampaign = () => {
                     <button onClick={submit}>Save</button>
                 </div>
             }
+
             <p><strong>Description</strong></p>
             <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
             <FaEdit onClick={editDescription} />
@@ -182,6 +184,7 @@ const EditCampaign = () => {
                     <button onClick={submit}>Save</button>
                 </div>
             }
+
             <p><strong>Plot points</strong></p>
             {campaignPlotPoints && campaignPlotPoints.map((campaignPlotPoint, index) => (
                 <div className="plotPoint">
@@ -207,6 +210,7 @@ const EditCampaign = () => {
                     <button onClick={addANewPlotPoint}>Save</button>
                 </div>
             }
+            
             <p><strong>Image:</strong></p><FaEdit onClick={editImage} />
             {eImage && 
                 <div>
