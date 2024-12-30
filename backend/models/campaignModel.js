@@ -19,6 +19,7 @@ const campaignSchema = new Schema({
         type: String,
         required: true
     },
+    plotPoints: [String],
     image: {
         type: String,
     },

@@ -63,6 +63,7 @@ const createCampaign = async (req, res) => {
             dmID, 
             dmUsername, 
             description, 
+            plotPoints,
             playerSettings: [{
                 id: dmID,
                 username: dmUsername,
@@ -257,19 +258,6 @@ const userSettingsCampaign = async (req, res) => {
         res.status(400).json(err.message)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // update a campaign
