@@ -128,14 +128,17 @@ const EditCampaign = () => {
     return (
         <div className="settings__container glass">
             <h1>Campaign Editor</h1>
-            <p><strong>Campaign title: </strong>{campaigns.title}</p><FaEdit onClick={editTitle}/>
+            <p><strong>Campaign title: </strong>{campaigns.title}</p>
+            <FaEdit onClick={editTitle}/>
             {eTitle && 
                 <div>
                     <input type="text" id="title" onChange={handleChange} />
                     <button onClick={submit}>Save</button>
                 </div>
             }
-            <p><strong>Description</strong></p><p dangerouslySetInnerHTML={{__html: campaignDescription}}></p><FaEdit onClick={editDescription} />
+            <p><strong>Description</strong></p>
+            <p dangerouslySetInnerHTML={{__html: campaignDescription}}></p>
+            <FaEdit onClick={editDescription} />
             {eDescription && 
                 <div>
                     {/* <input type="text" id="description" onChange={handleChange} /> */}
