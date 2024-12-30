@@ -70,8 +70,9 @@ const EditCampaign = () => {
                     let cleanCampaignDescription = DOMPurify.sanitize(campaigns.description)
                     setCampaignDescription(cleanCampaignDescription)
                 } else if (campaigns.plotPoints) {
-                    let cleanCampaignPlotPoints = DOMPurify.sanitize(campaigns.plotPoints)
-                    setCampaignPlotPoints(cleanCampaignPlotPoints)
+                    let cleanCampaignPlotPoints = campaigns.plotPoints.map(plotPoint => DOMPurify.sanitize(plotPoint));
+                    console.log("plot points:", cleanCampaignPlotPoints)
+                    setCampaignPlotPoints(cleanCampaignPlotPoints);
                 }
             }
             if (campaigns) {
@@ -144,7 +145,11 @@ const EditCampaign = () => {
                     <button onClick={submit}>Save</button>
                 </div>
             }
-            <p><strong>Plot points</strong></p><p dangerouslySetInnerHTML={{__html: campaignPlotPoints}}></p><FaEdit onClick={editPlotPoints} />
+            <p><strong>Plot points</strong></p>
+            {campaignPlotPoints && campaignPlotPoints.map((campaignPlotPoint, index) => (
+                <p key={index} dangerouslySetInnerHTML={{__html: campaignPlotPoint}}></p>
+            ))}
+            <FaEdit onClick={editPlotPoints} />
             {ePlotPoints && 
                 <div>
                     {/* <input type="text" id="plotPoints" onChange={handleChange} /> */}
