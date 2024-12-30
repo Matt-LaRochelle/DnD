@@ -66,7 +66,8 @@ const EditCampaign = () => {
         submit(e)
     }
 
-    // ???
+    // ??? Figure out what this is
+    // Also figure out which component is being sent as the plot points...
     const handleChange = (event) => {
         setFormState({
             ...formState,
