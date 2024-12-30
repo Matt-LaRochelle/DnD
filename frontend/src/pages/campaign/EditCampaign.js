@@ -32,22 +32,19 @@ const EditCampaign = () => {
     const [plotPoints, setPlotPoints] = useState('')
 
     const editTitle = () => {
-        console.log('title')
         setETitle(!eTitle)
     }
 
     const editDescription = () => {
-        console.log('description')
         setEDescription(!eDescription)
     }
 
     const editPlotPoints = () => {
-        console.log('plot points')
+        console.log('Editing plot points')
         setEPlotPoints(!ePlotPoints)
     }
 
     const editImage = () => {
-        console.log('image')
         setEImage(!eImage)
     }
 
@@ -59,19 +56,20 @@ const EditCampaign = () => {
     }
 
     useEffect(() => {
-        console.log(formState)
+        console.log("formState:", formState)
     }, [formState])
 
         // For handling inner HTML
         useEffect(()=> {
             const cleanHtml = () => {
-                console.log(campaigns.description)
+                // console.log(campaigns.description)
                 if (campaigns.description) {
                     let cleanCampaignDescription = DOMPurify.sanitize(campaigns.description)
                     setCampaignDescription(cleanCampaignDescription)
-                } else if (campaigns.plotPoints) {
+                } if (campaigns.plotPoints) {
+                    console.log("plot points are located")
                     let cleanCampaignPlotPoints = campaigns.plotPoints.map(plotPoint => DOMPurify.sanitize(plotPoint));
-                    console.log("plot points:", cleanCampaignPlotPoints)
+                    console.log("plot points have been cleaned", cleanCampaignPlotPoints)
                     setCampaignPlotPoints(cleanCampaignPlotPoints);
                 }
             }
@@ -147,9 +145,13 @@ const EditCampaign = () => {
             }
             <p><strong>Plot points</strong></p>
             {campaignPlotPoints && campaignPlotPoints.map((campaignPlotPoint, index) => (
-                <p key={index} dangerouslySetInnerHTML={{__html: campaignPlotPoint}}></p>
+                <div>
+                    <p key={index}>{campaignPlotPoint}, {index}</p>
+                    {/* <p key={index} dangerouslySetInnerHTML={{__html: campaignPlotPoint}}></p> */}
+                    <FaEdit onClick={editPlotPoints} />
+                </div>
             ))}
-            <FaEdit onClick={editPlotPoints} />
+            {!campaignPlotPoints && <FaEdit onClick={editPlotPoints} />}
             {ePlotPoints && 
                 <div>
                     {/* <input type="text" id="plotPoints" onChange={handleChange} /> */}
