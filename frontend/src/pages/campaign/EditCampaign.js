@@ -37,47 +37,42 @@ const EditCampaign = () => {
         plotPoints: ''
     })
 
-    // Extra variables that hold data as it moves from the editor component to the local form state
+    // Variables that hold data as it moves from the editor component to the local form state
     const [description, setDescription] = useState('')
     const [plotPoints, setPlotPoints] = useState('')
+    const [editedPlotPoint, setEditedPlotPoint] = useState('')
     const [newPlotPoint, setNewPlotPoint] = useState('')
 
     // Toggle editor windows
-    const editTitle = () => {
-        setETitle(!eTitle)
-    }
-    const editDescription = () => {
-        setEDescription(!eDescription)
-    }
-    const editPlotPoint = () => {
-        console.log('Editing plot point')
-        setEPlotPoint(!ePlotPoint)
-    }
-    const addPlotPoint = () => {
-        console.log('Adding plot point')
-        setAPlotPoint(!aPlotPoint)
-    }
-    const editImage = () => {
-        setEImage(!eImage)
-    }
+    const editTitle = () => {setETitle(!eTitle)}
+    const editDescription = () => {setEDescription(!eDescription)}
+    const editPlotPoint = () => {setEPlotPoint(!ePlotPoint)}
+    const addPlotPoint = () => {setAPlotPoint(!aPlotPoint)}
+    const editImage = () => {setEImage(!eImage)}
 
     // Function to add a new plot point
+    // TO DO: Currently off by 1 submit click...
     const addANewPlotPoint = (e) => {
-        console.log('Adding a new plot point')
+        console.log("Adding a new plot point function")
         console.log('old campaign plot points:', dbPlotPoints)
-        dbPlotPoints.push(newPlotPoint)
-        console.log('new campaign plot points:', dbPlotPoints)
-        // Set form state so that everything remains the same except that dbPlotPoints is placed inside the array of plot points in the form state
-        setFormState({
-            ...formState,
-            plotPoints: [dbPlotPoints]
-        })
-        console.log('form state:', formState)
+
+        // Update the plotPoints state using a callback function
+        setPlotPoints(prevPlotPoints => {
+            const updatedPlotPoints = [...prevPlotPoints, newPlotPoint];
+            console.log("updated plot points:", updatedPlotPoints);
+
+            // Update the formState with the new plot points
+            setFormState(prevFormState => ({
+                ...prevFormState,
+                plotPoints: updatedPlotPoints
+            }));
+
+            return updatedPlotPoints;
+        });
         submit(e)
     }
 
-    // ??? Figure out what this is
-    // Also figure out which component is being sent as the plot points...
+    // For handling Title and Image changes using basic input
     const handleChange = (event) => {
         setFormState({
             ...formState,
@@ -86,20 +81,20 @@ const EditCampaign = () => {
     }
 
     // For debugging
-    useEffect(() => {
-        console.log(
-            "campaigns:", campaigns,
-            "campaignPlotPoints:", dbPlotPoints,
-            "plotPoints:", plotPoints,
-            "newPlotPoint:", newPlotPoint,
-            "----------"
-        )
-    }, [campaigns, dbPlotPoints, plotPoints]
-    )
+    // useEffect(() => {
+    //     console.log(
+    //         "campaigns:", campaigns,
+    //         "campaignPlotPoints:", dbPlotPoints,
+    //         "plotPoints:", plotPoints,
+    //         "newPlotPoint:", newPlotPoint,
+    //         "----------"
+    //     )
+    // }, [campaigns, dbPlotPoints, plotPoints]
+    // )
 
     // For debugging
     useEffect(() => {
-        console.log("formState:", formState)
+        console.log("formState always:", formState)
     }, [formState])
 
     // For handling inner HTML --> Take DB information and format it to HTML
@@ -170,6 +165,14 @@ const EditCampaign = () => {
             setEImage(false)
             setEPlotPoint(false)
             setAPlotPoint(false)
+
+            // Reset form state
+            setFormState({
+                title: '',
+                description: '',
+                image: '',
+                plotPoints: ''
+            })
         }
     }
 
@@ -207,7 +210,7 @@ const EditCampaign = () => {
             {/* This is when we edit a plot point */}
             {ePlotPoint && 
                 <div>
-                    <Editor value={plotPoints} onChange={setPlotPoints} />
+                    <Editor value={editedPlotPoint} onChange={setEditedPlotPoint} />
                     <button onClick={submit}>Save</button>
                 </div>
             }
