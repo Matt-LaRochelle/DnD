@@ -32,7 +32,7 @@ const EditCampaign = () => {
         title: '',
         description: '',
         image: '',
-        plotPoints: ''
+        plotPoints: []
     })
     const [description, setDescription] = useState('')
     const [plotPoints, setPlotPoints] = useState('')
@@ -80,6 +80,7 @@ const EditCampaign = () => {
             "campaigns:", campaigns,
             "campaignPlotPoints:", campaignPlotPoints,
             "plotPoints:", plotPoints,
+            "newPlotPoints:", newPlotPoints,
             "This is just a test when campaigns, campaignPlotPoints, or plotPoints changes"
         )
     }, [campaigns, campaignPlotPoints, plotPoints]
@@ -138,6 +139,8 @@ const EditCampaign = () => {
             updatedData['plotPoints'] = plotPoints
         }
 
+        console.log("updatedData 3:", updatedData)
+
         const response = await fetch('https://dnd-kukm.onrender.com/api/campaign/' + campaigns._id, {
             method: 'PATCH',
             headers: {
@@ -179,7 +182,6 @@ const EditCampaign = () => {
             <FaEdit onClick={editDescription} />
             {eDescription && 
                 <div>
-                    {/* <input type="text" id="description" onChange={handleChange} /> */}
                     <Editor value={description} onChange={setDescription} />
                     <button onClick={submit}>Save</button>
                 </div>
@@ -193,24 +195,22 @@ const EditCampaign = () => {
                     <FaEdit onClick={editPlotPoints} />
                 </div>
             ))}
-            <FaEdit onClick={addPlotPoints} />
             {/* This is when we edit a plot point */}
             {ePlotPoints && 
                 <div>
-                    {/* <input type="text" id="plotPoints" onChange={handleChange} /> */}
                     <Editor value={plotPoints} onChange={setPlotPoints} />
                     <button onClick={submit}>Save</button>
                 </div>
             }
+            <FaEdit onClick={addPlotPoints} />
             {/* This is when we add a plot point */}
             {aPlotPoints &&
                 <div>
-                    {/* <input type="text" id="plotPoints" onChange={handleChange} /> */}
                     <Editor value={newPlotPoints} onChange={setNewPlotPoints} />
                     <button onClick={addANewPlotPoint}>Save</button>
                 </div>
             }
-            
+
             <p><strong>Image:</strong></p><FaEdit onClick={editImage} />
             {eImage && 
                 <div>
