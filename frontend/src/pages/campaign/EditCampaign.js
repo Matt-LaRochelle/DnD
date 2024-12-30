@@ -37,9 +37,8 @@ const EditCampaign = () => {
         plotPoints: ''
     })
 
-    // Variables that hold data as it moves from the editor component to the local form state
+    // Variables that hold data as it moves from the editor component to the form state
     const [description, setDescription] = useState('')
-    const [plotPoints, setPlotPoints] = useState('')
     const [editedPlotPoint, setEditedPlotPoint] = useState('')
     const [newPlotPoint, setNewPlotPoint] = useState('')
 
@@ -56,21 +55,21 @@ const EditCampaign = () => {
         console.log("Adding a new plot point function")
         console.log('old campaign plot points:', dbPlotPoints)
 
-        // Update the plotPoints state using a callback function
-        setPlotPoints(prevPlotPoints => {
-            const updatedPlotPoints = [...prevPlotPoints, newPlotPoint];
-            console.log("updated plot points:", updatedPlotPoints);
+        // Update the plotPoints array with the new plot point
+        const updatedPlotPoints = [...dbPlotPoints, newPlotPoint];
+        console.log("updated plot points:", updatedPlotPoints);
 
-            // Update the formState with the new plot points
-            setFormState(prevFormState => ({
-                ...prevFormState,
-                plotPoints: updatedPlotPoints
-            }));
+        // Update the formState with the new plot points
+        setFormState(prevFormState => ({
+            ...prevFormState,
+            plotPoints: updatedPlotPoints
+        }));
 
-            return updatedPlotPoints;
-        });
-        submit(e)
+        // I need this to be current but it is one step behind...
+        console.log("formState after adding a new plot point:", formState)
+        // submit(e)
     }
+
 
     // For handling Title and Image changes using basic input
     const handleChange = (event) => {
@@ -81,16 +80,14 @@ const EditCampaign = () => {
     }
 
     // For debugging
-    // useEffect(() => {
-    //     console.log(
-    //         "campaigns:", campaigns,
-    //         "campaignPlotPoints:", dbPlotPoints,
-    //         "plotPoints:", plotPoints,
-    //         "newPlotPoint:", newPlotPoint,
-    //         "----------"
-    //     )
-    // }, [campaigns, dbPlotPoints, plotPoints]
-    // )
+    useEffect(() => {
+        console.log(
+            "campaigns:", campaigns,
+            "dbPlotPoints:", dbPlotPoints,
+            "newPlotPoint:", newPlotPoint
+        )
+    }, [campaigns, dbPlotPoints]
+    )
 
     // For debugging
     useEffect(() => {
@@ -125,7 +122,6 @@ const EditCampaign = () => {
 
         // Only add things that were updated
         const updatedData = {};
-        console.log("updatedData 1:", updatedData)
 
         // This goes through each object within the form state and adds it to updatedData if it's not undefined or an empty string
         for (const [key, value] of Object.entries(formState)) {
@@ -133,17 +129,18 @@ const EditCampaign = () => {
                 updatedData[key] = value
             }
         }
-        console.log("updatedData 2:", updatedData)
+        console.log("updatedData 1:", updatedData)
 
         // Since description doesn't have a key/value we assign one here.
         // Plot points are a bit different since they are an array
         if (description) {
             updatedData['description'] = description
-        } else if (plotPoints) {
-            updatedData['plotPoints'] = plotPoints
-        }
+        } 
+        // else if (currentPlotPoints) {
+        //     updatedData['plotPoints'] = currentPlotPoints
+        // }
 
-        console.log("updatedData 3:", updatedData)
+        console.log("updatedData 2:", updatedData)
 
         const response = await fetch('https://dnd-kukm.onrender.com/api/campaign/' + campaigns._id, {
             method: 'PATCH',
