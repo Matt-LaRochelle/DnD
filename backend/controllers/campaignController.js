@@ -63,7 +63,7 @@ const createCampaign = async (req, res) => {
             dmID, 
             dmUsername, 
             description, 
-            plotPoints,
+            plotPoints: [],
             playerSettings: [{
                 id: dmID,
                 username: dmUsername,
